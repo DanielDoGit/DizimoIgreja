@@ -1,0 +1,32 @@
+Telas:
+**Dizimo
+-Login - Concluida
+-Cadastro Dizimista - Concluido
+-Cadastro Coletor
+-Cadastro Funcionario
+-Associação de Dizimistas com coletores - Concluida
+-inserir recebimento - fazendo
+-Pagamento
+-Cidade
+RELATÓRIOS
+-Cidade
+-Funcionarios 
+	Ativos e Inativos
+	por data
+	Todos
+
+-pagamentos
+	Detalhado
+		Origem
+		Data Pagamento
+		Descrição
+		Nome do tesoureiro
+		Valor de pagamento
+		Nome do Fornecedor
+
+		Total por período
+		Total por funcionario
+		
+		
+
+**Missa
