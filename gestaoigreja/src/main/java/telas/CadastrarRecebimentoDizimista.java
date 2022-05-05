@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class CadastrarRecebimentoDizimista extends JFrame {
 
@@ -43,6 +44,7 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 				try {
 					CadastrarRecebimentoDizimista frame = new CadastrarRecebimentoDizimista();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,8 +56,10 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastrarRecebimentoDizimista() {
+		setResizable(false);
+		setTitle("Cadastrar recebimento Dizimos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 575, 300);
+		setBounds(100, 100, 571, 337);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
@@ -79,7 +83,7 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 		lblQuantidadeRecebidos.setBounds(305, 12, 157, 15);
 		panel.add(lblQuantidadeRecebidos);
 		
-		JLabel lblData = new JLabel("Data");
+		JLabel lblData = new JLabel("Data de Abertura");
 		lblData.setBounds(307, 48, 157, 15);
 		panel.add(lblData);
 		
@@ -91,7 +95,15 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 		}
 		
 		JScrollPane barraderolagem = new JScrollPane(tabela);
-		barraderolagem.setBounds(12, 160, 601, 150);
+		barraderolagem.setBounds(12, 99, 534, 151);
 		getContentPane().add(barraderolagem);
+		
+		JButton btnGravar = new JButton("Gravar");
+		btnGravar.setBounds(429, 262, 117, 25);
+		contentPane.add(btnGravar);
+		
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds(288, 262, 117, 25);
+		contentPane.add(btnLimpar);
 	}
 }
