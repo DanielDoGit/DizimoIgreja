@@ -2,12 +2,12 @@ Telas:
 **Dizimo
 -Login - Concluida
 -Cadastro Dizimista - Concluido
--Cadastro Coletor
--Cadastro Funcionario
+-Cadastro Coletor - Concluido
+-Cadastro Funcionario - Concluido
 -Associação de Dizimistas com coletores - Concluida
--inserir recebimento - fazendo
--Pagamento
--Cidade
+-inserir recebimento - Concluida	
+-Pagamento - Concluida
+-Cidade - Concluido
 RELATÓRIOS
 -Cidade
 -Funcionarios 

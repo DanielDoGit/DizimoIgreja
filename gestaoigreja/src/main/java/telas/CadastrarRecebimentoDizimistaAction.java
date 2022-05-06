@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class CadastrarRecebimentoDizimista extends JFrame {
+public class CadastrarRecebimentoDizimistaAction extends JFrame {
 
 	private JPanel contentPane;
 	private DefaultTableModel modelo;
@@ -42,7 +42,7 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastrarRecebimentoDizimista frame = new CadastrarRecebimentoDizimista();
+					CadastrarRecebimentoDizimistaAction frame = new CadastrarRecebimentoDizimistaAction();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -55,7 +55,7 @@ public class CadastrarRecebimentoDizimista extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastrarRecebimentoDizimista() {
+	public CadastrarRecebimentoDizimistaAction() {
 		setResizable(false);
 		setTitle("Cadastrar recebimento Dizimos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
