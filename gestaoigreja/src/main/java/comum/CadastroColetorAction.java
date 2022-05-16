@@ -133,6 +133,7 @@ public class CadastroColetorAction extends JFrame {
 		textField_3 = new JTextField();
 		textField_3.setBackground(Color.CYAN);
 		textField_3.setBounds(151, 228, 209, 20);
+		textField_3.setEditable(false);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -207,6 +208,7 @@ public class CadastroColetorAction extends JFrame {
 		
 		textField_8 = new JTextField();
 		textField_8.setColumns(10);
+		textField_8.setEditable(false);
 		textField_8.setBackground(Color.CYAN);
 		textField_8.setBounds(151, 320, 209, 20);
 		contentPane.add(textField_8);
