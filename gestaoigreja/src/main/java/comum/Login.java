@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
-import entidades.Usuario;
+import dao.UsuarioDAO;
 
 public class Login {
 	

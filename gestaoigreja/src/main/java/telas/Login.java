@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
-import entidades.Usuario;
+import dao.UsuarioDAO;
 
-public class Login implements Usuario{
+public class Login {
 	
 	public void AcessarSistema() {
 		SimpleDateFormat sdf = new SimpleDateFormat ( " dd / MM / yyyy HH : mm : ss " ) ;
@@ -20,10 +20,5 @@ public class Login implements Usuario{
 		
 	}
 
-	@Override
-	public void AcessarSistema(Usuario u) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
