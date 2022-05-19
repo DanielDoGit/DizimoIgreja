@@ -1,21 +1,31 @@
 package telas;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
+import comum.ColetaPropriedades;
 import dao.UsuarioDAO;
+import entidades.Coletor;
+import entidades.Funcionario;
+import entidades.Usuario;
 
 public class Login {
 	
-	public void AcessarSistema() {
-		SimpleDateFormat sdf = new SimpleDateFormat ( " dd / MM / yyyy HH : mm : ss " ) ;
-		java.util.Date agora ;
-		
-	}
 	
-	public Login() {
+	
+	public Login(String login, String senha) {
+		
+		
+		Usuario o = null;
+		o.setLoginUsuario(login);
+		o.setSenhaUsuario(senha);
+		
+		
+		
+		
 		
 		
 	}

@@ -71,10 +71,12 @@ public class ColetaPropriedades {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			verificador = false;
-			e.printStackTrace();
+			new EjetaException(e) {
+			};
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new EjetaException(e) {
+			};
 			verificador = false;
 		}
 		

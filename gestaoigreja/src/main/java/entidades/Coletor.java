@@ -2,7 +2,7 @@ package entidades;
 
 import java.time.LocalDate;
 
-public class Coletor {
+public class Coletor extends Usuario{
 
 	private Comunidade comunidade;
 	

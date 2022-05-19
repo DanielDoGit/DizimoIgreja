@@ -6,10 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import comum.Login;
-
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -74,17 +73,22 @@ public class LoginAction extends JFrame{
 		contentPane.add(passwordField_1);
 		
 		btnNewButton = new JButton("Acessar");
-		btnNewButton.setBounds(313, 195, 89, 23);
+		btnNewButton.setBounds(313, 195, 92, 23);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new Login();
+				if (!passwordField_1.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+					new Login(passwordField_1.getText(),passwordField_1.getText());
+					dispose();
+				}else {
+					JOptionPane.showMessageDialog(lblNewLabel, "As credenciais digitadas são invalidas ou estao incorretas. \n Por favor tente novamente. ","Mensagem",2);
+				}
 				//setVisible(false);
 			//	setDefaultCloseOperation(EXIT_ON_CLOSE);
 				//setEnabled(false);
-				dispose();
+				
 			}
 		});
 		

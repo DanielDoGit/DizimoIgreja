@@ -35,6 +35,8 @@ public abstract class Usuario {
 		this.observacoesUsuario = observacoesUsuario;
 		this.dataCadastro = dataCadastro;
 	}
+	
+	public Usuario() {}
 
 	public Integer getIdUsuario() {
 		return idUsuario;

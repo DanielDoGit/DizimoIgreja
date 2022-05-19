@@ -9,10 +9,23 @@ import comum.ColetaPropriedades;
 
 public class FabricaConexoes {
 	
-	private Connection con;
+	private static Connection con;
 
 	public FabricaConexoes(ColetaPropriedades col) throws SQLException {
-		con = DriverManager.getConnection(col.getUrl()+col.getNomeDoBanco(),col.getUsuario(),col.getSenha());
+		con = DriverManager.getConnection(
+			  col.getUrl()+col.getNomeDoBanco(),
+			  col.getUsuario(),
+			  col.getSenha());
 	}
+
+	public Connection getCon() {
+		return con;
+	}
+
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+	
+	
 
 }
