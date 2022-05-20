@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import comum.ColetaPropriedades;
@@ -16,6 +17,8 @@ public class FabricaConexoes {
 			  col.getUrl()+col.getNomeDoBanco(),
 			  col.getUsuario(),
 			  col.getSenha());
+		PreparedStatement ps = con.prepareStatement("use gestaoigreja");
+		ps.executeUpdate();
 	}
 
 	public Connection getCon() {
