@@ -39,9 +39,8 @@ public class AutenticadorUsuario {
 	public boolean isAuthentiquedUserFuncionario(String login, String senha) {
 		
 		try {
-			col = null;
 			PreparedStatement ps = 
-			con.prepareStatement("select funcLogin, funcSenha from Funcionario where funLogin=? and funcSenha=?;");
+			con.prepareStatement("select funcLogin,funcSenha from Funcionario where funcLogin=? and funcSenha=?;");
 			 ps.setString(1, login);
 			 ps.setString(2, senha);
 			 ResultSet rs = ps.executeQuery();			
@@ -51,37 +50,6 @@ public class AutenticadorUsuario {
 				 func.setLoginUsuario(rs.getString("funcLogin"));
 				 func.setSenhaUsuario(rs.getString("funcSenha")); 
 			}
-			 
-			 if ()
-			
-			//con.commit();
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
-	
-public boolean  isAuthentiquedUserColetor(String login, String senha) {
-		
-		try {
-			func = null;
-			PreparedStatement ps = 
-			con.prepareStatement("select funcLogin,funcSenha from Coletor where funcLogin=? and funcSenha=?;");
-			 ps.setString(1, login);
-			 ps.setString(2, senha);
-			 ResultSet rs = ps.executeQuery();			
-			
-			 while (rs.next()) {
-				 col = new Coletor();
-				 col.setLoginUsuario(rs.getString("funcLogin"));
-				 col.setSenhaUsuario(rs.getString("funcSenha")); 
-			}
-			 
-			
-			 if 
 			
 			//con.commit();
 			con.close();
@@ -90,18 +58,19 @@ public boolean  isAuthentiquedUserColetor(String login, String senha) {
 			e.printStackTrace();
 		}
 		
-		if () {}
-		
-		
+		if (func.getLoginUsuario().equals(login) && func.getSenhaUsuario().equals(senha) && col == null) {
+		 	return true;
+		}else {
+			 return false;
+		}
 		 	
 	
 	}
 	
-	
 
 
 
-	public AutenticadorUsuario(String login, String senha) {}
+	public AutenticadorUsuario() {}
 	
 	
 	
