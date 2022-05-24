@@ -74,6 +74,8 @@ public class Comunidade {
 		this.cidade = cidade;
 	}
 	
+	public Comunidade() {}
+	
 	
 	
 

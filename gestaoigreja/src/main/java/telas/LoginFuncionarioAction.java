@@ -7,18 +7,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import comum.Login;
+import comum.ColetaPropriedades;
+import dao.AutenticadorUsuario;
+import dao.FabricaConexoes;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-public class LoginAction extends JFrame{
+public class LoginFuncionarioAction extends JFrame{
 
 	private JPanel contentPane;
 	private JPasswordField passwordField;
@@ -32,7 +37,7 @@ public class LoginAction extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginAction frame = new LoginAction();
+					LoginFuncionarioAction frame = new LoginFuncionarioAction();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -45,8 +50,8 @@ public class LoginAction extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public LoginAction() {
-		setTitle("Tela de Login");
+	public LoginFuncionarioAction() {
+		setTitle("Tela Login Funcionario");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -74,23 +79,30 @@ public class LoginAction extends JFrame{
 		contentPane.add(passwordField_1);
 		
 		btnNewButton = new JButton("Acessar");
-		btnNewButton.setBounds(313, 195, 89, 23);
+		btnNewButton.setBounds(249, 195, 92, 23);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new Login();
+				if (!passwordField_1.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+					
+					
+					
+					
+				}else {
+					JOptionPane.showMessageDialog(lblNewLabel, "As credenciais digitadas são invalidas ou estao incorretas. \n Por favor tente novamente. ","Mensagem",2);
+				}
 				//setVisible(false);
 			//	setDefaultCloseOperation(EXIT_ON_CLOSE);
 				//setEnabled(false);
-				dispose();
+				
 			}
 		});
 		
 		
 		btnNewButton_1 = new JButton("Limpar");
-		btnNewButton_1.setBounds(200, 195, 89, 23);
+		btnNewButton_1.setBounds(114, 195, 89, 23);
 		contentPane.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			
