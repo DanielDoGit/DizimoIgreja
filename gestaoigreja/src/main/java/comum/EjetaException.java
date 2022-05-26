@@ -11,9 +11,9 @@ import javax.swing.JOptionPane;
 
 import java.io.IOException;
 
-public abstract class EjetaException {
+public class EjetaException {
 		
-	public EjetaException(Exception e) {
+	public  EjetaException(Exception e) {
 		try{
 			
 				FileWriter fw = new FileWriter("log.txt", true);
