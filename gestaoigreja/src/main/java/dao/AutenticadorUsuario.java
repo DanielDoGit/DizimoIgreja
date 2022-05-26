@@ -110,7 +110,7 @@ public boolean  isAuthentiquedUserColetor(String login, String senha) {
 
 
 
-	public AutenticadorUsuario() {}
+	public AutenticadorUsuario(String login, String senha) {}
 	
 	
 	

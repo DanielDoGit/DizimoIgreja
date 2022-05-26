@@ -5,10 +5,6 @@ import java.awt.Rectangle;
 import javax.management.monitor.Monitor;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
@@ -90,42 +86,10 @@ public class LoginColetorActionSWT {
 		Button btnAcessar = new Button(shell, SWT.NONE);
 		btnAcessar.setBounds(301, 197, 75, 25);
 		btnAcessar.setText("Acessar");
-		btnAcessar.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				shell.dispose();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});;
 		
 		Button btnLimpar = new Button(shell, SWT.NONE);
 		btnLimpar.setBounds(198, 197, 75, 25);
 		btnLimpar.setText("Limpar");
-		btnLimpar.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				text.setText("");
-				text_1.setText("");
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 
 	}
 }
