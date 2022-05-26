@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import comum.EjetaException;
 import entidades.Coletor;
 import entidades.Funcionario;
 import entidades.Usuario;
@@ -39,8 +40,9 @@ public class AutenticadorUsuario {
 	public boolean isAuthentiquedUserFuncionario(String login, String senha) {
 		
 		try {
+			col = null;
 			PreparedStatement ps = 
-			con.prepareStatement("select funcLogin,funcSenha from Funcionario where funcLogin=? and funcSenha=?;");
+			con.prepareStatement("select funcLogin, funcSenha from Funcionario where funLogin=? and funcSenha=?;");
 			 ps.setString(1, login);
 			 ps.setString(2, senha);
 			 ResultSet rs = ps.executeQuery();			
@@ -51,6 +53,7 @@ public class AutenticadorUsuario {
 				 func.setSenhaUsuario(rs.getString("funcSenha")); 
 			}
 			
+			
 			//con.commit();
 			con.close();
 		} catch (SQLException e) {
@@ -58,19 +61,56 @@ public class AutenticadorUsuario {
 			e.printStackTrace();
 		}
 		
-		if (func.getLoginUsuario().equals(login) && func.getSenhaUsuario().equals(senha) && col == null) {
-		 	return true;
-		}else {
+		if (login.equals(func.getLoginUsuario()) && senha.equals(func.getSenhaUsuario()) && col == null){
+			 return true;
+		 }else {
 			 return false;
+		 }
+
+	}
+	
+	
+public boolean  isAuthentiquedUserColetor(String login, String senha) {
+		
+		try {
+			func = null;
+			PreparedStatement ps = 
+			con.prepareStatement("select funcLogin,funcSenha from Coletor where funcLogin=? and funcSenha=?;");
+			 ps.setString(1, login);
+			 ps.setString(2, senha);
+			 ResultSet rs = ps.executeQuery();			
+			
+			 while (rs.next()) {
+				 col = new Coletor();
+				 col.setLoginUsuario(rs.getString("funcLogin"));
+				 col.setSenhaUsuario(rs.getString("funcSenha")); 
+			}
+			 
+			 con.close();
+			
+			
+			
+			//con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			new EjetaException(e);
 		}
+		
+		 if (login.equals(col.getLoginUsuario()) && senha.equals(col.getSenhaUsuario()) && func == null){
+			 return true;
+		 }else {
+			 return false;
+		 }
 		 	
 	
 	}
 	
+	
 
 
 
-	public AutenticadorUsuario() {}
+	public AutenticadorUsuario(String login, String senha) {}
 	
 	
 	
