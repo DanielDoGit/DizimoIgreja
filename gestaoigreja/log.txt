@@ -1,0 +1,4 @@
+
+
+31/05/2022 20:48:58
+java.sql.SQLException: Column 'colLogin8' not found.

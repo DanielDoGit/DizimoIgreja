@@ -1,14 +1,26 @@
 package telas;
 
 import java.awt.Rectangle;
+import java.sql.SQLException;
 
 import javax.management.monitor.Monitor;
+import javax.swing.JOptionPane;
+import javax.swing.JWindow;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
+
+import comum.ColetaPropriedades;
+import comum.EjetaException;
+import dao.AutenticadorUsuario;
+import dao.FabricaConexoes;
+
 import org.eclipse.swt.widgets.Button;
 
 public class LoginColetorActionSWT {
@@ -37,8 +49,6 @@ public class LoginColetorActionSWT {
 	public void open() {
 		display = Display.getDefault();
 		
-		
-		
 		createContents(display);
 
 		shell.open();
@@ -54,7 +64,7 @@ public class LoginColetorActionSWT {
 	protected void createContents(Display display) {
 		shell = new Shell(display,  SWT.CLOSE | SWT.MIN | SWT.TITLE );
 		shell.setSize(450, 300);
-		shell.setText("Tela de Login");
+		shell.setText("Tela de Login Coletor");
 		shell.setLayout(null);
 		
 		
@@ -86,10 +96,58 @@ public class LoginColetorActionSWT {
 		Button btnAcessar = new Button(shell, SWT.NONE);
 		btnAcessar.setBounds(301, 197, 75, 25);
 		btnAcessar.setText("Acessar");
+		btnAcessar.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				if (!text.getText().isEmpty() && !text_1.getText().isEmpty() ) {
+					
+					try {
+						AutenticadorUsuario.setCon(new FabricaConexoes(new ColetaPropriedades()).getCon());
+						if(AutenticadorUsuario.isAuthentiquedUserColetor(text.getText(), text_1.getText())) {
+							
+						}else {
+							JOptionPane.showMessageDialog(null, " Usuário não cadastrado ou incorreto");
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						new EjetaException(e1);
+					}
+					
+				
+					
+				}else {
+						JOptionPane.showMessageDialog(null, " As credenciais estão em branco");
+				}
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		Button btnLimpar = new Button(shell, SWT.NONE);
 		btnLimpar.setBounds(198, 197, 75, 25);
 		btnLimpar.setText("Limpar");
+		btnLimpar.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				text.setText("");
+				text_1.setText("");
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 	}
 }

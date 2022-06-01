@@ -15,7 +15,8 @@ public class EjetaException {
 		
 	public  EjetaException(Exception e) {
 		try{
-			
+				
+//				File arquivo = new File();
 				FileWriter fw = new FileWriter("log.txt", true);
 			    BufferedWriter bw = new BufferedWriter(fw);
 			    PrintWriter out = new PrintWriter(bw);

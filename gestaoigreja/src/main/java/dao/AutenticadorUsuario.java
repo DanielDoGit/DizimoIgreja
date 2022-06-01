@@ -15,7 +15,7 @@ public class AutenticadorUsuario {
 	
 	private static Funcionario func;
 	private static Coletor col;
-	private Connection con;
+	private static Connection con;
 
 	public Coletor getCol() {
 		return col;
@@ -25,12 +25,12 @@ public class AutenticadorUsuario {
 		this.col = col;
 	}
 	
-	public Connection getCon() {
+	public static Connection getCon() {
 		return con;
 	}
 
-	public void setCon(Connection con) {
-		this.con = con;
+	public static void setCon(Connection con) {
+		AutenticadorUsuario.con = con;
 	}
 
 	public Funcionario getFunc() {
@@ -70,20 +70,20 @@ public class AutenticadorUsuario {
 	}
 	
 	
-public boolean  isAuthentiquedUserColetor(String login, String senha) {
+public static boolean  isAuthentiquedUserColetor(String login, String senha) {
 		
 		try {
 			func = null;
 			PreparedStatement ps = 
-			con.prepareStatement("select funcLogin,funcSenha from Coletor where funcLogin=? and funcSenha=?;");
+			con.prepareStatement("select colLogin,colSenha from Coletor where colLogin=? and colSenha=?;");
 			 ps.setString(1, login);
 			 ps.setString(2, senha);
 			 ResultSet rs = ps.executeQuery();			
 			
 			 while (rs.next()) {
 				 col = new Coletor();
-				 col.setLoginUsuario(rs.getString("funcLogin"));
-				 col.setSenhaUsuario(rs.getString("funcSenha")); 
+				 col.setLoginUsuario(rs.getString("colLogin"));
+				 col.setSenhaUsuario(rs.getString("colSenha")); 
 			}
 			 
 			 con.close();
