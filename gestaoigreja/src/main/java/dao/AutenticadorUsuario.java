@@ -37,20 +37,19 @@ public class AutenticadorUsuario {
 		return func;
 	}
 	
-	public boolean isAuthentiquedUserFuncionario(String login, String senha) {
+	public static boolean isAuthentiquedUserFuncionario(String login, String senha) {
 		
 		try {
 			col = null;
 			PreparedStatement ps = 
-			con.prepareStatement("select funcLogin, funcSenha from Funcionario where funLogin=? and funcSenha=?;");
+			con.prepareStatement("select funcLogin, funcSenha from funcionario where funcLogin=? and funcSenha=?;");
 			 ps.setString(1, login);
 			 ps.setString(2, senha);
 			 ResultSet rs = ps.executeQuery();			
 			
 			 while (rs.next()) {
-				 func = new Funcionario();
-				 func.setLoginUsuario(rs.getString("funcLogin"));
-				 func.setSenhaUsuario(rs.getString("funcSenha")); 
+				 Funcionario.setLoginUsuario(rs.getString("funcLogin"));
+				 Funcionario.setSenhaUsuario(rs.getString("funcSenha")); 
 			}
 			
 			
@@ -58,10 +57,10 @@ public class AutenticadorUsuario {
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new EjetaException(e);
 		}
 		
-		if (login.equals(func.getLoginUsuario()) && senha.equals(func.getSenhaUsuario()) && col == null){
+		if (login.equals(Funcionario.getLoginUsuario()) && senha.equals(Funcionario.getSenhaUsuario()) && col == null){
 			 return true;
 		 }else {
 			 return false;

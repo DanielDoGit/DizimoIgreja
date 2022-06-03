@@ -34,14 +34,14 @@ public class LoginColetorActionSWT {
 	 * Launch the application.
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		try {
-			LoginColetorActionSWT window = new LoginColetorActionSWT();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			LoginColetorActionSWT window = new LoginColetorActionSWT();
+//			window.open();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Open the window.
@@ -107,8 +107,15 @@ public class LoginColetorActionSWT {
 						AutenticadorUsuario.setCon(new FabricaConexoes(new ColetaPropriedades()).getCon());
 						if(AutenticadorUsuario.isAuthentiquedUserColetor(text.getText(), text_1.getText())) {
 							
+							
+							
+							
 						}else {
-							JOptionPane.showMessageDialog(null, " Usuário não cadastrado ou incorreto");
+							MessageBox dialog =
+								    new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK );
+								dialog.setText("Mensagem");
+								dialog.setMessage("Este usuário não está cadastrado ou está incorreto.");
+								dialog.open();
 						}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -118,7 +125,11 @@ public class LoginColetorActionSWT {
 				
 					
 				}else {
-						JOptionPane.showMessageDialog(null, " As credenciais estão em branco");
+					MessageBox dialog =
+						    new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK );
+						dialog.setText("Mensagem");
+						dialog.setMessage("Verifique se os campos foram preenchidos corretamente !");
+						dialog.open();
 				}
 				
 			}
