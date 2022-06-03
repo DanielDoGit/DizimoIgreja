@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class IdentificacaoTipoUsuario extends JFrame {
+public class IdentificacaoTipoUsuarioDeprecied extends JFrame {
 
 	private JPanel contentPane;
 
@@ -20,7 +20,7 @@ public class IdentificacaoTipoUsuario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IdentificacaoTipoUsuario frame = new IdentificacaoTipoUsuario();
+					IdentificacaoTipoUsuarioDeprecied frame = new IdentificacaoTipoUsuarioDeprecied();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -33,7 +33,7 @@ public class IdentificacaoTipoUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public IdentificacaoTipoUsuario() {
+	public IdentificacaoTipoUsuarioDeprecied() {
 		setResizable(false);
 		setTitle("Painel de Controle");
 		setBounds(100, 100, 441, 243);

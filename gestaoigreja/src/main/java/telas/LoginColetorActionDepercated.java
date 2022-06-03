@@ -6,11 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import comum.ColetaPropriedades;
-import dao.AutenticadorUsuario;
-import dao.FabricaConexoes;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -18,12 +13,11 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-public class LoginFuncionarioAction extends JFrame{
+public class LoginColetorActionDepercated extends JFrame{
 
 	private JPanel contentPane;
 	private JPasswordField passwordField;
@@ -37,7 +31,7 @@ public class LoginFuncionarioAction extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginFuncionarioAction frame = new LoginFuncionarioAction();
+					LoginColetorActionDepercated frame = new LoginColetorActionDepercated();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -50,8 +44,8 @@ public class LoginFuncionarioAction extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public LoginFuncionarioAction() {
-		setTitle("Tela Login Funcionario");
+	public LoginColetorActionDepercated() {
+		setTitle("Tela Login Coletor");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -87,9 +81,7 @@ public class LoginFuncionarioAction extends JFrame{
 				// TODO Auto-generated method stub
 				if (!passwordField_1.getText().isEmpty() && !passwordField.getText().isEmpty()) {
 					
-					
-					
-					
+					dispose();
 				}else {
 					JOptionPane.showMessageDialog(lblNewLabel, "As credenciais digitadas são invalidas ou estao incorretas. \n Por favor tente novamente. ","Mensagem",2);
 				}

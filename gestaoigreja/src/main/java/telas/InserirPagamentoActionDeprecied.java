@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class InserirPagamentoAction extends JFrame {
+public class InserirPagamentoActionDeprecied extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -34,7 +34,7 @@ public class InserirPagamentoAction extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InserirPagamentoAction frame = new InserirPagamentoAction();
+					InserirPagamentoActionDeprecied frame = new InserirPagamentoActionDeprecied();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -47,7 +47,7 @@ public class InserirPagamentoAction extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InserirPagamentoAction() {
+	public InserirPagamentoActionDeprecied() {
 		setTitle("Cadastro de pagamentos");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
