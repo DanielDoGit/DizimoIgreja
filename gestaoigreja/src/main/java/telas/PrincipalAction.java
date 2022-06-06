@@ -3,9 +3,17 @@ package telas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -16,6 +24,7 @@ import org.eclipse.swt.widgets.Canvas;
 public class PrincipalAction {
 
 	protected Shell shell;
+	protected Image imagem;
 
 	/**
 	 * Launch the application.
@@ -60,11 +69,9 @@ public class PrincipalAction {
 		shell.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		shell.setMaximized(true);
-		//shell.setModified(true);
-		//sshell.setFullScreen(true);
-		//shell.setSize(640, 429);
-		shell.setText("SWT Application");
-		shell.setLayout(new GridLayout(1, false));
+		shell.setText("Gestão Igreja");
+		shell.setLayout(new GridLayout(1, true));
+	
 		
 		Menu menu = new Menu(shell, SWT.BAR);
 		menu.setVisible(true);
@@ -114,6 +121,9 @@ public class PrincipalAction {
 		MenuItem mntmCadastrar_7 = new MenuItem(menu_11, SWT.NONE);
 		mntmCadastrar_7.setText("Cadastrar");
 		
+		MenuItem mntmPesquisar_10 = new MenuItem(menu_11, SWT.NONE);
+		mntmPesquisar_10.setText("Pesquisar");
+		
 		new MenuItem(menu_1, SWT.SEPARATOR);
 		
 		MenuItem mntmColetor = new MenuItem(menu_1, SWT.CASCADE);
@@ -160,6 +170,9 @@ public class PrincipalAction {
 		
 		MenuItem mntmCadastrar_8 = new MenuItem(menu_12, SWT.NONE);
 		mntmCadastrar_8.setText("Cadastrar");
+		
+		MenuItem mntmPesquisar_11 = new MenuItem(menu_12, SWT.NONE);
+		mntmPesquisar_11.setText("Pesquisar");
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
 		
@@ -286,6 +299,24 @@ public class PrincipalAction {
 		
 		MenuItem mntmEstadoDasMovimentaes = new MenuItem(menu_18, SWT.NONE);
 		mntmEstadoDasMovimentaes.setText("Estado das Movimentações");
+		
+		imagem = SWTResourceManager.getImage("./imagens/inicial.png");
+		Composite composite = new Composite(shell, SWT.NONE);
+		composite.setRedraw(true);
+		//composite.setBackgroundMode(SWT.INHERIT_FORCE);
+		composite.setBackgroundImage(imagem);
+		Rectangle dimensoes = imagem.getBounds();
+		GridData gd_composite = new GridData();
+		
+		gd_composite.grabExcessHorizontalSpace = true;
+		gd_composite.grabExcessVerticalSpace = true;
+		gd_composite.heightHint = dimensoes.height;
+		gd_composite.widthHint = dimensoes.width;
+		gd_composite.horizontalAlignment= GridData.CENTER;
+		
+//		gd_composite.verticalAlignment = GridData.FILL;
+		
+		composite.setLayoutData(gd_composite);
 //		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 //		gd_composite.heightHint = 315;
 //		gd_composite.widthHint = 607;
