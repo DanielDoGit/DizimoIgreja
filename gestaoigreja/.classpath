@@ -13,8 +13,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -23,5 +24,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/ferramentas/org.eclipse.nebula.widgets.formattedtext_1.0.0.HEAD.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding_1.11.0.v20220118-1028.jar" sourcepath="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding_1.11.0.v20220118-1028.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.beans_1.8.0.v20210619-1111.jar" sourcepath="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.beans_1.8.0.v20210619-1111.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.observable_1.12.0.v20211231-1006.jar" sourcepath="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.observable_1.12.0.v20211231-1006.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.property_1.9.0.v20210619-1129.jar" sourcepath="C:/ferramentas/eclipse/plugins/org.eclipse.core.databinding.property_1.9.0.v20210619-1129.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/org.eclipse.jface.databinding_1.13.0.v20210619-1146.jar" sourcepath="C:/ferramentas/eclipse/plugins/org.eclipse.jface.databinding_1.13.0.v20210619-1146.jar"/>
+	<classpathentry kind="lib" path="C:/ferramentas/eclipse/plugins/com.ibm.icu_67.1.0.v20200706-1749.jar" sourcepath="C:/ferramentas/eclipse/plugins/com.ibm.icu_67.1.0.v20200706-1749.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

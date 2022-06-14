@@ -1,7 +1,9 @@
 package telas;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 public class PropriedadesShell {
@@ -21,6 +23,14 @@ public class PropriedadesShell {
 	    
 	    return x1;
 		
+	}
+	
+	public static void mensagemDeRetorno(String mensagem) {
+		MessageBox dialog =
+			    new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK );
+			dialog.setText("Mensagem");
+			dialog.setMessage(mensagem);
+			dialog.open();
 	}
 
 }

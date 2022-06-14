@@ -17,6 +17,11 @@
 			<id>mysql conector</id>
 			<url>https://mvnrepository.com/artifact/mysql/mysql-connector-java</url>
 		</repository>
+		
+		<repository>
+		<id>repo nebula</id>
+		<url>http://download.eclipse.org/nebula/releases/latest</url>
+		</repository>
 
 	</repositories>
 
@@ -36,6 +41,14 @@
 		<artifactId>text</artifactId>
 		<version>3.3.0-v20070606-0010</version>
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.eclipse.nebula.widgets.nattable/org.eclipse.nebula.widgets.nattable.core -->
+<dependency>
+	<groupId>org.eclipse.nebula.widgets.nattable</groupId>
+	<artifactId>org.eclipse.nebula.widgets.nattable.core</artifactId>
+	<version>2.0.2</version>
+</dependency>
+	
 	
 		
 
@@ -85,6 +98,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.28</version>
 		</dependency>
+		
 
 
 
