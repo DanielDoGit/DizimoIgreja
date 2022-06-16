@@ -45,7 +45,15 @@ public abstract class WindowCidade {
 		this.text_2.setText(a);
 	}
 
-	public Button getBtnNewButton() {
+	public Button getBtnNewButtonCadastrar() {
+		return btnNewButton;
+	}
+	
+	public Button getBtnNewButtonEditar() {
+		return btnNewButton;
+	}
+	
+	public Button getBtnNewButtonExcluir() {
 		return btnNewButton;
 	}
 

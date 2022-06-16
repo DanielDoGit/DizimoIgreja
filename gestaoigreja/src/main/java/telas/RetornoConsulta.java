@@ -18,11 +18,12 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 public class RetornoConsulta {
 
 	protected Shell shlPesquisar;
-	protected CCombo combo;
 	private Text text;
 	private Table table;
 
@@ -50,13 +51,7 @@ public class RetornoConsulta {
 		this.shlPesquisar = shlPesquisar;
 	}
 	
-	public CCombo getCombo() {
-		return combo;
-	}
-
-	public void setCombo(CCombo combo) {
-		this.combo = combo;
-	}
+	
 	
 	/**
 	 * Open the window.
@@ -68,8 +63,14 @@ public class RetornoConsulta {
 		shlPesquisar.setLocation(PropriedadesShell.centralizarShell(shlPesquisar, display));
 		
 		Button btnEditar = new Button(shlPesquisar, SWT.NONE);
-		btnEditar.setText("Editar");
+		btnEditar.setText("Pesquisar");
 		btnEditar.setBounds(515, 14, 62, 54);
+		
+		ToolBar toolBar = new ToolBar(shlPesquisar, SWT.FLAT | SWT.RIGHT);
+		toolBar.setBounds(32, 35, 100, 23);
+		
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.DROP_DOWN);
+		tltmNewItem.setText("New Item");
 		
 		
 		
@@ -87,13 +88,9 @@ public class RetornoConsulta {
 	protected void createContents() {
 		shlPesquisar = new Shell(SWT.MIN| SWT.CLOSE);
 		shlPesquisar.setImage(SWTResourceManager.getImage("D:\\LIMA SOFTWARE\\Workspace\\workspace-eclipse2020\\ContatosBranch\\icones\\lupa.png"));
-		shlPesquisar.setModified(true);
 		shlPesquisar.setSize(771, 502);
 		shlPesquisar.setText("Pesquisar");
 		shlPesquisar.setLayout(null);
-		
-		combo = new CCombo(shlPesquisar, SWT.BORDER | SWT.READ_ONLY);
-		combo.setBounds(32, 31, 88, 21);
 		shlPesquisar.layout();
 		
 		Label lblFiltro = new Label(shlPesquisar, SWT.NONE);
@@ -129,8 +126,8 @@ public class RetornoConsulta {
 		tblclmnUf.setText("UF");
 		
 		Label lblCampoDePesquisa = new Label(shlPesquisar, SWT.NONE);
-		lblCampoDePesquisa.setBounds(146, 14, 112, 15);
-		lblCampoDePesquisa.setText("Campo de Pesquisa");
+		lblCampoDePesquisa.setBounds(146, 14, 62, 15);
+		lblCampoDePesquisa.setText("Campo");
 
 	}
 }
