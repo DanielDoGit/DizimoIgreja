@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.Coletor;
+import beans.Funcionario;
+import beans.Usuario;
 import comum.EjetaException;
-import entidades.Coletor;
-import entidades.Funcionario;
-import entidades.Usuario;
 
 public class AutenticadorUsuario {
 	

@@ -61,7 +61,7 @@ CREATE TABLE `categoriafuncionario` (
   `catFuncNome` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`catFuncId`),
   UNIQUE KEY `nomeCatFunc_UN` (`catFuncNome`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,7 @@ CREATE TABLE `categoriafuncionario` (
 
 LOCK TABLES `categoriafuncionario` WRITE;
 /*!40000 ALTER TABLE `categoriafuncionario` DISABLE KEYS */;
+INSERT INTO `categoriafuncionario` VALUES (1,'Tesoureiro');
 /*!40000 ALTER TABLE `categoriafuncionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +87,7 @@ CREATE TABLE `cidade` (
   `cidadeUf` char(2) DEFAULT NULL,
   PRIMARY KEY (`cidadeId`),
   UNIQUE KEY `cidadeNomeCidade_UN` (`cidadeNomeCidade`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `cidade` (
 
 LOCK TABLES `cidade` WRITE;
 /*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
-INSERT INTO `cidade` VALUES (1,'Cândido Mota','SP');
+INSERT INTO `cidade` VALUES (1,'Cândido Mota','SP'),(3,'Tangamandapio','SP');
 /*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,8 +292,10 @@ CREATE TABLE `funcionario` (
   `funcEndereco` varchar(255) DEFAULT NULL,
   `funcNumeroEndereco` int unsigned DEFAULT NULL,
   `funcObservacoes` varchar(255) DEFAULT NULL,
+  `funcLogin` varchar(255) DEFAULT NULL,
+  `funcSenha` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`funcId`),
-  UNIQUE KEY `cpfRgFuncionario_UN` (`funcCpf`,`funcRg`,`funcNome`),
+  UNIQUE KEY `funcLoginSenhaNomeRgCpf_UN` (`funcRg`,`funcCpf`,`funcNome`,`funcLogin`,`funcSenha`),
   KEY `idCidade_FK` (`Cidade_cidadeId`),
   KEY `IdCategoraFuncionario_FK` (`CategoriaFuncionario_catFuncId`),
   CONSTRAINT `Funcionario_ibfk_1` FOREIGN KEY (`Cidade_cidadeId`) REFERENCES `cidade` (`cidadeId`) ON DELETE CASCADE,
@@ -306,6 +309,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
+INSERT INTO `funcionario` VALUES (1,1,1,122222,6999,'Carlos Ronconi Prado','2002-07-10',9999,NULL,'Rua Aldalberto Ferraz Da Cruz',12,NULL,'prado123','prado123');
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,6 +340,70 @@ CREATE TABLE `missa` (
 LOCK TABLES `missa` WRITE;
 /*!40000 ALTER TABLE `missa` DISABLE KEYS */;
 /*!40000 ALTER TABLE `missa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paroquia`
+--
+
+DROP TABLE IF EXISTS `paroquia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `paroquia` (
+  `paroId` int NOT NULL,
+  `paroNomefantasia` varchar(255) DEFAULT NULL,
+  `paroRazaoSocial` varchar(255) DEFAULT NULL,
+  `paroCnpj` varchar(255) DEFAULT NULL,
+  `paroTelef` varchar(255) DEFAULT NULL,
+  `paroCel` varchar(255) DEFAULT NULL,
+  `paroContatos` varchar(255) DEFAULT NULL,
+  `paroEndereco` varchar(255) DEFAULT NULL,
+  `paroNumEndereco` int DEFAULT NULL,
+  `paroCep` varchar(255) DEFAULT NULL,
+  `paroBairro` varchar(255) DEFAULT NULL,
+  `paroCidade_fk` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`paroId`),
+  UNIQUE KEY `paroNomefantasia_RS_UN` (`paroNomefantasia`,`paroRazaoSocial`,`paroCnpj`),
+  KEY `paroCidade_fk_fk` (`paroCidade_fk`),
+  CONSTRAINT `paroCidade_fk_fk` FOREIGN KEY (`paroCidade_fk`) REFERENCES `cidade` (`cidadeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paroquia`
+--
+
+LOCK TABLES `paroquia` WRITE;
+/*!40000 ALTER TABLE `paroquia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paroquia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `permissaocoletor`
+--
+
+DROP TABLE IF EXISTS `permissaocoletor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `permissaocoletor` (
+  `permissaocoletorid` int NOT NULL,
+  `permiId_FK` int unsigned DEFAULT NULL,
+  `colId_FK` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`permissaocoletorid`),
+  KEY `permiId_FK_FK` (`permiId_FK`),
+  KEY `colId_FK_FK` (`colId_FK`),
+  CONSTRAINT `colId_FK_FK` FOREIGN KEY (`colId_FK`) REFERENCES `coletor` (`colId`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `permiId_FK_FK` FOREIGN KEY (`permiId_FK`) REFERENCES `permissoes` (`permiId`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permissaocoletor`
+--
+
+LOCK TABLES `permissaocoletor` WRITE;
+/*!40000 ALTER TABLE `permissaocoletor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permissaocoletor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -453,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-01 15:22:19
+-- Dump completed on 2022-06-14 21:34:52

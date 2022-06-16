@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import beans.Funcionario;
+import beans.Usuario;
 import comum.EjetaException;
-import entidades.Funcionario;
-import entidades.Usuario;
 
 public class FuncionarioDAO  {
 
