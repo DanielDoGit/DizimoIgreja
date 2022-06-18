@@ -1,6 +1,7 @@
 package telas;
 
 import org.eclipse.swt.widgets.Display;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
 
@@ -14,6 +15,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -25,6 +27,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import beans.Cidade;
 import comum.EjetaException;
+import telas.Cadastrar.WindowCidadeCadastrar;
+import telas.Pesquiar.WindowCidadeRecuperar;
 
 import org.eclipse.swt.widgets.Canvas;
 
@@ -32,22 +36,22 @@ public class WindowPrincipal {
 
 	protected Shell shell;
 	protected Image imagem;
-	private MenuItem mntmCadastrar;
-	private MenuItem mntmPesquisar;
-	private MenuItem mntmCadastrar_7;
-	private MenuItem mntmPesquisar_10;
-	private MenuItem mntmParoquia;
-	private MenuItem mntmCadastrar_1;
-	private MenuItem mntmPesquisar_1;
-	private MenuItem mntmCadastrar_2;
-	private MenuItem mntmPesquisar_2;
-	private MenuItem mntmCadastrar_3;
-	private MenuItem mntmPesquisar_3;
-	private MenuItem mntmCadastrar_4;
-	private MenuItem mntmPesquisar_4;
-	private MenuItem mntmCadastrar_8;
-	private MenuItem mntmCadastrar_10;
-	private MenuItem mntmPesquisar_9;
+	protected MenuItem mntmCadastrar;
+	protected MenuItem mntmPesquisar;
+	protected MenuItem mntmCadastrar_7;
+	protected MenuItem mntmPesquisar_10;
+	protected MenuItem mntmParoquia;
+	protected MenuItem mntmCadastrar_1;
+	protected MenuItem mntmPesquisar_1;
+	protected MenuItem mntmCadastrar_2;
+	protected MenuItem mntmPesquisar_2;
+	protected MenuItem mntmCadastrar_3;
+	protected MenuItem mntmPesquisar_3;
+	protected MenuItem mntmCadastrar_4;
+	protected MenuItem mntmPesquisar_4;
+	protected MenuItem mntmCadastrar_8;
+	protected MenuItem mntmCadastrar_10;
+	protected MenuItem mntmPesquisar_9;
 
 	/**
 	 * Launch the application.
@@ -66,21 +70,26 @@ public class WindowPrincipal {
 	 * Open the window.
 	 */
 	public void open() {
-		Display display = Display.getDefault();
-		
-		createContents();
-		
-		shell.open();
-		
-		shell.layout();
+		try {
+			Display display = Display.getDefault();
+			
+			createContents();
+			
+			shell.open();
+			
+			shell.layout();
 
-		
-		
-		
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+			
+			
+			
+			while (!shell.isDisposed()) {
+				if (!display.readAndDispatch()) {
+					display.sleep();
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			new EjetaException(e);
 		}
 	}
 
@@ -142,11 +151,25 @@ public class WindowPrincipal {
 		mntmCidade.setMenu(menu_2);
 		
 		mntmCadastrar = new MenuItem(menu_2, SWT.NONE);
+		mntmCadastrar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new WindowCidadeCadastrar().open();
+			}
+		});
 		mntmCadastrar.setText("Cadastrar");
 		
 		
 		mntmPesquisar = new MenuItem(menu_2, SWT.NONE);
 		mntmPesquisar.setText("Pesquisar");
+		mntmPesquisar.addSelectionListener(new SelectionAdapter() {
+		
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				new WindowCidadeRecuperar().open();
+			}
+		});
 		
 		MenuItem mntmFornecedor = new MenuItem(menu_1, SWT.CASCADE);
 		mntmFornecedor.setText("Fornecedor");

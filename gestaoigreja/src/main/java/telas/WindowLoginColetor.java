@@ -34,14 +34,14 @@ public class WindowLoginColetor {
 	 * Launch the application.
 	 * @param args
 	 */
-//	public static void main(String[] args) {
-//		try {
-//			LoginColetorActionSWT window = new LoginColetorActionSWT();
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public static void main(String[] args) {
+		try {
+			WindowLoginColetor window = new WindowLoginColetor();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Open the window.
@@ -63,7 +63,7 @@ public class WindowLoginColetor {
 
 	protected void createContents(Display display) {
 		shell = new Shell(display,  SWT.CLOSE | SWT.MIN | SWT.TITLE );
-		shell.setSize(450, 300);
+		shell.setSize(293, 206);
 		shell.setText("Tela de Login Coletor");
 		shell.setLayout(null);
 		
@@ -80,21 +80,21 @@ public class WindowLoginColetor {
 		    shell.setLocation(x, y);
 		
 		Label lblLogin = new Label(shell, SWT.NONE);
-		lblLogin.setBounds(35, 51, 55, 15);
+		lblLogin.setBounds(10, 28, 42, 15);
 		lblLogin.setText("Login");
 		
 		Label lblSenha = new Label(shell, SWT.NONE);
-		lblSenha.setBounds(35, 109, 55, 15);
+		lblSenha.setBounds(10, 64, 42, 15);
 		lblSenha.setText("Senha");
 		
 		text = new Text(shell, SWT.BORDER | SWT.PASSWORD);
-		text.setBounds(96, 51, 268, 21);
+		text.setBounds(56, 25, 188, 21);
 		
 		text_1 = new Text(shell, SWT.BORDER | SWT.PASSWORD);
-		text_1.setBounds(96, 109, 268, 21);
+		text_1.setBounds(56, 61, 188, 21);
 		
 		Button btnAcessar = new Button(shell, SWT.NONE);
-		btnAcessar.setBounds(301, 197, 75, 25);
+		btnAcessar.setBounds(169, 112, 75, 25);
 		btnAcessar.setText("Acessar");
 		btnAcessar.addSelectionListener(new SelectionListener() {
 			
@@ -142,7 +142,7 @@ public class WindowLoginColetor {
 		});
 		
 		Button btnLimpar = new Button(shell, SWT.NONE);
-		btnLimpar.setBounds(198, 197, 75, 25);
+		btnLimpar.setBounds(58, 112, 75, 25);
 		btnLimpar.setText("Limpar");
 		btnLimpar.addSelectionListener(new SelectionListener() {
 			

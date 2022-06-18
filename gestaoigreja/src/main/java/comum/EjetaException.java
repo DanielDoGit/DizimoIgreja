@@ -26,7 +26,8 @@ public class EjetaException {
 			    out.println();
 			    out.println();
 			    out.println(formato.format(c.getTime()));
-			    out.println(e.toString());
+			    out.println(e);
+			    
 			    
 			    out.close();
 			} catch (IOException exe) {

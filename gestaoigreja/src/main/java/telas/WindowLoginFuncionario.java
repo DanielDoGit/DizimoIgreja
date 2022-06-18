@@ -107,6 +107,7 @@ public class WindowLoginFuncionario {
 						AutenticadorUsuario.setCon(new FabricaConexoes(new ColetaPropriedades()).getCon());
 						if(AutenticadorUsuario.isAuthentiquedUserFuncionario(text.getText(), text_1.getText())) {
 							//System.out.println("Deu certo");
+							shell.dispose();
 							new WindowPrincipal().open();
 						}else {
 							MessageBox dialog =

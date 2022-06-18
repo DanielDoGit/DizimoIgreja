@@ -1,7 +1,4 @@
 package telas;
-
-
-
 import java.text.ParseException;
 
 
@@ -30,14 +27,18 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.nebula.*;
 import org.eclipse.nebula.widgets.formattedtext.FormattedText;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 public class WindowIdentificacaoParoquia {
 
+	protected Integer indiceShell = 1;
 	protected Shell shell;
 	protected Display display;
 	private Label lblNewLabel;
@@ -52,6 +53,7 @@ public class WindowIdentificacaoParoquia {
 	private Text text_6;
 	private Text text_7;
 	private Text text_8;
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -59,6 +61,7 @@ public class WindowIdentificacaoParoquia {
 	public static void main(String[] args) {
 		try {
 			WindowIdentificacaoParoquia window = new WindowIdentificacaoParoquia();
+			
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,7 +74,6 @@ public class WindowIdentificacaoParoquia {
 	 */
 	public void open() throws ParseException {
 		display = Display.getDefault();
-		createContents();
 		
 		shell.open();
 		shell.layout();
@@ -88,7 +90,7 @@ public class WindowIdentificacaoParoquia {
 	 */
 	protected void createContents() throws ParseException {
 		shell = new Shell(SWT.MIN| SWT.CLOSE);
-		shell.setSize(635, 506);
+		shell.setSize(638, 486);
 		shell.setText("Identificação Paroquia");
 		shell.setLocation(PropriedadesShell.centralizarShell(shell, Display.getCurrent()));
 		shell.setLayout(null);
@@ -145,16 +147,9 @@ public class WindowIdentificacaoParoquia {
 		text_3.setEditable(false);
 		text_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
 		text_3.setBounds(120, 278, 248, 21);
-		
-		
-		Button btnPesquisar = new Button(shell, SWT.NONE);
-		btnPesquisar.setImage(SWTResourceManager.getImage("C:\\Users\\danie\\eclipse-workspace\\gestaoigreja\\icones\\lupa.png"));
-		btnPesquisar.setBounds(389, 277, 92, 23);
 		FormData fdButton = new FormData();
 		 fdButton.left = new FormAttachment( 0, 0 );
 		 fdButton.bottom = new FormAttachment( 100, 0 );
-		 btnPesquisar.setLayoutData( fdButton );
-		btnPesquisar.setText("Pesquisar");
 		
 		lblCidade = new Label(shell, SWT.NONE);
 		lblCidade.setText("Cidade");
@@ -175,14 +170,14 @@ public class WindowIdentificacaoParoquia {
 		text_5.setBounds(487, 324, 86, 21);
 		
 		text_6 = new Text(shell, SWT.BORDER);
-		text_6.setBounds(120, 367, 171, 21);
+		text_6.setBounds(120, 367, 248, 21);
 		
 		Label lblBairro = new Label(shell, SWT.NONE);
 		lblBairro.setText("Bairro");
 		lblBairro.setBounds(28, 370, 55, 15);
 		
 		Button btnLimpar = new Button(shell, SWT.NONE);
-		btnLimpar.setBounds(389, 427, 75, 25);
+		btnLimpar.setBounds(406, 411, 75, 25);
 		btnLimpar.setText("Limpar");
 		
 		Button btnGravar = new Button(shell, SWT.NONE);
@@ -191,7 +186,7 @@ public class WindowIdentificacaoParoquia {
 			public void widgetSelected(SelectionEvent e) {
 				
 				if (!textoFormattedText.getControl().getText().isEmpty() && !text_3.getText().isEmpty() && !text.getText().isEmpty()) {
-					System.out.println("Deu certo");
+					
 				}else {
 					PropriedadesShell.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos.");
 				}
@@ -199,7 +194,7 @@ public class WindowIdentificacaoParoquia {
 			}
 		});
 		btnGravar.setText("Gravar");
-		btnGravar.setBounds(498, 427, 75, 25);
+		btnGravar.setBounds(498, 411, 75, 25);
 		
 		Label label_1 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_1.setBounds(28, 259, 568, 2);
@@ -219,6 +214,12 @@ public class WindowIdentificacaoParoquia {
 		textoFormattedTextCep.setFormatter(new org.eclipse.nebula.widgets.formattedtext.MaskFormatter("#####-###"));
 		textoFormattedTextCep.getControl().setBounds(120, 410, 171, 21);
 		textoFormattedTextCep.getControl().setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		
+		ToolBar toolBar = new ToolBar(shell, SWT.FLAT | SWT.RIGHT);
+		toolBar.setBounds(374, 278, 29, 23);
+		
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem.setImage(SWTResourceManager.getImage("./icones/search.png"));
 		
 
 

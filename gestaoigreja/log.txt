@@ -1,0 +1,61 @@
+
+
+16/06/2022 19:48:27
+Cannot invoke "java.sql.Connection.prepareStatement(String)" because "dao.CidadeDao.con" is null
+Cannot invoke "java.sql.Connection.prepareStatement(String)" because "dao.CidadeDao.con" is null
+
+
+16/06/2022 19:50:48
+java.lang.NullPointerException: Cannot invoke "org.eclipse.swt.widgets.Text.setText(String)" because "this.text" is null
+
+
+16/06/2022 19:53:07
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 19:53:33
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 20:07:50
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 20:11:00
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 20:27:20
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 20:35:50
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 21:53:26
+org.eclipse.swt.SWTException: Widget is disposed
+
+
+16/06/2022 22:15:19
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because the return value of "beans.Cidade.getIdCidade()" is null
+
+
+16/06/2022 22:31:23
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '4' for key 'cidade.PRIMARY'
+
+
+16/06/2022 22:33:24
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'teste2' for key 'cidade.cidadeNomeCidade_UN'
+
+
+16/06/2022 22:33:26
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'teste2' for key 'cidade.cidadeNomeCidade_UN'
+
+
+16/06/2022 22:33:30
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'teste2' for key 'cidade.cidadeNomeCidade_UN'
+
+
+16/06/2022 22:43:10
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'teste2' for key 'cidade.cidadeNomeCidade_UN'

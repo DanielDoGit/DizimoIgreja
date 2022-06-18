@@ -23,17 +23,11 @@ public class CidadeDao {
 		this.con = con;
 	}
 	
+	public static Connection getCon() {
+		return con;
+	}
+	
 	public void cadastrar(Cidade ci) throws SQLException {
-		
-		ps = con.prepareStatement("select max(cidadeId) cidadeId from cidade;");
-		ResultSet rs = ps.executeQuery();
-		
-		Cidade c = null;
-		while (rs.next()) {
-			c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
-		}
-		c.setIdCidade(c.getIdCidade()+1);
 		
 		ps = con.prepareStatement("insert into cidade values(?,?,?)");
 		ps.setInt(1, ci.getIdCidade());
@@ -72,23 +66,24 @@ public class CidadeDao {
 		
 	}
 	
-	public void consultarCidadeCodigo(Cidade c1) throws SQLException {
+	public Cidade consultarCidadePorCodigo(Integer codigo) throws SQLException {
 		
 		ps = con.prepareStatement("select * from cidade where cidadeId = ?;");
-		ps.setInt(1, c1.getIdCidade());
+		ps.setInt(1, codigo);
 		
 		ResultSet rs = ps.executeQuery();
+		Cidade c = null;
 		while (rs.next()) {
-			Cidade c = new Cidade();
+			 c = new Cidade();
 			c.setIdCidade(rs.getInt("cidadeId"));
 			c.setNomeCidade(rs.getString("cidadeNomeCidade"));
 			c.setUfCidade(rs.getString("cidadeUf"));
-			listaCidade.add(c);
+			//listaCidade.add(c);
 		}
-		
+		return c;
 	}
 
-	public void consultarCidadeNome(Cidade c1) throws SQLException {
+	public List<Cidade> consultarCidadeNome(Cidade c1) throws SQLException {
 
 		ps = con.prepareStatement("select * from cidade where cidadeNomeCidade = ?;");
 		ps.setString(1, c1.getNomeCidade());
@@ -101,12 +96,13 @@ public class CidadeDao {
 			c.setUfCidade(rs.getString("cidadeUf"));
 			listaCidade.add(c);
 		}
+		return listaCidade;
 
 	}
 	
-	public void consultarCidadeUF(Cidade c1) throws SQLException {
+	public List<Cidade> consultarCidadeUF(Cidade c1) throws SQLException {
 
-		ps = con.prepareStatement("select * from cidade where cidadeUf = ?;");
+		ps = con.prepareStatement("select * from cidade where cidadeUf = ? order by cidadeUf;");
 		ps.setString(1, c1.getUfCidade());
 		
 		ResultSet rs = ps.executeQuery();
@@ -117,7 +113,22 @@ public class CidadeDao {
 			c.setUfCidade(rs.getString("cidadeUf"));
 			listaCidade.add(c);
 		}
+		return listaCidade;
 
+	}
+	
+	public Cidade retornaCidadeIndiceMaximo() throws SQLException {
+		ps = con.prepareStatement("select max(cidadeId) cidadeId from cidade;");
+		ResultSet rs = ps.executeQuery();
+		
+		Cidade c = null;
+		while (rs.next()) {
+			c = new Cidade();
+			c.setIdCidade(rs.getInt("cidadeId"));
+		}
+		c.setIdCidade(c.getIdCidade()+1);
+		
+		return c;
 	}
 	
 	
