@@ -13,20 +13,20 @@ public class Teste {
 
 	public static void main(String[] args) {
 		
-		StringBuilder st = new StringBuilder();
-		st.append("update cidade set ");
-		st.append("paroNomefantasia=?,");
-		st.append("paroRazaoSocial=?," );
-		st.append("paroCnpj=?,");
-		st.append("paroTelef=?,");
-		st.append("paroCel=?,");
-		st.append("paroContatos=?,");
-		st.append("paroEndereco=?,");
-		st.append("paroNumEndereco=?,");
-		st.append("paroCep=?,");
-		st.append("paroBairro=?,");
-		st.append("where paroId=?");
+	
 		
+		StringBuilder st = new StringBuilder();
+		st.append("insert into paroquia values(");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?,");
+		st.append("?)");
 		System.out.println(st.toString());
 		
 		//Como fazer uma caixa de dialogo 

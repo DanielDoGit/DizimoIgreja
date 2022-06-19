@@ -1,6 +1,7 @@
 package telas.Cadastrar;
 
 import org.eclipse.swt.widgets.Display;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 
@@ -178,9 +179,9 @@ public class WindowCidadeCadastrar {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+			
 				Integer i;
-				if (!text_1.getText().isBlank() && !text_2.getText().isBlank()) {
+				if (!text_1.getText().isEmpty() && !text_2.getText().isEmpty()) {
 					Cidade c = new Cidade();
 					c.setIdCidade(Integer.valueOf(text.getText()));
 					c.setNomeCidade(text_1.getText());

@@ -32,5 +32,13 @@ public class PropriedadesShell {
 			dialog.setMessage(mensagem);
 			dialog.open();
 	}
+	
+	public static void mensagemDeErro(String mensagem) {
+		MessageBox dialog =
+			    new MessageBox(new Shell(), SWT.ICON_ERROR | SWT.OK );
+			dialog.setText("Mensagem");
+			dialog.setMessage(mensagem);
+			dialog.open();
+	}
 
 }

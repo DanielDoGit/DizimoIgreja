@@ -17,6 +17,7 @@ public class FabricaConexoes {
 			  col.getUrl()+col.getNomeDoBanco(),
 			  col.getUsuario(),
 			  col.getSenha());
+		con.setAutoCommit(true);
 		PreparedStatement ps = con.prepareStatement("use gestaoigreja");
 		ps.executeUpdate();
 	}

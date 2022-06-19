@@ -26,9 +26,7 @@ public class EjetaException {
 			    out.println();
 			    out.println();
 			    out.println(formato.format(c.getTime()));
-			    out.println(e);
-			    
-			    
+			    e.printStackTrace(out);
 			    out.close();
 			} catch (IOException exe) {
 				String a = exe+"\n Não foi possivel gravar o log";

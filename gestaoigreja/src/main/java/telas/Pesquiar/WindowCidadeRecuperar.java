@@ -201,7 +201,7 @@ public class WindowCidadeRecuperar {
 				ass = table.getItems();
 				
 				
-				if (!text.getText().isBlank()) {
+				if (!text.getText().isEmpty()) {
 					if (ass.length > 0 ) {
 						for (int i = 0; i < ass.length; i++ ) {
 							ass[i].setText(0, "");

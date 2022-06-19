@@ -2,6 +2,7 @@ package telas;
 
 import org.eclipse.swt.widgets.Display;
 
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Menu;
 
@@ -57,14 +58,14 @@ public class WindowPrincipal {
 	 * Launch the application.
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		try {
-			WindowPrincipal window = new WindowPrincipal();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			WindowPrincipal window = new WindowPrincipal();
+//			window.open();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Open the window.
@@ -120,13 +121,7 @@ public class WindowPrincipal {
 		mntmParoquia.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					new WindowIdentificacaoParoquia().open();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					new EjetaException(e1);
-				}
+				new WindowIdentificacaoParoquiaAction();
 			}
 		});
 		

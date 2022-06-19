@@ -26,46 +26,52 @@ public class ParoquiaDao {
 	public void cadastrar(Paroquia po) throws SQLException {
 		
 		StringBuilder st = new StringBuilder();
-		st.append("insert into paroquia values( ");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?,");
-		st.append("?)");
+		st.append("insert into paroquia values(");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?, ");
+		st.append("?);");
 	
 		ps = con.prepareStatement(st.toString());
-		ps.setString(1, po.getNomeFantasia());
-		ps.setString(2, po.getRazaoSocial());
-		ps.setString(3, po.getCnpj());
-		ps.setString(4, po.getTelefone());
-		ps.setString(5, po.getCelular());
-		ps.setString(6, po.getContatos());
-		ps.setString(7, po.getEndereco());
-		ps.setInt(8, po.getNumeroLogradouro());
-		ps.setString(9, po.getCep());
-		ps.setString(10, po.getBairro());
+		ps.setInt(1, po.getIndice());
+		ps.setString(2, po.getNomeFantasia());
+		ps.setString(3, po.getRazaoSocial());
+		ps.setString(4, po.getCnpj());
+		ps.setString(5, po.getTelefone());
+		ps.setString(6, po.getCelular());
+		ps.setString(7, po.getContatos());
+		ps.setString(8, po.getEndereco());
+		ps.setInt(9, po.getNumeroLogradouro());
+		ps.setString(10, po.getCep());
+		ps.setString(11, po.getBairro());
+		ps.setInt(12, po.getCidade().getIdCidade());
 		ps.executeUpdate();
 	}
 	
 	public void editar(Paroquia po) throws SQLException {
 		StringBuilder st = new StringBuilder();
-		st.append("update cidade set ");
-		st.append("paroNomefantasia=?,");
-		st.append("paroRazaoSocial=?," );
-		st.append("paroCnpj=?,");
-		st.append("paroTelef=?,");
-		st.append("paroCel=?,");
-		st.append("paroContatos=?,");
-		st.append("paroEndereco=?,");
-		st.append("paroNumEndereco=?,");
-		st.append("paroCep=?,");
-		st.append("paroBairro=?,");
-		st.append("where paroId=?");
+		st.append("update paroquia set ");
+		st.append("paroNomefantasia=?, ");
+		st.append("paroRazaoSocial=?, " );
+		st.append("paroCnpj=?, ");
+		st.append("paroTelef=?, ");
+		st.append("paroCel=?, ");
+		st.append("paroContatos=?, ");
+		st.append("paroEndereco=?, ");
+		st.append("paroNumEndereco=?, ");
+		st.append("paroCep=?, ");
+		st.append("paroBairro=?, ");
+		st.append("paroCidade_fk=?");
+		st.append(" where paroId=?;");
+		System.out.println(st.toString());
 		ps = con.prepareStatement(st.toString());
 		ps.setString(1, po.getNomeFantasia());
 		ps.setString(2, po.getRazaoSocial());
@@ -77,7 +83,9 @@ public class ParoquiaDao {
 		ps.setInt(8, po.getNumeroLogradouro());
 		ps.setString(9, po.getCep());
 		ps.setString(10, po.getBairro());
-		ps.executeUpdate();
+		ps.setInt(11, po.getCidade().getIdCidade());
+		ps.setInt(12, po.getIndice());
+		ps.executeLargeUpdate();
 	}
 		
 	public Paroquia consultarParoquiaTodos() throws SQLException {

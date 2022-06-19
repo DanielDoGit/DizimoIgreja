@@ -180,7 +180,7 @@ public class WindowCidadeEditar {
 				c.setUfCidade(text_2.getText());
 				
 				
-				if (!text_1.getText().isBlank() && !text_2.getText().isBlank()) {
+				if (!text_1.getText().isEmpty() && !text_2.getText().isEmpty()) {
 					
 					try {
 						CidadeDao cidadeDao = new CidadeDao();
