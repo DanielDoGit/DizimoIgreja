@@ -66,18 +66,8 @@ public class WindowLoginColetor {
 		shell.setSize(293, 206);
 		shell.setText("Tela de Login Coletor");
 		shell.setLayout(null);
-		
-		
-			org.eclipse.swt.widgets.Monitor primary = display.getPrimaryMonitor();
-			org.eclipse.swt.graphics.Rectangle bounds = primary.getBounds();
-		    org.eclipse.swt.graphics.Rectangle rect = shell.getBounds();
-		   
 		    
-		    int x = bounds.x + (bounds.width - rect.width) / 2;
-		    int y = bounds.y + (bounds.height - rect.height) / 2;
-		    
-		    
-		    shell.setLocation(x, y);
+		shell.setLocation(PropriedadesShell.centralizarShell(shell, display));
 		
 		Label lblLogin = new Label(shell, SWT.NONE);
 		lblLogin.setBounds(10, 28, 42, 15);
@@ -108,7 +98,7 @@ public class WindowLoginColetor {
 						if(AutenticadorUsuario.isAuthentiquedUserColetor(text.getText(), text_1.getText())) {
 							
 							shell.dispose();
-							new WindowPrincipal().open();
+							new WindowPrincipalAction();
 							
 						}else {
 							MessageBox dialog =

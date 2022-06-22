@@ -167,6 +167,27 @@ public class WindowIdentificacaoParoquiaAction extends WindowIdentificacaoParoqu
 				
 			}
 		});
+		
+		btnLimpar.addSelectionListener(new SelectionAdapter() {
+		
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				textCidade.setText("");
+				textFantasia.setText("");
+				textRazaoSocial.setText("");
+				textoFormattedText.getControl().setText("");
+				textoFormattedTextTelefone.getControl().setText("");
+				textoFormattedTextCelular.getControl().setText("");
+				textEndereco.setText("");
+				textContatos.setText("");
+				textNumeroEndereco.setText("");
+				textBairro.setText("");
+				textoFormattedTextCep.getControl().setText("");
+				
+				
+			}
+		});
 	}
 	
 	

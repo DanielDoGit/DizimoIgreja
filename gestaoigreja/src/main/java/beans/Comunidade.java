@@ -5,12 +5,19 @@ public class Comunidade {
 	private Integer idComunidade;
 	private String nomefantaziaComunidade;
 	private String nomerazaosocialComunidade;
-	private Integer cnpjComunidade;
+	private String cnpjComunidade;
 	private String enderecoComunidade;
-	private Integer numeroenderecoComunidade;
+	private String numeroenderecoComunidade;
 	private String bairroComunidade;
 	private Cidade cidade;
+	private String observacoes;
 	
+	public String getObservacoes() {
+		return observacoes;
+	}
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
 	public Integer getIdComunidade() {
 		return idComunidade;
 	}
@@ -29,10 +36,10 @@ public class Comunidade {
 	public void setNomerazaosocialComunidade(String nomerazaosocialComunidade) {
 		this.nomerazaosocialComunidade = nomerazaosocialComunidade;
 	}
-	public Integer getCnpjComunidade() {
+	public String getCnpjComunidade() {
 		return cnpjComunidade;
 	}
-	public void setCnpjComunidade(Integer cnpjComunidade) {
+	public void setCnpjComunidade(String cnpjComunidade) {
 		this.cnpjComunidade = cnpjComunidade;
 	}
 	public String getEnderecoComunidade() {
@@ -41,10 +48,10 @@ public class Comunidade {
 	public void setEnderecoComunidade(String enderecoComunidade) {
 		this.enderecoComunidade = enderecoComunidade;
 	}
-	public Integer getNumeroenderecoComunidade() {
+	public String getNumeroenderecoComunidade() {
 		return numeroenderecoComunidade;
 	}
-	public void setNumeroenderecoComunidade(Integer numeroenderecoComunidade) {
+	public void setNumeroenderecoComunidade(String numeroenderecoComunidade) {
 		this.numeroenderecoComunidade = numeroenderecoComunidade;
 	}
 	public String getBairroComunidade() {
@@ -61,7 +68,7 @@ public class Comunidade {
 	}
 	
 	public Comunidade(Integer idComunidade, String nomefantaziaComunidade, String nomerazaosocialComunidade,
-			Integer cnpjComunidade, String enderecoComunidade, Integer numeroenderecoComunidade,
+			String cnpjComunidade, String enderecoComunidade, String numeroenderecoComunidade,
 			String bairroComunidade, Cidade cidade) {
 		super();
 		this.idComunidade = idComunidade;

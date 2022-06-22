@@ -107,7 +107,7 @@ public class WindowDizimista {
 		
 		text_1 = new Text(shell, SWT.BORDER);
 		text_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
-		text_1.setBounds(117, 61, 431, 21);
+		text_1.setBounds(117, 61, 414, 21);
 		
 		lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(52, 108, 55, 15);
@@ -163,10 +163,10 @@ public class WindowDizimista {
 		});
 		
 		text_7 = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		text_7.setBounds(366, 108, 182, 104);
+		text_7.setBounds(350, 105, 182, 120);
 		
 		lblContatos = new Label(shell, SWT.NONE);
-		lblContatos.setBounds(305, 154, 55, 15);
+		lblContatos.setBounds(289, 154, 55, 15);
 		lblContatos.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblContatos.setText("Contatos");
 		
@@ -193,10 +193,10 @@ public class WindowDizimista {
 		lblCelular = new Label(shell, SWT.NONE);
 		lblCelular.setText("Celular");
 		lblCelular.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		lblCelular.setBounds(305, 244, 55, 15);
+		lblCelular.setBounds(289, 244, 55, 15);
 		
 		text_9 = new Text(shell, SWT.BORDER);
-		text_9.setBounds(366, 241, 134, 21);
+		text_9.setBounds(350, 241, 134, 21);
 		text_9.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -212,7 +212,7 @@ public class WindowDizimista {
 		
 		ToolBar toolBar = new ToolBar(shell, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		toolBar.setBounds(430, 295, 53, 23);
+		toolBar.setBounds(412, 293, 53, 23);
 		
 		ToolItem tltmPesquisar = new ToolItem(toolBar, SWT.NONE);
 		tltmPesquisar.addSelectionListener(new SelectionAdapter() {
@@ -233,7 +233,7 @@ public class WindowDizimista {
 		text_10 = new Text(shell, SWT.BORDER);
 		text_10.setEnabled(false);
 		text_10.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
-		text_10.setBounds(117, 295, 307, 21);
+		text_10.setBounds(117, 295, 289, 21);
 		
 		lblEndereo = new Label(shell, SWT.NONE);
 		lblEndereo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
@@ -241,19 +241,19 @@ public class WindowDizimista {
 		lblEndereo.setText("Endereço");
 		
 		text_11 = new Text(shell, SWT.BORDER);
-		text_11.setBounds(117, 333, 254, 21);
+		text_11.setBounds(117, 333, 289, 21);
 		
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(10, 278, 548, 2);
 		
 		Label lblN = new Label(shell, SWT.NONE);
 		lblN.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		lblN.setBounds(402, 336, 22, 15);
+		lblN.setBounds(427, 336, 22, 15);
 		lblN.setText("Nº");
 		
 		text_12 = new Text(shell, SWT.BORDER);
 		text_12.setTextLimit(6);
-		text_12.setBounds(424, 333, 76, 21);
+		text_12.setBounds(455, 333, 76, 21);
 		
 		Button btnCheckButton = new Button(shell, SWT.CHECK);
 		btnCheckButton.setSelection(true);
@@ -267,14 +267,14 @@ public class WindowDizimista {
 		lblObservaes.setBounds(31, 422, 76, 15);
 		
 		text_13 = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		text_13.setBounds(117, 375, 254, 104);
+		text_13.setBounds(117, 375, 289, 104);
 		
 		Button btnGravar = new Button(shell, SWT.NONE);
-		btnGravar.setBounds(425, 398, 75, 25);
+		btnGravar.setBounds(456, 396, 75, 25);
 		btnGravar.setText("Gravar");
 		
 		Button btnLimpar = new Button(shell, SWT.NONE);
-		btnLimpar.setBounds(424, 441, 75, 25);
+		btnLimpar.setBounds(456, 438, 75, 25);
 		btnLimpar.setText("Limpar");
 		btnLimpar.addSelectionListener(new SelectionAdapter() {
 		

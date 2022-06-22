@@ -36,7 +36,7 @@ public class PropriedadesShell {
 	public static void mensagemDeErro(String mensagem) {
 		MessageBox dialog =
 			    new MessageBox(new Shell(), SWT.ICON_ERROR | SWT.OK );
-			dialog.setText("Mensagem");
+			dialog.setText("Mensagem de Erro");
 			dialog.setMessage(mensagem);
 			dialog.open();
 	}

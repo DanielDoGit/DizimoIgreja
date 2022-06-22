@@ -1,6 +1,7 @@
 package telas;
 
 import java.sql.Connection;
+
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
@@ -8,9 +9,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-
-import com.ibm.icu.impl.number.Properties;
-
 import comum.ColetaPropriedades;
 import dao.FabricaConexoes;
 import stupidTests.Teste;

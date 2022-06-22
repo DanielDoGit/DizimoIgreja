@@ -30,10 +30,11 @@ import beans.Cidade;
 import comum.EjetaException;
 import telas.Cadastrar.WindowCidadeCadastrar;
 import telas.Pesquiar.WindowCidadeRecuperar;
+import telas.Pesquiar.WindowComunidadeRecuperarAction;
 
 import org.eclipse.swt.widgets.Canvas;
 
-public class WindowPrincipal {
+public abstract class WindowPrincipal {
 
 	protected Shell shell;
 	protected Image imagem;
@@ -42,7 +43,6 @@ public class WindowPrincipal {
 	protected MenuItem mntmCadastrar_7;
 	protected MenuItem mntmPesquisar_10;
 	protected MenuItem mntmParoquia;
-	protected MenuItem mntmCadastrar_1;
 	protected MenuItem mntmPesquisar_1;
 	protected MenuItem mntmCadastrar_2;
 	protected MenuItem mntmPesquisar_2;
@@ -53,6 +53,15 @@ public class WindowPrincipal {
 	protected MenuItem mntmCadastrar_8;
 	protected MenuItem mntmCadastrar_10;
 	protected MenuItem mntmPesquisar_9;
+	protected MenuItem mntmCadastros;
+	protected MenuItem mntmCadastrar_1;
+	protected MenuItem mntmCidade;
+	protected MenuItem mntmFornecedor;
+	protected MenuItem mntmColetor;
+	protected MenuItem mntmFuncionario;
+	protected MenuItem mntmContribuintedizimista;
+	protected MenuItem mntmFormasDePagamento;
+	protected MenuItem mntmMissas;
 
 	/**
 	 * Launch the application.
@@ -74,7 +83,7 @@ public class WindowPrincipal {
 		try {
 			Display display = Display.getDefault();
 			
-			createContents();
+			//createContents();
 			
 			shell.open();
 			
@@ -110,7 +119,7 @@ public class WindowPrincipal {
 		menu.setVisible(true);
 		shell.setMenuBar(menu);
 		
-		MenuItem mntmCadastros = new MenuItem(menu, SWT.CASCADE);
+		mntmCadastros = new MenuItem(menu, SWT.CASCADE);
 		mntmCadastros.setText("Cadastros");
 		
 		Menu menu_1 = new Menu(mntmCadastros);
@@ -118,12 +127,7 @@ public class WindowPrincipal {
 		
 		mntmParoquia = new MenuItem(menu_1, SWT.NONE);
 		mntmParoquia.setText("Paroquia");
-		mntmParoquia.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				new WindowIdentificacaoParoquiaAction();
-			}
-		});
+		
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
 		
@@ -136,37 +140,24 @@ public class WindowPrincipal {
 		mntmCadastrar_1 = new MenuItem(menu_3, SWT.NONE);
 		mntmCadastrar_1.setText("Cadastrar");
 		
+		
 		mntmPesquisar_1 = new MenuItem(menu_3, SWT.NONE);
 		mntmPesquisar_1.setText("Pesquisar");
 		
-		MenuItem mntmCidade = new MenuItem(menu_1, SWT.CASCADE);
+		
+		mntmCidade = new MenuItem(menu_1, SWT.CASCADE);
 		mntmCidade.setText("Cidade");
 		
 		Menu menu_2 = new Menu(mntmCidade);
 		mntmCidade.setMenu(menu_2);
 		
 		mntmCadastrar = new MenuItem(menu_2, SWT.NONE);
-		mntmCadastrar.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				new WindowCidadeCadastrar().open();
-			}
-		});
 		mntmCadastrar.setText("Cadastrar");
-		
-		
 		mntmPesquisar = new MenuItem(menu_2, SWT.NONE);
 		mntmPesquisar.setText("Pesquisar");
-		mntmPesquisar.addSelectionListener(new SelectionAdapter() {
 		
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				new WindowCidadeRecuperar().open();
-			}
-		});
 		
-		MenuItem mntmFornecedor = new MenuItem(menu_1, SWT.CASCADE);
+		mntmFornecedor = new MenuItem(menu_1, SWT.CASCADE);
 		mntmFornecedor.setText("Fornecedor");
 		
 		Menu menu_11 = new Menu(mntmFornecedor);
@@ -180,7 +171,7 @@ public class WindowPrincipal {
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
 		
-		MenuItem mntmColetor = new MenuItem(menu_1, SWT.CASCADE);
+		mntmColetor = new MenuItem(menu_1, SWT.CASCADE);
 		mntmColetor.setText("Coletor");
 		
 		Menu menu_4 = new Menu(mntmColetor);
@@ -192,7 +183,7 @@ public class WindowPrincipal {
 		mntmPesquisar_2 = new MenuItem(menu_4, SWT.NONE);
 		mntmPesquisar_2.setText("Pesquisar");
 		
-		MenuItem mntmFuncionario = new MenuItem(menu_1, SWT.CASCADE);
+		mntmFuncionario = new MenuItem(menu_1, SWT.CASCADE);
 		mntmFuncionario.setText("Funcionario");
 		
 		Menu menu_5 = new Menu(mntmFuncionario);
@@ -204,7 +195,7 @@ public class WindowPrincipal {
 		mntmPesquisar_3 = new MenuItem(menu_5, SWT.NONE);
 		mntmPesquisar_3.setText("Pesquisar");
 		
-		MenuItem mntmContribuintedizimista = new MenuItem(menu_1, SWT.CASCADE);
+		mntmContribuintedizimista = new MenuItem(menu_1, SWT.CASCADE);
 		mntmContribuintedizimista.setText("Contribuinte/Dizimista");
 		
 		Menu menu_6 = new Menu(mntmContribuintedizimista);
@@ -212,18 +203,12 @@ public class WindowPrincipal {
 		
 		mntmCadastrar_4 = new MenuItem(menu_6, SWT.NONE);
 		mntmCadastrar_4.setText("Cadastrar");
-		mntmCadastrar_4.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				new WindowDizimista().open();
-			}
-		});
+		
 		
 		mntmPesquisar_4 = new MenuItem(menu_6, SWT.NONE);
 		mntmPesquisar_4.setText("Pesquisar");
 		
-		MenuItem mntmFormasDePagamento = new MenuItem(menu_1, SWT.CASCADE);
+		mntmFormasDePagamento = new MenuItem(menu_1, SWT.CASCADE);
 		mntmFormasDePagamento.setText("Formas de Pagamento");
 		
 		Menu menu_12 = new Menu(mntmFormasDePagamento);
@@ -237,7 +222,7 @@ public class WindowPrincipal {
 		
 		new MenuItem(menu_1, SWT.SEPARATOR);
 		
-		MenuItem mntmMissas = new MenuItem(menu_1, SWT.CASCADE);
+		mntmMissas = new MenuItem(menu_1, SWT.CASCADE);
 		mntmMissas.setText("Missas");
 		
 		Menu menu_13 = new Menu(mntmMissas);

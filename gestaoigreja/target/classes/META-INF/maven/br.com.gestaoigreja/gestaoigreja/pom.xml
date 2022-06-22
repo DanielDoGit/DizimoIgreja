@@ -19,8 +19,13 @@
 		</repository>
 		
 		<repository>
-		<id>repo nebula</id>
-		<url>http://download.eclipse.org/nebula/releases/latest</url>
+			<id>repo nebula</id>
+			<url>http://download.eclipse.org/nebula/releases/latest</url>
+		</repository>
+		
+		<repository>
+			<id> repo git</id>
+			<url>https://github.com/DanielDoGit/DependeciesJava</url>
 		</repository>
 
 	</repositories>
@@ -41,6 +46,7 @@
 		<artifactId>text</artifactId>
 		<version>3.3.0-v20070606-0010</version>
 	</dependency>
+	
 	
 	<!-- https://mvnrepository.com/artifact/org.eclipse.nebula.widgets.nattable/org.eclipse.nebula.widgets.nattable.core -->
 <dependency>

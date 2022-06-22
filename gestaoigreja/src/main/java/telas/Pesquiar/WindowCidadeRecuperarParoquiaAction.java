@@ -96,28 +96,39 @@ public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarPa
 							Cidade co = null;
 							if (combo.getSelectionIndex() == 0) {
 								Integer ij = Integer.valueOf(text.getText());
-								co = c.consultarCidadePorCodigo(ij);
-								a.setText(0, Integer.toString(co.getIdCidade()));
-								a.setText(1, co.getNomeCidade());
-								a.setText(2, co.getUfCidade());
+								if (c.consultarCidadePorCodigo(ij) != null) {
+									co = c.consultarCidadePorCodigo(ij);
+									a.setText(0, Integer.toString(co.getIdCidade()));
+									a.setText(1, co.getNomeCidade());
+									a.setText(2, co.getUfCidade());
+								}else {
+									PropriedadesShell.mensagemDeRetorno("Não há nenhum cadastro com esse número");
+								}
 							} else if (combo.getSelectionIndex() == 1) {
 								co = new Cidade();
 								co.setNomeCidade(text.getText());
-								for (Cidade cc : c.consultarCidadeNome(co)) {
-									a.setText(0, Integer.toString(cc.getIdCidade()));
-									a.setText(1, cc.getNomeCidade());
-									a.setText(2, cc.getUfCidade());
+								if (c.consultarCidadeNome(co) != null) {
+									for (Cidade cc : c.consultarCidadeNome(co)) {
+										a.setText(0, Integer.toString(cc.getIdCidade()));
+										a.setText(1, cc.getNomeCidade());
+										a.setText(2, cc.getUfCidade());
+									}
+								}else {
+									PropriedadesShell.mensagemDeRetorno("Não há nenhum cadastro com esse nome");
+									throw new NullPointerException("Não ha cadastro com esse nome");
 								}
 							} else if (combo.getSelectionIndex() == 2) {
 								table.setItemCount(0);
 								co = new Cidade();
 								co.setUfCidade(text.getText());
 								TableItem itens = null; 
-								for (Cidade cc : c.consultarCidadeUF(co)) {
-									itens = new TableItem(table, SWT.ARROW);
-									itens.setText(0, Integer.toString(cc.getIdCidade()));
-									itens.setText(1, cc.getNomeCidade());
-									itens.setText(2, cc.getUfCidade());
+								if(c.consultarCidadeUF(co) != null) {
+									for (Cidade cc : c.consultarCidadeUF(co)) {
+										itens = new TableItem(table, SWT.ARROW);
+										itens.setText(0, Integer.toString(cc.getIdCidade()));
+										itens.setText(1, cc.getNomeCidade());
+										itens.setText(2, cc.getUfCidade());
+									}
 								}
 							}
 						
@@ -131,6 +142,9 @@ public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarPa
 						PropriedadesShell.mensagemDeRetorno(
 								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
 						new EjetaException(e1);
+					} catch(NullPointerException e2) {
+						new EjetaException(e2);
+						PropriedadesShell.mensagemDeErro("Ocorreu um erro");
 					}
 						
 					

@@ -24,7 +24,7 @@ public class CidadeDao {
 	}
 	
 	public static Connection getCon() {
-		return con;
+		return CidadeDao.con;
 	}
 	
 	public void cadastrar(Cidade ci) throws SQLException {
@@ -85,7 +85,7 @@ public class CidadeDao {
 
 	public List<Cidade> consultarCidadeNome(Cidade c1) throws SQLException {
 
-		ps = con.prepareStatement("select * from cidade where cidadeNomeCidade = ?;");
+		ps = con.prepareStatement("select * from cidade where exists (cidadeNomeCidade = ?);");
 		ps.setString(1, c1.getNomeCidade());
 		
 		ResultSet rs = ps.executeQuery();
@@ -118,13 +118,13 @@ public class CidadeDao {
 	}
 	
 	public Cidade retornaCidadeIndiceMaximo() throws SQLException {
-		ps = con.prepareStatement("select max(cidadeId) cidadeId from cidade;");
+		ps = con.prepareStatement("select max(cidadeId) from cidade;");
 		ResultSet rs = ps.executeQuery();
 		
 		Cidade c = null;
 		while (rs.next()) {
 			c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
+			c.setIdCidade(rs.getInt("max(cidadeId)"));
 		}
 		c.setIdCidade(c.getIdCidade()+1);
 		

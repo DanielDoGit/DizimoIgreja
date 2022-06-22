@@ -108,7 +108,7 @@ public class WindowLoginFuncionario {
 						if(AutenticadorUsuario.isAuthentiquedUserFuncionario(text.getText(), text_1.getText())) {
 							//System.out.println("Deu certo");
 							shell.dispose();
-							new WindowPrincipal().open();
+							new WindowPrincipalAction();
 						}else {
 							MessageBox dialog =
 								    new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK );
