@@ -116,22 +116,22 @@ public class WindowDizimista {
 		
 		text_3 = new Text(shell, SWT.BORDER);
 		text_3.setBounds(117, 108, 134, 21);
+		text_3.setTextLimit(14);
 		text_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
 		text_3.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				Text t = (Text) e.getSource();
+				Text t = (Text) e.getSource();				
 				t.selectAll();
-				text_3 = t;
-				formattedText = new FormattedText(text_3);
+				formattedText = new FormattedText(t);
 				formattedText.setFormatter(new MaskFormatter("###.###.###-##"));
-				text_3 = formattedText.getControl();
+				text_3.setText(formattedText.getControl().getText());
+				
 
 			}
-			 
-			
+
 		});
 		
 		text_5 = new Text(shell, SWT.BORDER);

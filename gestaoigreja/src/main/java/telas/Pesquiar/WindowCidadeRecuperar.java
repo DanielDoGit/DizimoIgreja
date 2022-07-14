@@ -224,9 +224,14 @@ public class WindowCidadeRecuperar {
 							if (combo.getSelectionIndex() == 0) {
 								Integer ij = Integer.valueOf(text.getText());
 								co = c.consultarCidadePorCodigo(ij);
-								a.setText(0, Integer.toString(co.getIdCidade()));
-								a.setText(1, co.getNomeCidade());
-								a.setText(2, co.getUfCidade());
+								if ( co != null) {
+									a.setText(0, Integer.toString(co.getIdCidade()));
+									a.setText(1, co.getNomeCidade());
+									a.setText(2, co.getUfCidade());
+								}else {
+									
+									throw new NullPointerException();
+								}
 							} else if (combo.getSelectionIndex() == 1) {
 								co = new Cidade();
 								co.setNomeCidade(text.getText());
@@ -258,6 +263,8 @@ public class WindowCidadeRecuperar {
 						PropriedadesShell.mensagemDeRetorno(
 								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
 						new EjetaException(e1);
+					}catch (NullPointerException e1) {
+						PropriedadesShell.mensagemDeRetorno("Nao ha nehuma cidade com esse codigo");
 					}
 						
 					

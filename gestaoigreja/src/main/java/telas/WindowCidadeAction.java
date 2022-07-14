@@ -71,7 +71,7 @@ public class WindowCidadeAction extends WindowCidade{
 				try {
 					CidadeDao cidadeDao = new CidadeDao();
 					cidadeDao.setConnection(Inicial.startaPropertiesConnection());
-					cidadeDao.cadastrar(cidade);
+					cidadeDao.editar(cidade);
 				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
 					new EjetaException(e2);

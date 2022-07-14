@@ -68,13 +68,6 @@ public class WindowPrincipalAction extends WindowPrincipal{
 			}
 		});
 		
-		mntmCadastrar_4.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				new WindowDizimista().open();
-			}
-		});
 		
 		//CadastroFornecedor
 		mntmCadastrar_7.addSelectionListener(new SelectionAdapter() {

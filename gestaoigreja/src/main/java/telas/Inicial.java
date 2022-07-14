@@ -1,7 +1,6 @@
 package telas;
 
 import java.sql.Connection;
-
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
@@ -24,7 +23,7 @@ public class Inicial{
 	//	new Inicial(new Shell(),SWT.PRIMARY_MODAL);
 	}
 	
-	public static final Connection startaPropertiesConnection() throws SQLException {
+	public static Connection startaPropertiesConnection() throws SQLException {
 		ColetaPropriedades coletaPropriedades = new ColetaPropriedades();
 		FabricaConexoes fabrica = new FabricaConexoes(coletaPropriedades);
 		return fabrica.getCon();
