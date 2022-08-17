@@ -1,27 +1,18 @@
 package telas;
 
-import java.awt.Rectangle;
-import java.sql.SQLException;
-
-import javax.management.monitor.Monitor;
-import javax.swing.JOptionPane;
-import javax.swing.JWindow;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import comum.ColetaPropriedades;
 import comum.EjetaException;
+import comum.PropriedadesShell;
 import dao.AutenticadorUsuario;
-import dao.FabricaConexoes;
-
-import org.eclipse.swt.widgets.Button;
 
 public class WindowLoginColetor {
 
@@ -30,24 +21,8 @@ public class WindowLoginColetor {
 	private Text text_1;
 	private Display display;
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			WindowLoginColetor window = new WindowLoginColetor();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
 	public void open() {
-		display = Display.getDefault();
+		display = Display.getCurrent();
 		
 		createContents(display);
 
@@ -99,7 +74,7 @@ public class WindowLoginColetor {
 							
 							shell.dispose();
 							new WindowPrincipalAction();
-							
+							Inicial.fechaconexao();
 						}else {
 							MessageBox dialog =
 								    new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK );
@@ -107,7 +82,7 @@ public class WindowLoginColetor {
 								dialog.setMessage("Este usuário não está cadastrado ou está incorreto.");
 								dialog.open();
 						}
-					} catch (SQLException e1) {
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						new EjetaException(e1);
 					}

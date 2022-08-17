@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Properties;
 
 public class ColetaPropriedades {
@@ -71,12 +70,10 @@ public class ColetaPropriedades {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			verificador = false;
-			new EjetaException(e) {
-			};
+			new EjetaException(e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			new EjetaException(e) {
-			};
+			new EjetaException(e);
 			verificador = false;
 		}
 		

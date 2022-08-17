@@ -23,4 +23,6 @@ public class CategoriaFuncionario {
 		this.idCategoriaFuncionario = idCategoriaFuncionario;
 		this.nomeCategoraiFuncionario = nomeCategoraiFuncionario;
 	}
+	
+	public CategoriaFuncionario() {}
 }

@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +43,11 @@ public class ComunidadeDao {
 	public void editar(Comunidade com) throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("update comunidade set ");
-		st.append("Cidade_cidadeId=?,");
-		st.append("comuFantasia=?, comuRazaoSocial=?, comuCnpj=?,");
-		st.append("comuEndereco=?, comuNumeroEndereco=?, comuBairro=?, comuObservacoes=?");
+		st.append("cidade_cidadeid=?,");
+		st.append("comufantasia=?, comurazaosocial=?, comucnpj=?,");
+		st.append("comuendereco=?, comuNumeroEndereco=?, comuBairro=?, comuObservacoes=?");
 		st.append("where comuId=?");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setInt(1, com.getCidade().getIdCidade());
 		ps.setString(2, com.getNomefantaziaComunidade());
 		ps.setString(3, com.getNomerazaosocialComunidade());
@@ -63,8 +62,8 @@ public class ComunidadeDao {
 	}
 	
 	public void excluir(Comunidade com) throws SQLException {
-		String expressao = "delete from comunidade where comuId=?";
-		ps = con.prepareStatement(expressao);
+		String expressao = "delete from comunidade where comuid=?";
+		ps = con.prepareStatement(expressao.toLowerCase());
 		ps.setInt(1, com.getIdComunidade());
 		ps.executeUpdate();
 
@@ -73,19 +72,20 @@ public class ComunidadeDao {
 	public Comunidade pesquisarComunidadeNomeFantasia(Comunidade com) throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("select "
-				+ "comunidade.comuId, "
-				+ "cidade.cidadeNomeCidade "
+				+ "comunidade.comuid, "
+				+ "cidade.cidadenomecidade "
 				+ "from comunidade inner join cidade on"
-				+ " (comunidade.Cidade_cidadeId = cidade.cidadeId) "
-				+ "where comunidade.comuFantasia=?");
-		ps = con.prepareStatement(st.toString());
+				+ " (comunidade.cidade_cidadeid = cidade.cidadeid) "
+				+ "where comunidade.comufantasia=?");
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setString(1, com.getNomefantaziaComunidade());
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
+			com.setIdComunidade(rs.getInt("comunidade.comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comunidade.comufantasia"));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("cidade.cidadenomecidade"));
 			com.setCidade(cidade);
 		}
 		
@@ -95,22 +95,22 @@ public class ComunidadeDao {
 	public Comunidade pesquisarComunidadeIndice(Comunidade com) throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("select "
-				+ "comunidade.comuId, "
-				+ "comunidade.comuFantasia, "
+				+ "comuId, "
+				+ "comuFantasia, "
 				+ "cidade.cidadeNomeCidade "
 				+ "from comunidade inner join cidade on"
 				+ " (comunidade.Cidade_cidadeId = cidade.cidadeId) "
 				+ "where comunidade.comuId=?");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setInt(1, com.getIdComunidade());
 		ResultSet rs = ps.executeQuery();
 		com = null;
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(Integer.valueOf(rs.getString("comunidade.comuId")));
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
+			com.setIdComunidade(rs.getInt("comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comufantasia"));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("cidadenomecidade"));
 			com.setCidade(cidade);
 		}
 		
@@ -128,18 +128,18 @@ public class ComunidadeDao {
 				+ "from comunidade inner join cidade on"
 				+ " (comunidade.Cidade_cidadeId = cidade.cidadeId) "
 				+ "where comunidade.comuId=?");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setInt(1, com.getIdComunidade());
 		ResultSet rs = ps.executeQuery();
 		com = null;
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(rs.getInt("comunidade.comuId"));
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
+			com.setIdComunidade(rs.getInt("comunidade.comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comunidade.comufantasia"));
 			Cidade cidade = new Cidade();
-			cidade.setIdCidade(rs.getInt("cidade.cidadeId"));
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
-			cidade.setUfCidade(rs.getString("cidade.cidadeUf"));
+			cidade.setIdCidade(rs.getInt("cidade.cidadeid"));
+			cidade.setNomeCidade(rs.getString("cidade.cidadenomecidade"));
+			cidade.setUfCidade(rs.getString("cidade.cidadeuf"));
 			com.setCidade(cidade);
 		}
 		
@@ -149,16 +149,16 @@ public class ComunidadeDao {
 	public Comunidade pesquisarComunidadeIndiceMaximo() throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("select "
-				+ "max(comuId) "
+				+ "max(comuid) "
 				+ "from comunidade;");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ResultSet rs = ps.executeQuery();
 		Comunidade com = null;
 		while(rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(rs.getInt("max(comuId)")+1);
+			com.setIdComunidade(rs.getInt("max"));
 		}
-
+		com.setIdComunidade(com.getIdComunidade()+1);
 		return com;
 	}
 	
@@ -180,24 +180,24 @@ public class ComunidadeDao {
 				+ "from comunidade inner join cidade on"
 				+ " (comunidade.Cidade_cidadeId = cidade.cidadeId) "
 				+ "where comunidade.comuId=?;");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setInt(1, com.getIdComunidade());
 		ResultSet rs = ps.executeQuery();
 		com = null;
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(rs.getInt("comunidade.comuId"));
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
-			com.setNomerazaosocialComunidade(rs.getString("comunidade.comuRazaoSocial"));
-			com.setCnpjComunidade(rs.getString("comunidade.comuCnpj"));
-			com.setEnderecoComunidade(rs.getString("comunidade.comuEndereco"));
-			com.setNumeroenderecoComunidade(rs.getString("comunidade.comuNumeroEndereco"));
-			com.setBairroComunidade(rs.getString("comunidade.comuBairro"));
-			com.setObservacoes(rs.getString("comunidade.comuObservacoes"));
+			com.setIdComunidade(rs.getInt("comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comufantasia"));
+			com.setNomerazaosocialComunidade(rs.getString("comurazaosocial"));
+			com.setCnpjComunidade(rs.getString("comucnpj"));
+			com.setEnderecoComunidade(rs.getString("comuendereco"));
+			com.setNumeroenderecoComunidade(rs.getString("comunumeroendereco"));
+			com.setBairroComunidade(rs.getString("comubairro"));
+			com.setObservacoes(rs.getString("comuobservacoes"));
 			Cidade cidade = new Cidade();
-			cidade.setIdCidade(rs.getInt("cidade.cidadeId"));
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
-			cidade.setUfCidade(rs.getString("cidade.cidadeUf"));
+			cidade.setIdCidade(rs.getInt("cidadeid"));
+			cidade.setNomeCidade(rs.getString("cidadenomecidade"));
+			cidade.setUfCidade(rs.getString("cidadeuf"));
 			com.setCidade(cidade);
 			listaComunidade.add(com);
 		}		
@@ -215,16 +215,16 @@ public class ComunidadeDao {
 				+ "cidade.cidadeNomeCidade "
 				+ "from comunidade inner join cidade on"
 				+ " (comunidade.Cidade_cidadeId = cidade.cidadeId) "
-				+ "where comunidade.comuFantasia=?");
+				+ "where comunidade.comuFantasia ilike ?;");
 		ps = con.prepareStatement(st.toString());
-		ps.setString(1, com.getNomefantaziaComunidade());
+		ps.setString(1, "%"+ com.getNomefantaziaComunidade() + "%");
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
-			com.setIdComunidade(rs.getInt("comunidade.comuId"));
+			com.setIdComunidade(rs.getInt("comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comufantasia"));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("cidadenomecidade"));
 			com.setCidade(cidade);
 			listaComunidade.add(com);
 		}		
@@ -234,40 +234,24 @@ public class ComunidadeDao {
 	
 	public List<Comunidade> pesquisarListaComunidadeCidade(Cidade c) throws SQLException{
 		
+	
 		StringBuilder st = new StringBuilder();
-		st.append("select comunidade.comuId, comunidade.comuFantasia from comunidade"
-				+ " where comunidade.Cidade_cidadeId = "
-				+ "(select cidade.cidadeId from cidade where cidade.cidadeNomeCidade=?)");
-		ps = con.prepareStatement(st.toString());
-		ps.setString(1, c.getNomeCidade());
+		st.append("select comunidade.comuId,comunidade.comuFantasia, cidade.cidadeNomeCidade from comunidade inner join cidade on \r\n"
+				+ "(comunidade.Cidade_cidadeId = cidade.cidadeId) where cidadenomecidade ilike ?;");
+		ps = con.prepareStatement(st.toString().toLowerCase());
+		ps.setString(1, "%"+c.getNomeCidade()+"%");
 		ResultSet rs = ps.executeQuery();
+		
 		Comunidade com = null;
 		while (rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(rs.getInt("comunidade.comuId"));
-			com.setNomefantaziaComunidade(rs.getString("comunidade.comuFantasia"));
+			com.setIdComunidade(rs.getInt("comuid"));
+			com.setNomefantaziaComunidade(rs.getString("comufantasia"));
+			c.setNomeCidade(rs.getString("cidadenomecidade"));
 			com.setCidade(c);
 			listaComunidade.add(com);
 			
 		}
-		return listaComunidade;
-	}
-	
-
-	//relatorio
-	public List<Comunidade> pesquisarListaComunidadeCnpj(){
-		
-		
-		
-		
-		return listaComunidade;
-	}
-	
-	public List<Comunidade> pesquisarListaComunidadeRazaoSocial(){
-		
-		
-		
-		
 		return listaComunidade;
 	}
 	

@@ -1,4 +1,4 @@
-url = jdbc:mysql://localhost:3306/
-usuario = root
-senha = limalinux
+url = jdbc:postgresql://dev.limasoftware.com.br:5432/
+usuario = postgres
+senha = LSJ6PGFB2000
 banco = gestaoigreja

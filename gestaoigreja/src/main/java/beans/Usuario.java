@@ -6,7 +6,7 @@ public abstract class Usuario {
 
 	protected Integer idUsuario;
 	protected String nomeUsuario;
-	protected static String loginUsuario, senhaUsuario;
+	protected String loginUsuario, senhaUsuario;
 	protected Cidade cidadeUsuario;
 	protected String rgUsuario;
 	protected String cpfUsuario;
@@ -14,13 +14,13 @@ public abstract class Usuario {
 	protected String celularUsuario;
 	protected String telefoneUsuario;
 	protected String enderecoUsuario;
-	protected Integer numeroenderecoUsuario;
+	protected String numeroenderecoUsuario;
 	protected String observacoesUsuario;
 	protected LocalDate dataCadastro;
 	
 	public Usuario(Integer idUsuario, String nomeUsuario, Cidade cidadeUsuario, String rgUsuario, String cpfUsuario,
 			LocalDate datanascimentoUsuario, String celularUsuario, String telefoneUsuario, String enderecoUsuario,
-			Integer numeroenderecoUsuario, String observacoesUsuario, LocalDate dataCadastro) {
+			String numeroenderecoUsuario, String observacoesUsuario, LocalDate dataCadastro) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nomeUsuario = nomeUsuario;
@@ -54,20 +54,20 @@ public abstract class Usuario {
 		this.nomeUsuario = nomeUsuario;
 	}
 
-	public static String getLoginUsuario() {
+	public String getLoginUsuario() {
 		return loginUsuario;
 	}
 
-	public static void setLoginUsuario(String loginUsuario) {
-		Usuario.loginUsuario = loginUsuario;
+	public void setLoginUsuario(String loginUsuario) {
+		this.loginUsuario = loginUsuario;
 	}
 
-	public static String getSenhaUsuario() {
+	public String getSenhaUsuario() {
 		return senhaUsuario;
 	}
 
-	public static void setSenhaUsuario(String senhaUsuario) {
-		Usuario.senhaUsuario = senhaUsuario;
+	public void setSenhaUsuario(String senhaUsuario) {
+		this.senhaUsuario = senhaUsuario;
 	}
 
 	public Cidade getCidadeUsuario() {
@@ -126,11 +126,11 @@ public abstract class Usuario {
 		this.enderecoUsuario = enderecoUsuario;
 	}
 
-	public Integer getNumeroenderecoUsuario() {
+	public String getNumeroenderecoUsuario() {
 		return numeroenderecoUsuario;
 	}
 
-	public void setNumeroenderecoUsuario(Integer numeroenderecoUsuario) {
+	public void setNumeroenderecoUsuario(String numeroenderecoUsuario) {
 		this.numeroenderecoUsuario = numeroenderecoUsuario;
 	}
 

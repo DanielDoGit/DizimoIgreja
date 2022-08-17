@@ -1,43 +1,20 @@
 package telas;
 import java.text.ParseException;
 
-
-import javax.swing.text.MaskFormatter;
-
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.text.formatter.ContentFormatter;
-import org.eclipse.jface.text.formatter.FormattingContext;
+import org.eclipse.nebula.widgets.formattedtext.FormattedText;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import telas.Pesquiar.WindowCidadeRecuperarParoquiaAction;
-
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.nebula.*;
-import org.eclipse.nebula.widgets.formattedtext.FormattedText;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import comum.PropriedadesShell;
 
 public abstract class WindowIdentificacaoParoquia {
 
@@ -60,29 +37,13 @@ public abstract class WindowIdentificacaoParoquia {
 	protected ToolBar toolBar;
 	protected ToolItem tltmNewItem;
 	protected FormattedText textoFormattedTextCep, textoFormattedTextTelefone, textoFormattedTextCelular, textoFormattedText;
-	
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			WindowIdentificacaoParoquia window = new WindowIdentificacaoParoquia();
-//			
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-	/**
-	 * Open the window.
-	 * @throws ParseException 
-	 */
+ 
+	 
 	public void open() throws ParseException {
-		display = Display.getDefault();
+		display = Display.getCurrent();
 		
 		shell.open();
+		
 		shell.layout();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -92,14 +53,12 @@ public abstract class WindowIdentificacaoParoquia {
 		
 	}
 
-	/**
-	 * Create contents of the window.
-	 * @throws ParseException 
-	 */
+
 	protected void createContents() throws ParseException {
 		shell = new Shell(SWT.MIN| SWT.CLOSE);
 		shell.setSize(638, 486);
 		shell.setText("Identificação Paroquia");
+		shell.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shell.setLocation(PropriedadesShell.centralizarShell(shell, Display.getCurrent()));
 		shell.setLayout(null);
 		
@@ -215,7 +174,7 @@ public abstract class WindowIdentificacaoParoquia {
 		textoFormattedTextCep.getControl().setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		
 		toolBar = new ToolBar(shell, SWT.FLAT | SWT.RIGHT);
-		toolBar.setBounds(374, 278, 29, 23);
+		toolBar.setBounds(374, 278, 49, 43);
 		
 		tltmNewItem = new ToolItem(toolBar, SWT.NONE);
 		tltmNewItem.setImage(SWTResourceManager.getImage("./icones/search.png"));

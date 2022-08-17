@@ -1,9 +1,7 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import comum.ColetaPropriedades;
@@ -18,16 +16,16 @@ public class FabricaConexoes {
 			  col.getUsuario(),
 			  col.getSenha());
 		con.setAutoCommit(true);
-		PreparedStatement ps = con.prepareStatement("use gestaoigreja");
-		ps.executeUpdate();
 	}
 
 	public Connection getCon() {
 		return con;
 	}
 	
-	public void fechaConexao() throws SQLException {
-		this.con.close();
+	public static void fechaConexao() throws SQLException {
+		if (con != null) {
+			FabricaConexoes.con.close();
+		}
 	}
 	
 	

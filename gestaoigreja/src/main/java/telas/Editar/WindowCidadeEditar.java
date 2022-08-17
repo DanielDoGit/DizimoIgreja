@@ -1,24 +1,22 @@
 package telas.Editar;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import beans.Cidade;
 import comum.EjetaException;
+import comum.PropriedadesShell;
 import dao.CidadeDao;
 import telas.Inicial;
-import telas.PropriedadesShell;
 
 public class WindowCidadeEditar {
 
@@ -29,9 +27,6 @@ public class WindowCidadeEditar {
 	private Button btnNewButton;
 	protected Button editButton;
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public Shell getShell() {
 		return shell;
 	}
@@ -82,19 +77,6 @@ public class WindowCidadeEditar {
 	public void setBtnNewButton(Button btnNewButton) {
 		this.btnNewButton = btnNewButton;
 	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			WindowCidadeEditar window = new WindowCidadeEditar();
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public WindowCidadeEditar(Text um, Text dois, Text tres) {
 		text = um;
@@ -120,10 +102,6 @@ public class WindowCidadeEditar {
 		}
 	}
 
-	/**
-	 * Create contents of the window.
-	 * @wbp.parser.entryPoint
-	 */
 	protected void createContents(Text um, Text dois, Text tres) {
 		shell = new Shell(SWT.MIN | SWT.CLOSE);
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
@@ -186,7 +164,7 @@ public class WindowCidadeEditar {
 						CidadeDao cidadeDao = new CidadeDao();
 						cidadeDao.setConnection(Inicial.startaPropertiesConnection());
 						cidadeDao.editar(c);
-						cidadeDao.getCon().close();
+						Inicial.fechaconexao();
 						shell.dispose();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block

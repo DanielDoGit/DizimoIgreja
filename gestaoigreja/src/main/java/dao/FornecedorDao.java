@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Cidade;
-import beans.Comunidade;
 import beans.Fornecedor;
 
 public class FornecedorDao {
@@ -72,29 +71,27 @@ public class FornecedorDao {
 
 	}
 	
-	public Fornecedor pesquisarComunidadeNomeFantasia(Fornecedor com) throws SQLException {
+	public Fornecedor pesquisarFornecedorNomeFantasia(Fornecedor com) throws SQLException {
 		StringBuilder st = new StringBuilder();
-		st.append("select "
-				+ "fornecedor.forId, "
-				+ "cidade.cidadeNomeCidade "
-				+ "from fornecedor inner join cidade on"
-				+ " (fornecedor.Cidade_cidadeId = cidade.cidadeId) "
-				+ "where fornecedor.forNome=?");
+		st.append(
+				"select fornecedor.forId as id, cidade.cidadeNomeCidade as nomecidade from fornecedor"
+				+ "inner join cidade on "
+				+ "(fornecedor.Cidade_cidadeId = cidade.cidadeId) where fornecedor.forNome ilike ?)");
 		ps = con.prepareStatement(st.toString());
-		ps.setString(1, com.getNomeFantasia());
+		ps.setString(1, "%"+com.getNomeFantasia()+"%");
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
+			com.setNomeFantasia(rs.getString("id"));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("nomecidade"));
 			com.setCidade(cidade);
 		}
 		
 		return com;
 	}
 	
-	public Fornecedor pesquisarComunidadeIndice(Fornecedor com) throws SQLException {
+	public Fornecedor pesquisarFornecedorIndice(Fornecedor com) throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("select "
 				+ "fornecedor.forId, "
@@ -103,16 +100,16 @@ public class FornecedorDao {
 				+ "from fornecedor inner join cidade on"
 				+ " (fornecedor.Cidade_cidadeId = cidade.cidadeId) "
 				+ "where fornecedor.forId=?");
-		ps = con.prepareStatement(st.toString());
+		ps = con.prepareStatement(st.toString().toLowerCase());
 		ps.setInt(1, com.getIndice());
 		ResultSet rs = ps.executeQuery();
 		com = null;
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setIndice(Integer.valueOf(rs.getString("fornecedor.forId")));
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
+			com.setIndice(Integer.valueOf(rs.getString("forId".toLowerCase())));
+			com.setNomeFantasia(rs.getString("forNome".toLowerCase()));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("cidadeNomeCidade".toLowerCase()));
 			com.setCidade(cidade);
 		}
 		
@@ -136,29 +133,29 @@ public class FornecedorDao {
 		com = null;
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setIndice(rs.getInt("fornecedor.forId"));
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
+			com.setIndice(rs.getInt("forId".toLowerCase()));
+			com.setNomeFantasia(rs.getString("forNome".toLowerCase()));
 			Cidade cidade = new Cidade();
-			cidade.setIdCidade(rs.getInt("cidade.cidadeId"));
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
-			cidade.setUfCidade(rs.getString("cidade.cidadeUf"));
+			cidade.setIdCidade(rs.getInt("cidadeId".toLowerCase()));
+			cidade.setNomeCidade(rs.getString("cidadeNomeCidade".toLowerCase()));
+			cidade.setUfCidade(rs.getString("cidadeUf".toLowerCase()));
 			com.setCidade(cidade);
 		}
 		
 		return com;
 	}
 	
-	public Fornecedor pesquisarComunidadeIndiceMaximo() throws SQLException {
+	public Fornecedor pesquisarFornecedorIndiceMaximo() throws SQLException {
 		StringBuilder st = new StringBuilder();
 		st.append("select "
 				+ "max(forId) "
-				+ "from fornecedor;");
+				+ "from fornecedor;".toLowerCase());
 		ps = con.prepareStatement(st.toString());
 		ResultSet rs = ps.executeQuery();
 		Fornecedor com = null;
 		while(rs.next()) {
 			com = new Fornecedor();
-			com.setIndice(rs.getInt("max(forId)")+1);
+			com.setIndice(rs.getInt("max")+1);
 		}
 
 		return com;
@@ -167,37 +164,26 @@ public class FornecedorDao {
 	public Fornecedor populartelaComunidade(Fornecedor com) throws SQLException{
 		
 		StringBuilder st = new StringBuilder();
-		st.append("select "
-				+ "fornecedor.forId, "
-				+ "fornecedor.forNome, "
-				+ "fornecedor.forRazaoSocial, "
-				+ "fornecedor.forCnpj, "
-				+ "fornecedor.forEndereco, "
-				+ "fornecedor.forNEndereco, "
-				+ "fornecedor.observacoes, "
-				+ "cidade.cidadeNomeCidade, "
-				+ "cidade.cidadeId, "
-				+ "cidade.cidadeUf "
-				+ "from fornecedor inner join cidade on"
-				+ " (fornecedor.Cidade_cidadeId = cidade.cidadeId) "
-				+ "where fornecedor.forId=?;");
+		st.append( "select fornecedor.forId as id, fornecedor.forNome as nome, fornecedor.forRazaoSocial as razaosocial, fornecedor.forCnpj as cnpj,"
+				 +"fornecedor.forEndereco as endereco, fornecedor.forNEndereco as numero, fornecedor.observacoes as observacoes, cidade.cidadeNomeCidade as nomecidade, cidade.cidadeId as idcidade,"
+				 +"cidade.cidadeUf as ufcidade from fornecedor inner join cidade on (fornecedor.Cidade_cidadeId = cidade.cidadeId) where fornecedor.forId= ?;");
 		ps = con.prepareStatement(st.toString());
 		ps.setInt(1, com.getIndice());
 		ResultSet rs = ps.executeQuery();
 		com = null;
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setIndice(rs.getInt("fornecedor.forId"));
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
-			com.setRazaoSocial(rs.getString("fornecedor.forRazaoSocial"));
-			com.setCnpj(rs.getString("fornecedor.forCnpj"));
-			com.setEndereco(rs.getString("fornecedor.forEndereco"));
-			com.setNumeroendereco(rs.getString("fornecedor.forNEndereco"));
-			com.setObservacoes(rs.getString("fornecedor.observacoes"));
+			com.setIndice(rs.getInt("id"));
+			com.setNomeFantasia(rs.getString("nome"));
+			com.setRazaoSocial(rs.getString("razaosocial"));
+			com.setCnpj(rs.getString("cnpj"));
+			com.setEndereco(rs.getString("endereco"));
+			com.setNumeroendereco(rs.getString("numero"));
+			com.setObservacoes(rs.getString("observacoes"));
 			Cidade cidade = new Cidade();
-			cidade.setIdCidade(rs.getInt("cidade.cidadeId"));
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
-			cidade.setUfCidade(rs.getString("cidade.cidadeUf"));
+			cidade.setIdCidade(rs.getInt("idcidade"));
+			cidade.setNomeCidade(rs.getString("nomecidade"));
+			cidade.setUfCidade(rs.getString("ufcidade"));
 			com.setCidade(cidade);
 			listaFornecedors.add(com);
 		}		
@@ -206,7 +192,7 @@ public class FornecedorDao {
 	}
 	
 		
-	public List<Fornecedor> pesquisarListaComunidadeNomeFantasia(Fornecedor com) throws SQLException{
+	public List<Fornecedor> pesquisarListaFornecedorNomeFantasia(Fornecedor com) throws SQLException{
 		
 		StringBuilder st = new StringBuilder();
 		st.append("select "
@@ -215,16 +201,16 @@ public class FornecedorDao {
 				+ "cidade.cidadeNomeCidade "
 				+ "from fornecedor inner join cidade on"
 				+ " (fornecedor.Cidade_cidadeId = cidade.cidadeId) "
-				+ "where fornecedor.forNome=?");
-		ps = con.prepareStatement(st.toString());
-		ps.setString(1, com.getNomeFantasia());
+				+ "where fornecedor.forNome ilike ?");
+		ps = con.prepareStatement(st.toString().toLowerCase());
+		ps.setString(1, "%"+com.getNomeFantasia()+"%");
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
-			com.setIndice(rs.getInt("fornecedor.forId"));
+			com.setNomeFantasia(rs.getString("forNome".toLowerCase()));
+			com.setIndice(rs.getInt("forId".toLowerCase()));
 			Cidade cidade = new Cidade();
-			cidade.setNomeCidade(rs.getString("cidade.cidadeNomeCidade"));
+			cidade.setNomeCidade(rs.getString("cidadeNomeCidade".toLowerCase()));
 			com.setCidade(cidade);
 			listaFornecedors.add(com);
 		}		
@@ -232,20 +218,20 @@ public class FornecedorDao {
 		return listaFornecedors;
 	}
 	
-	public List<Fornecedor> pesquisarListaComunidadeCidade(Cidade c) throws SQLException{
+	public List<Fornecedor> pesquisarListaFornecedorCidade(Cidade c) throws SQLException{
 		
 		StringBuilder st = new StringBuilder();
 		st.append("select fornecedor.forId, fornecedor.forNome from fornecedor"
 				+ " where fornecedor.Cidade_cidadeId = "
-				+ "(select cidade.cidadeId from cidade where cidade.cidadeNomeCidade=?)");
-		ps = con.prepareStatement(st.toString());
-		ps.setString(1, c.getNomeCidade());
+				+ "(select cidade.cidadeId from cidade where cidade.cidadeNomeCidade ilike ?)");
+		ps = con.prepareStatement(st.toString().toLowerCase());
+		ps.setString(1, "%"+c.getNomeCidade()+"%");
 		ResultSet rs = ps.executeQuery();
 		Fornecedor com = null;
 		while (rs.next()) {
 			com = new Fornecedor();
-			com.setIndice(rs.getInt("fornecedor.forId"));
-			com.setNomeFantasia(rs.getString("fornecedor.forNome"));
+			com.setIndice(rs.getInt("forId".toLowerCase()));
+			com.setNomeFantasia(rs.getString("forNome".toLowerCase()));
 			com.setCidade(c);
 			listaFornecedors.add(com);
 			

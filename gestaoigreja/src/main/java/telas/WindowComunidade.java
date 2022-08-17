@@ -1,30 +1,21 @@
 package telas;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.nebula.widgets.formattedtext.FormattedText;
 import org.eclipse.nebula.widgets.formattedtext.MaskFormatter;
-import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.DragDetectListener;
-import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import comum.PropriedadesShell;
 
 public abstract class WindowComunidade {
 
-	
 	protected Shell shell;
 	protected Label lblNome;
 	protected Text textNomeFantasia;
@@ -45,24 +36,6 @@ public abstract class WindowComunidade {
 	protected Button btnGravar;
 	protected Button btnLimpar;
 	protected Text textCodigo;
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			WindowComunidade window = new WindowComunidade();
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-	/**
-	 * Open the window.
-	 */
-	
-
 	
 	
 	protected void open() throws Exception{
@@ -72,7 +45,9 @@ public abstract class WindowComunidade {
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
+			
 			if (!display.readAndDispatch()) {
+				Inicial.startaPropertiesConnection().close();
 				display.sleep();
 			}
 		}

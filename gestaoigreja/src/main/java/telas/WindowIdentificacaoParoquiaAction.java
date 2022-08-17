@@ -9,15 +9,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import beans.Cidade;
 import beans.Paroquia;
 import comum.EjetaException;
+import comum.PropriedadesShell;
 import dao.CidadeDao;
 import dao.ParoquiaDao;
-import telas.Pesquiar.WindowCidadeRecuperarParoquiaAction;
+import telas.Pesquiar.WindowCidadeRecuperarAssociarAction;
 
 public class WindowIdentificacaoParoquiaAction extends WindowIdentificacaoParoquia{
 
 	private ParoquiaDao paroquiaDao;
 	private Cidade c;
-	private Paroquia paroquiaGlobal;
 	private boolean teste;
 	
 	public WindowIdentificacaoParoquiaAction() {
@@ -89,7 +89,7 @@ public class WindowIdentificacaoParoquiaAction extends WindowIdentificacaoParoqu
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				WindowCidadeRecuperarParoquiaAction windowCidadeRecuperarParoquiaAction = new WindowCidadeRecuperarParoquiaAction();
+				WindowCidadeRecuperarAssociarAction windowCidadeRecuperarParoquiaAction = new WindowCidadeRecuperarAssociarAction();
 				if (windowCidadeRecuperarParoquiaAction.getC() != null) {
 					textCidade.setText(windowCidadeRecuperarParoquiaAction.getC().getNomeCidade());
 					c = windowCidadeRecuperarParoquiaAction.getC();

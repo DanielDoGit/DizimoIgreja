@@ -1,21 +1,18 @@
 package telas;
 
-import java.awt.MenuItem;
 import java.sql.SQLException;
 
-import org.eclipse.nebula.widgets.formattedtext.FormattedText;
-import org.eclipse.nebula.widgets.formattedtext.MaskFormatter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 
 import beans.Cidade;
 import beans.Comunidade;
 import comum.EjetaException;
+import comum.PropriedadesShell;
 import dao.ComunidadeDao;
-import telas.Pesquiar.WindowCidadeRecuperarParoquiaAction;
+import telas.Pesquiar.WindowCidadeRecuperarAssociarAction;
 
 public class WindowComunidadeAction extends WindowComunidade {
 	
@@ -25,6 +22,11 @@ public class WindowComunidadeAction extends WindowComunidade {
 	private String textoChecagem = "Cadastrar", textochecagemEditar = "Editar";
 	private Button botaopropriedades;
 	private org.eclipse.swt.widgets.MenuItem mntmCadastrar;
+	private boolean verificadorexclusao = false;
+	
+	public boolean getverificadorexclusao() {
+		return verificadorexclusao;
+	}
 
 	public WindowComunidadeAction(org.eclipse.swt.widgets.MenuItem mntmCadastrar_1) {
 		
@@ -83,14 +85,19 @@ public class WindowComunidadeAction extends WindowComunidade {
 		try {
 			comunidadeDao = new ComunidadeDao();
 			comunidadeDao.setCon(Inicial.startaPropertiesConnection());
-			//super.createContents();
 
 			c = new Comunidade();
 			c.setIdComunidade(Integer.valueOf(t1));
 			comunidadeDao.excluir(c);
+			verificadorexclusao = true;
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {
+			PropriedadesShell.mensagemDeErro("Não é possível excluir esse registro pois está sendo utilizado por outros");
+			verificadorexclusao = false;
+			new EjetaException(e);
+		}catch(Exception e) {
+			PropriedadesShell.mensagemDeErro("Não é possível excluir esse registro. Verifique o Log e tente novamente");
+			verificadorexclusao = false;
 			new EjetaException(e);
 		}
 	}
@@ -146,17 +153,16 @@ public class WindowComunidadeAction extends WindowComunidade {
 								try {
 									c.setNomefantaziaComunidade(textNomeFantasia.getText());
 									c.setNomerazaosocialComunidade(textRazaoSocial.getText());
-									//String x = textCNPJ.getText().replaceAll("\\p{Punct}", "");
 									c.setCnpjComunidade(formattedText.getControl().getText());
 									c.setCidade(cc);
 									c.setEnderecoComunidade(textEndereco.getText());
 									c.setNumeroenderecoComunidade(textNumeroLogradouro.getText());
 									c.setObservacoes(textObservacoes.getText());
 									comunidadeDao.cadastrar(c);
-									shell.dispose();
-									comunidadeDao.getCon().close();
+									String numero = Integer.toString(comunidadeDao.pesquisarComunidadeIndiceMaximo().getIdComunidade());
+									textCodigo.setText(numero+1);
 								} catch (Exception e1) {
-									// TODO Auto-generated catch block
+									
 									PropriedadesShell.mensagemDeErro("ocorreu um erro");
 									new EjetaException(e1);
 								} 
@@ -169,7 +175,6 @@ public class WindowComunidadeAction extends WindowComunidade {
 							try {
 									c.setNomefantaziaComunidade(textNomeFantasia.getText());
 									c.setNomerazaosocialComunidade(textRazaoSocial.getText());
-									//String x = textCNPJ.getText().replaceAll("\\p{Punct}", "");
 									c.setCnpjComunidade(formattedText.getControl().getText());
 									c.setCidade(cc);
 									c.setEnderecoComunidade(textEndereco.getText());
@@ -197,7 +202,7 @@ public class WindowComunidadeAction extends WindowComunidade {
 			
 			tltmPesquisar.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					WindowCidadeRecuperarParoquiaAction windowCidadeRecuperarParoquiaAction = new WindowCidadeRecuperarParoquiaAction();
+					WindowCidadeRecuperarAssociarAction windowCidadeRecuperarParoquiaAction = new WindowCidadeRecuperarAssociarAction();
 					if (windowCidadeRecuperarParoquiaAction.getC() != null) {
 						textCidade.setText(windowCidadeRecuperarParoquiaAction.getC().getNomeCidade());
 						cc = windowCidadeRecuperarParoquiaAction.getC();

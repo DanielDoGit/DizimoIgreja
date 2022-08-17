@@ -1,25 +1,25 @@
 package telas.Cadastrar;
 
-import org.eclipse.swt.widgets.Display;
-
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-
 import java.sql.SQLException;
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import beans.Cidade;
+import beans.Permissoes;
 import comum.EjetaException;
+import comum.PropriedadesShell;
+import dao.AutenticadorUsuario;
 import dao.CidadeDao;
 import telas.Inicial;
-import telas.PropriedadesShell;
 
 public class WindowCidadeCadastrar {
 
@@ -30,9 +30,7 @@ public class WindowCidadeCadastrar {
 	private Button btnNewButton;
 	protected Button editButton;
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
+
 	public Shell getShell() {
 		return shell;
 	}
@@ -84,10 +82,6 @@ public class WindowCidadeCadastrar {
 		this.btnNewButton = btnNewButton;
 	}
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		try {
 			WindowCidadeCadastrar window = new WindowCidadeCadastrar();
@@ -97,9 +91,6 @@ public class WindowCidadeCadastrar {
 		}
 	}
 
-	/**
-	 * Open the window.
-	 */
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
@@ -130,7 +121,6 @@ public class WindowCidadeCadastrar {
 		
 		text = new Text(shell, SWT.BORDER);
 		text.setEnabled(false);
-		//text.setEditable(false);
 		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		text.setBounds(186, 10, 76, 21);
 		try {
@@ -180,28 +170,43 @@ public class WindowCidadeCadastrar {
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
 			
-				Integer i;
-				if (!text_1.getText().isEmpty() && !text_2.getText().isEmpty()) {
-					Cidade c = new Cidade();
-					c.setIdCidade(Integer.valueOf(text.getText()));
-					c.setNomeCidade(text_1.getText());
-					c.setUfCidade(text_2.getText());
-					try {
-						CidadeDao cidadeDao = new CidadeDao();
-						cidadeDao.setConnection(Inicial.startaPropertiesConnection());
-						cidadeDao.cadastrar(c);
-						cidadeDao.getCon().close();
-						
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						new EjetaException(e1);
+				try {
+					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
+					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
+					Permissoes permissoes = new Permissoes(2, "Cadastrar Cidade");
+					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes) || autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(), permissoes)) {
+						Integer i;
+						if (!text_1.getText().isEmpty() && !text_2.getText().isEmpty()) {
+							Cidade c = new Cidade();
+							c.setIdCidade(Integer.valueOf(text.getText()));
+							c.setNomeCidade(text_1.getText());
+							c.setUfCidade(text_2.getText());
+							try {
+								CidadeDao cidadeDao = new CidadeDao();
+								cidadeDao.setConnection(Inicial.startaPropertiesConnection());
+								cidadeDao.cadastrar(c);
+								Inicial.fechaconexao();
+
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								new EjetaException(e1);
+							}
+							i = new Integer(Integer.valueOf(text.getText()) + 1);
+							text.setText(i.toString());
+							text_2.setText("");
+							text_1.setText("");
+						} else {
+							PropriedadesShell.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
+						} 
+					}else {
+						PropriedadesShell.mensagemDeRetorno("Usuário sem permissão para acessar o recurso: "+permissoes.getNomepermissao());
 					}
-					i = new Integer(Integer.valueOf(text.getText()) + 1);
-					text.setText(i.toString());
-					text_2.setText("");
-					text_1.setText("");
-				}else {
-					PropriedadesShell.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					new EjetaException(e1);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					new EjetaException(e1);
 				}
 
 			}

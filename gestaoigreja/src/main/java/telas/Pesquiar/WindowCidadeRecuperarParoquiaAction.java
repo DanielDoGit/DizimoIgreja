@@ -2,18 +2,16 @@ package telas.Pesquiar;
 
 import java.sql.SQLException;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TableItem;
 
 import beans.Cidade;
-import beans.Paroquia;
 import comum.EjetaException;
+import comum.PropriedadesShell;
 import dao.CidadeDao;
 import telas.Inicial;
-import telas.PropriedadesShell;
 
 
 public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarParoquia{
@@ -46,12 +44,10 @@ public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarPa
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+			
 				if (table.getSelectionIndex() != -1) {
 					ass = table.getItems();
 					
-					//System.out.println(ass[table.getSelectionIndex()].getText(1));
-					//System.out.println(table.getSelectionIndex());
 					c = new Cidade(
 							Integer.valueOf(ass[table.getSelectionIndex()].getText(0)),
 							ass[table.getSelectionIndex()].getText(1),
@@ -91,7 +87,7 @@ public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarPa
 							CidadeDao c = new CidadeDao();
 							c.setConnection(Inicial.startaPropertiesConnection());
 							
-							// System.out.println(ij);
+							
 							TableItem a = new TableItem(table, 0);
 							Cidade co = null;
 							if (combo.getSelectionIndex() == 0) {
@@ -132,13 +128,9 @@ public class WindowCidadeRecuperarParoquiaAction extends WindowCidadeRecuperarPa
 								}
 							}
 						
-						
-
-						// table.getSelectionIndex()
-						// System.out.println(table.getSelectionCount());
-
+					
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
+						
 						PropriedadesShell.mensagemDeRetorno(
 								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
 						new EjetaException(e1);

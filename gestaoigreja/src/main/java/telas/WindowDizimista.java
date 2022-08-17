@@ -1,75 +1,64 @@
 package telas;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.nebula.widgets.datechooser.DateChooserCombo;
 import org.eclipse.nebula.widgets.formattedtext.FormattedText;
-import org.eclipse.nebula.widgets.formattedtext.MaskFormatter;
-import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.DragDetectListener;
-import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
-public class WindowDizimista {
+import comum.PropriedadesShell;
+
+public abstract class WindowDizimista {
 
 	protected Shell shell;
-	private Text text;
-	private Label lblNome;
-	private Text text_1;
-	private Label lblNewLabel;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private FormattedText formattedText;
-	private Text text_5;
-	private Label lblRg;
-	private Label lblDataNascimento;
-	private Text text_6;
-	private Text text_7;
-	private Label lblContatos;
-	private Label lblTelefone;
-	private Text text_8;
-	private Label lblCelular;
-	private Text text_9;
-	private Text text_10;
-	private Label lblEndereo;
-	private Text text_11;
-	private Text text_12;
-	private Text text_13;
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
+	protected Text textCodigo;
+	protected Label lblNome;
+	protected Text textNome;
+	protected Label lblNewLabel;
+	protected Text text_2;
+	protected Text textCpf;
+	protected Text text_4;
+	protected FormattedText formattedText;
+	protected Text textRg;
+	protected Label lblRg;
+	protected Label lblDataNascimento;
+	protected Text textContatos;
+	protected Label lblContatos;
+	protected Label lblTelefone;
+	protected Text textTelefone;
+	protected Label lblCelular;
+	protected Text textCelular;
+	protected Text textCidade;
+	protected Label lblEndereo;
+	protected Text textEndereco;
+	protected Text textNumeroEndereco;
+	protected Text textObservacoes;
+	protected Button btnLimpar, btnGravar, botaoIsAtivo;
+	protected ToolItem tltmPesquisar;
+	protected ToolBar toolBar;
+	protected DateChooserCombo dateChooserCombo;
+
 	public static void main(String[] args) {
 		try {
-			WindowDizimista window = new WindowDizimista();
+			WindowDizimista window = new WindowDizimista() {
+			};
+			window.createContents();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Open the window.
-	 */
-	
-	
 	public void open() {
-		Display display = Display.getDefault();
-		createContents(display);
+		Display display = Display.getCurrent();
 		shell.open();
+		shell.setLocation(PropriedadesShell.centralizarShell(shell, display));
 		shell.layout();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -78,239 +67,142 @@ public class WindowDizimista {
 		}
 	}
 
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents(Display display) {
-		shell = new Shell(display , SWT.CLOSE | SWT.MIN);
+	protected void createContents() {
+		shell = new Shell(SWT.CLOSE | SWT.MIN);
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		
 		shell.setSize(580, 542);
-		shell.setLocation(PropriedadesShell.centralizarShell(shell, display));
-		shell.setText("Cadastrar Dizimista");
-		
+		shell.setText("Dizimista");
+
 		Label lblCdigo = new Label(shell, SWT.NONE);
 		lblCdigo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblCdigo.setBounds(192, 20, 55, 15);
 		lblCdigo.setText("Código");
-		
-		text = new Text(shell, SWT.BORDER | SWT.CENTER);
-		text.setVisible(true);
-		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		text.setEnabled(false);
-		text.setBounds(253, 20, 76, 21);
-		
+
+		textCodigo = new Text(shell, SWT.BORDER | SWT.CENTER);
+		textCodigo.setVisible(true);
+		textCodigo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		textCodigo.setEnabled(false);
+		textCodigo.setBounds(253, 20, 76, 21);
+
 		lblNome = new Label(shell, SWT.NONE);
 		lblNome.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblNome.setBounds(52, 64, 55, 15);
 		lblNome.setText("Nome");
-		
-		text_1 = new Text(shell, SWT.BORDER);
-		text_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
-		text_1.setBounds(117, 61, 414, 21);
-		
+
+		textNome = new Text(shell, SWT.BORDER);
+		textNome.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
+		textNome.setBounds(117, 61, 414, 21);
+
 		lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(52, 108, 55, 15);
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblNewLabel.setText("CPF");
-		
-		text_3 = new Text(shell, SWT.BORDER);
-		text_3.setBounds(117, 108, 134, 21);
-		text_3.setTextLimit(14);
-		text_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
-		text_3.addFocusListener(new FocusAdapter() {
 
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				Text t = (Text) e.getSource();				
-				t.selectAll();
-				formattedText = new FormattedText(t);
-				formattedText.setFormatter(new MaskFormatter("###.###.###-##"));
-				text_3.setText(formattedText.getControl().getText());
-				
+		textCpf = new Text(shell, SWT.BORDER);
+		textCpf.setBounds(117, 108, 134, 21);
+		textCpf.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
 
-			}
+		textRg = new Text(shell, SWT.BORDER);
+		textRg.setBounds(117, 151, 134, 21);
 
-		});
-		
-		text_5 = new Text(shell, SWT.BORDER);
-		text_5.setBounds(117, 151, 134, 21);
-		
 		lblRg = new Label(shell, SWT.NONE);
 		lblRg.setText("RG");
 		lblRg.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblRg.setBounds(52, 154, 55, 15);
-		
+
 		lblDataNascimento = new Label(shell, SWT.NONE);
 		lblDataNascimento.setBounds(10, 197, 97, 15);
 		lblDataNascimento.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblDataNascimento.setText("Data Nascimento");
-		
-		text_6 = new Text(shell, SWT.BORDER);
-		text_6.setBounds(117, 194, 134, 21);
-		text_6.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				Text t = (Text) e.getSource();
-				t.selectAll();
-				text_6 = t;
-				formattedText = new FormattedText(text_6);
-				formattedText.setFormatter(new MaskFormatter("##/##/####"));
-				text_6 = formattedText.getControl();
-				
-			}
-		});
-		
-		text_7 = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		text_7.setBounds(350, 105, 182, 120);
-		
+
+		textContatos = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		textContatos.setBounds(350, 105, 182, 120);
+
 		lblContatos = new Label(shell, SWT.NONE);
 		lblContatos.setBounds(289, 154, 55, 15);
 		lblContatos.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblContatos.setText("Contatos");
-		
+
 		lblTelefone = new Label(shell, SWT.NONE);
 		lblTelefone.setBounds(41, 244, 55, 15);
 		lblTelefone.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblTelefone.setText("Telefone");
-		
-		text_8 = new Text(shell, SWT.BORDER);
-		text_8.setBounds(117, 241, 134, 21);
-		text_8.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				Text t = (Text) e.getSource();
-				t.selectAll();
-				text_8 = t;
-				formattedText = new FormattedText(text_8);
-				formattedText.setFormatter(new MaskFormatter("(##) ####-####"));
-				text_8 = formattedText.getControl();
-				
-			}
-		});
-		
+
+		textTelefone = new Text(shell, SWT.BORDER);
+		textTelefone.setBounds(117, 241, 134, 21);
+
 		lblCelular = new Label(shell, SWT.NONE);
 		lblCelular.setText("Celular");
 		lblCelular.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblCelular.setBounds(289, 244, 55, 15);
-		
-		text_9 = new Text(shell, SWT.BORDER);
-		text_9.setBounds(350, 241, 134, 21);
-		text_9.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				Text t = (Text) e.getSource();
-				t.selectAll();
-				text_9 = t;
-				formattedText = new FormattedText(text_9);
-				formattedText.setFormatter(new MaskFormatter("(##) # ####-####"));
-				text_9 = formattedText.getControl();
-				
-			}
-		});
-		
-		ToolBar toolBar = new ToolBar(shell, SWT.FLAT | SWT.RIGHT);
+
+		textCelular = new Text(shell, SWT.BORDER);
+		textCelular.setBounds(350, 241, 134, 21);
+
+		toolBar = new ToolBar(shell, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		toolBar.setBounds(412, 293, 53, 23);
-		
-		ToolItem tltmPesquisar = new ToolItem(toolBar, SWT.NONE);
-		tltmPesquisar.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-				
-			}
-		});
-		
-		tltmPesquisar.setImage(SWTResourceManager.getImage("C:\\Users\\danie\\eclipse-workspace\\gestaoigreja\\icones\\search.png"));
-		
+
+		tltmPesquisar = new ToolItem(toolBar, SWT.NONE);
+		tltmPesquisar.setImage(SWTResourceManager.getImage("./icones/search.png"));
+
 		Label lblCidade = new Label(shell, SWT.NONE);
 		lblCidade.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblCidade.setBounds(41, 295, 55, 15);
 		lblCidade.setText("Cidade");
-		
-		text_10 = new Text(shell, SWT.BORDER);
-		text_10.setEnabled(false);
-		text_10.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
-		text_10.setBounds(117, 295, 289, 21);
-		
+
+		textCidade = new Text(shell, SWT.BORDER);
+		textCidade.setEnabled(false);
+		textCidade.setEditable(true);
+		textCidade.setBackground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
+		textCidade.setBounds(117, 295, 289, 21);
+
 		lblEndereo = new Label(shell, SWT.NONE);
 		lblEndereo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblEndereo.setBounds(41, 336, 55, 15);
 		lblEndereo.setText("Endereço");
-		
-		text_11 = new Text(shell, SWT.BORDER);
-		text_11.setBounds(117, 333, 289, 21);
-		
+
+		textEndereco = new Text(shell, SWT.BORDER);
+		textEndereco.setBounds(117, 333, 289, 21);
+
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(10, 278, 548, 2);
-		
+
 		Label lblN = new Label(shell, SWT.NONE);
 		lblN.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblN.setBounds(427, 336, 22, 15);
 		lblN.setText("Nº");
-		
-		text_12 = new Text(shell, SWT.BORDER);
-		text_12.setTextLimit(6);
-		text_12.setBounds(455, 333, 76, 21);
-		
-		Button btnCheckButton = new Button(shell, SWT.CHECK);
-		btnCheckButton.setSelection(true);
-		btnCheckButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		btnCheckButton.setBounds(455, 25, 93, 16);
-		btnCheckButton.setText("Ativo");
-		
+
+		textNumeroEndereco = new Text(shell, SWT.BORDER);
+		textNumeroEndereco.setTextLimit(6);
+		textNumeroEndereco.setBounds(455, 333, 76, 21);
+
+		botaoIsAtivo = new Button(shell, SWT.CHECK);
+		botaoIsAtivo.setSelection(true);
+		botaoIsAtivo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		botaoIsAtivo.setBounds(455, 25, 93, 16);
+		botaoIsAtivo.setText("Ativo");
+
 		Label lblObservaes = new Label(shell, SWT.NONE);
 		lblObservaes.setText("Observações");
 		lblObservaes.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblObservaes.setBounds(31, 422, 76, 15);
-		
-		text_13 = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		text_13.setBounds(117, 375, 289, 104);
-		
-		Button btnGravar = new Button(shell, SWT.NONE);
+
+		textObservacoes = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		textObservacoes.setBounds(117, 375, 289, 104);
+
+		btnGravar = new Button(shell, SWT.NONE);
 		btnGravar.setBounds(456, 396, 75, 25);
 		btnGravar.setText("Gravar");
-		
-		Button btnLimpar = new Button(shell, SWT.NONE);
+
+		btnLimpar = new Button(shell, SWT.NONE);
 		btnLimpar.setBounds(456, 438, 75, 25);
 		btnLimpar.setText("Limpar");
-		btnLimpar.addSelectionListener(new SelectionAdapter() {
 		
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				text_13.setText("");
-				text_12.setText("");
-				text_11.setText("");
-				text_10.setText("");
-				text_9.setText("");
-				text_8.setText("");
-				text_7.setText("");
-				text_6.setText("");
-				text_5.setText("");
-				
-				text_3.setText("");
-				
-				text_1.setText("");
-				
-			}
-		});
+		dateChooserCombo = new DateChooserCombo(shell, SWT.BORDER | SWT.FLAT);
+		dateChooserCombo.setShowButtonOnFocus(true);
+		dateChooserCombo.setBounds(117, 197, 134, 21);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		
-		
-	
-
 	}
 }

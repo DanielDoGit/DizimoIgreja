@@ -1,37 +1,17 @@
 package telas.Pesquiar;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.CoolBar;
-import org.eclipse.swt.widgets.CoolItem;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.widgets.Combo;
-
-import java.sql.SQLException;
-
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.Text;
 
-import beans.Cidade;
-import comum.EjetaException;
-import dao.CidadeDao;
-import telas.Inicial;
-import telas.PropriedadesShell;
-import telas.Editar.WindowCidadeEditar;
-
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
+import comum.PropriedadesShell;
 
 public abstract class WindowComunidadeRecuperar {
 
@@ -45,20 +25,7 @@ public abstract class WindowComunidadeRecuperar {
 	protected CCombo combo;
 	protected TableColumn tblclmnNewColumn, tblclmnNomeDizimista, tblclmnUf;
 	
-	
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			WindowComunidadeRecuperar window = new WindowComunidadeRecuperar();
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public Shell getShlPesquisar() {
 		return shlPesquisar;
@@ -68,11 +35,7 @@ public abstract class WindowComunidadeRecuperar {
 		this.shlPesquisar = shlPesquisar;
 	}
 	
-	
-	
-	/**
-	 * Open the window.
-	 */
+
 	public void open() {
 		Display display = Display.getDefault();
 		
@@ -88,13 +51,9 @@ public abstract class WindowComunidadeRecuperar {
 		}
 	}
 
-	/**
-	 * Create contents of the window.
-	 */
 	protected void createContents() {
 		shlPesquisar = new Shell(SWT.MIN| SWT.CLOSE);
 		shlPesquisar.setModified(true);
-		//shlPesquisar.setImage(SWTResourceManager.getImage("D:\\LIMA SOFTWARE\\Workspace\\workspace-eclipse2020\\ContatosBranch\\icones\\lupa.png"));
 		shlPesquisar.setSize(771, 502);
 		shlPesquisar.setText("Pesquisar");
 		shlPesquisar.setLayout(null);

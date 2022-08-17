@@ -17,15 +17,15 @@
 			<id>mysql conector</id>
 			<url>https://mvnrepository.com/artifact/mysql/mysql-connector-java</url>
 		</repository>
-		
+
 		<repository>
 			<id>repo nebula</id>
 			<url>http://download.eclipse.org/nebula/releases/latest</url>
 		</repository>
-		
+
 		<repository>
 			<id> repo git</id>
-			<url>https://github.com/DanielDoGit/DependeciesJava</url>
+			<url>https://github.com/DanielDoGit/DependeciesJava/blob/main/</url>
 		</repository>
 
 	</repositories>
@@ -40,38 +40,20 @@
 			<version>4.3</version>
 		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.eclipse.jface/text -->
-	<dependency>
-		<groupId>org.eclipse.jface</groupId>
-		<artifactId>text</artifactId>
-		<version>3.3.0-v20070606-0010</version>
-	</dependency>
-	
-	
-	<!-- https://mvnrepository.com/artifact/org.eclipse.nebula.widgets.nattable/org.eclipse.nebula.widgets.nattable.core -->
-<dependency>
-	<groupId>org.eclipse.nebula.widgets.nattable</groupId>
-	<artifactId>org.eclipse.nebula.widgets.nattable.core</artifactId>
-	<version>2.0.2</version>
-</dependency>
-	
-	
-		
-
-		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
 		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox</artifactId>
-			<version>3.0.0-RC1</version>
+			<groupId>org.eclipse.jface</groupId>
+			<artifactId>text</artifactId>
+			<version>3.3.0-v20070606-0010</version>
 		</dependency>
 
 
-		<dependency>
-			<groupId>com.jgoodies</groupId>
-			<artifactId>jgoodies-forms</artifactId>
-			<version>1.8.0</version>
-		</dependency>
-		
+		<!-- <dependency> -->
+		<!-- <groupId>org.eclipse.swt</groupId> -->
+		<!-- <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId> -->
+		<!-- <version>4.3</version> -->
+		<!-- </dependency> -->
+
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
@@ -98,14 +80,14 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.28</version>
-		</dependency>
-		
 
+
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.2</version>
+		</dependency>
 
 
 	</dependencies>

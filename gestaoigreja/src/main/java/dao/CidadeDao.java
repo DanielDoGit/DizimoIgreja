@@ -7,10 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.xdevapi.PreparableStatement;
-
- 
 import beans.Cidade;
 
 public class CidadeDao {
@@ -20,7 +16,7 @@ public class CidadeDao {
 	private List<Cidade> listaCidade = new ArrayList<Cidade>();
 	
 	public void setConnection (Connection con) {
-		this.con = con;
+		CidadeDao.con = con;
 	}
 	
 	public static Connection getCon() {
@@ -38,7 +34,7 @@ public class CidadeDao {
 	
 	public void editar(Cidade ci) throws SQLException {
 		
-		ps = con.prepareStatement("update cidade set cidadeNomeCidade=?, cidadeUf=? where cidadeId=? ");
+		ps = con.prepareStatement("update cidade set cidadeNomeCidade=?, cidadeUf=? where cidadeId=? ".toLowerCase());
 		ps.setInt(3, ci.getIdCidade());
 		ps.setString(1, ci.getNomeCidade());
 		ps.setString(2, ci.getUfCidade());
@@ -47,7 +43,7 @@ public class CidadeDao {
 	
 	public void excluir(Cidade ci) throws SQLException {
 
-		ps = con.prepareStatement("delete from cidade where cidadeId=? ");
+		ps = con.prepareStatement("delete from cidade where cidadeId=? ".toLowerCase());
 		ps.setInt(1, ci.getIdCidade());
 		ps.executeUpdate();
 	}
@@ -58,9 +54,9 @@ public class CidadeDao {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Cidade c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
-			c.setNomeCidade(rs.getString("cidadeNomeCidade"));
-			c.setUfCidade(rs.getString("cidadeUf"));
+			c.setIdCidade(rs.getInt("cidadeId".toLowerCase()));
+			c.setNomeCidade(rs.getString("cidadeNomeCidade".toLowerCase()));
+			c.setUfCidade(rs.getString("cidadeUf".toLowerCase()));
 			listaCidade.add(c);
 		}
 		
@@ -75,9 +71,9 @@ public class CidadeDao {
 		Cidade c = null;
 		while (rs.next()) {
 			 c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
-			c.setNomeCidade(rs.getString("cidadeNomeCidade"));
-			c.setUfCidade(rs.getString("cidadeUf"));
+			c.setIdCidade(rs.getInt("cidadeId".toLowerCase()));
+			c.setNomeCidade(rs.getString("cidadeNomeCidade".toLowerCase()));
+			c.setUfCidade(rs.getString("cidadeUf".toLowerCase()));
 			//listaCidade.add(c);
 		}
 		return c;
@@ -85,15 +81,15 @@ public class CidadeDao {
 
 	public List<Cidade> consultarCidadeNome(Cidade c1) throws SQLException {
 
-		ps = con.prepareStatement("select * from cidade where exists (cidadeNomeCidade = ?);");
-		ps.setString(1, c1.getNomeCidade());
+		ps = con.prepareStatement("select * from cidade where cidadenomecidade ilike ?;".toLowerCase());
+		ps.setString(1, "%"+c1.getNomeCidade()+"%");
 		
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Cidade c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
-			c.setNomeCidade(rs.getString("cidadeNomeCidade"));
-			c.setUfCidade(rs.getString("cidadeUf"));
+			c.setIdCidade(rs.getInt("cidadeid"));
+			c.setNomeCidade(rs.getString("cidadenomecidade"));
+			c.setUfCidade(rs.getString("cidadeuf"));
 			listaCidade.add(c);
 		}
 		return listaCidade;
@@ -102,15 +98,15 @@ public class CidadeDao {
 	
 	public List<Cidade> consultarCidadeUF(Cidade c1) throws SQLException {
 
-		ps = con.prepareStatement("select * from cidade where cidadeUf = ? order by cidadeUf;");
+		ps = con.prepareStatement("select * from cidade where cidadeUf = ? order by cidadeUf;".toLowerCase());
 		ps.setString(1, c1.getUfCidade());
 		
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Cidade c = new Cidade();
-			c.setIdCidade(rs.getInt("cidadeId"));
-			c.setNomeCidade(rs.getString("cidadeNomeCidade"));
-			c.setUfCidade(rs.getString("cidadeUf"));
+			c.setIdCidade(rs.getInt("cidadeid"));
+			c.setNomeCidade(rs.getString("cidadenomecidade"));
+			c.setUfCidade(rs.getString("cidadeuf"));
 			listaCidade.add(c);
 		}
 		return listaCidade;
@@ -118,13 +114,13 @@ public class CidadeDao {
 	}
 	
 	public Cidade retornaCidadeIndiceMaximo() throws SQLException {
-		ps = con.prepareStatement("select max(cidadeId) from cidade;");
+		ps = con.prepareStatement("select max(cidadeId) from cidade;".toLowerCase());
 		ResultSet rs = ps.executeQuery();
 		
 		Cidade c = null;
 		while (rs.next()) {
 			c = new Cidade();
-			c.setIdCidade(rs.getInt("max(cidadeId)"));
+			c.setIdCidade(rs.getInt("max"));
 		}
 		c.setIdCidade(c.getIdCidade()+1);
 		

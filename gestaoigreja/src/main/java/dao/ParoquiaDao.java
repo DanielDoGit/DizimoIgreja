@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import beans.Cidade;
 import beans.Paroquia;
 
 public class ParoquiaDao {
@@ -85,7 +82,7 @@ public class ParoquiaDao {
 		ps.setString(10, po.getBairro());
 		ps.setInt(11, po.getCidade().getIdCidade());
 		ps.setInt(12, po.getIndice());
-		ps.executeLargeUpdate();
+		ps.executeUpdate();
 	}
 		
 	public Paroquia consultarParoquiaTodos() throws SQLException {
