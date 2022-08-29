@@ -102,7 +102,7 @@ public abstract class WindowRecuperarColetor {
 		
 		tblclmnNome = new TableColumn(table, SWT.NONE);
 		tblclmnNome.setWidth(280);
-		tblclmnNome.setText("Nome ");
+		tblclmnNome.setText("Nome");
 		
 		tblclmnCidadeDoColetor = new TableColumn(table, SWT.NONE);
 		tblclmnCidadeDoColetor.setWidth(165);

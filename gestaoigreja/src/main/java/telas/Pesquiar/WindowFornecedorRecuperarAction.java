@@ -41,8 +41,14 @@ public class WindowFornecedorRecuperarAction extends WindowFornecedorRecuperar {
 
 					t.setText(ass[table.getSelectionIndex()].getText(0));
 
-					new WindowFornecedorAction(btnEditar, t);
-					
+					try {
+						new WindowFornecedorAction().verificarPermissaoEditar(t.getText());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					;
+
 				} else {
 					PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
 				}
@@ -58,26 +64,19 @@ public class WindowFornecedorRecuperarAction extends WindowFornecedorRecuperar {
 
 				try {
 
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(12, "Excluir Fornecedor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
+					if (table.getSelectionIndex() != -1) {
+						new WindowFornecedorAction()
+								.verificarPermissaoExcluir(ass[table.getSelectionIndex()].getText(0));
+						;
+						int a = table.getSelectionIndex();
+						ass[a].setText(0, "");
+						ass[a].setText(1, "");
+						ass[a].setText(2, "");
 
-						if (table.getSelectionIndex() != -1) {
-							new WindowFornecedorAction(ass[table.getSelectionIndex()].getText(0));
-							int a = table.getSelectionIndex();
-							ass[a].setText(0, "");
-							ass[a].setText(1, "");
-							ass[a].setText(2, "");
-
-						} else {
-							PropriedadesShell.mensagemDeRetorno("Selecione um registro para excluir");
-						}
-					}else {
-						PropriedadesShell.mensagemDeRetorno("Usuário sem permissão para acessar o recurso: "+permissoes.getNomepermissao());
+					} else {
+						PropriedadesShell.mensagemDeRetorno("Selecione um registro para excluir");
 					}
+
 				} catch (NullPointerException e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
@@ -91,6 +90,7 @@ public class WindowFornecedorRecuperarAction extends WindowFornecedorRecuperar {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
+
 				ass = table.getItems();
 
 				if (!text.getText().isEmpty()) {
@@ -105,85 +105,77 @@ public class WindowFornecedorRecuperarAction extends WindowFornecedorRecuperar {
 					}
 
 					try {
-
+						new WindowFornecedorAction().verificarPermissaoPesquisar();
 						Connection con = Inicial.startaPropertiesConnection();
 						FornecedorDao c = new FornecedorDao();
 						c.setCon(con);
-						
-						
-						AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-						AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-						Permissoes permissoes = new Permissoes(11, "Pesquisar Fornecedor");
-						if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(),
-								permissoes)
-								|| autenticadorUsuario.verificarPermissaoFuncionario(
-										AutenticadorUsuario.getusuario(), permissoes)) {
-							TableItem a = new TableItem(table, 0);
-							Fornecedor co = null;
-							if (combo.getSelectionIndex() == 0) {
-								String string = text.getText();
-								if (string != null && string.matches("[+-]?\\d*(\\.\\d+)?")) {
-									Integer ij = Integer.valueOf(string);
-									co = new Fornecedor();
-									co.setIndice(ij);
-									co = c.pesquisarFornecedorIndice(co);
-									a.setText(0, text.getText());
-									a.setText(1, co.getNomeFantasia());
-									a.setText(2, co.getCidade().getNomeCidade());
 
-								} else {
-									PropriedadesShell.mensagemDeRetorno("O que você inseriu não é número");
-								}
-							} else if (combo.getSelectionIndex() == 1) {
+						Fornecedor co = null;
+						if (combo.getSelectionIndex() == 0) {
+							String string = text.getText();
+							if (string != null && string.matches("[+-]?\\d*(\\.\\d+)?")) {
+								Integer ij = Integer.valueOf(string);
 								co = new Fornecedor();
-								co.setNomeFantasia(text.getText());
-								List<Fornecedor> lista = c.pesquisarListaFornecedorNomeFantasia(co);
-								if (lista != null && !lista.isEmpty()) {
-									for (Fornecedor cc : lista) {
-										a.setText(0, Integer.toString(cc.getIndice()));
-										a.setText(1, cc.getNomeFantasia());
-										a.setText(2, cc.getCidade().getNomeCidade());
-									}
-								} else {
-									PropriedadesShell.mensagemDeRetorno(
-											"Não há nenhum registro com esse argumento: " + text.getText());
-								}
-							} else if (combo.getSelectionIndex() == 2) {
-								table.setItemCount(0);
+								co.setIndice(ij);
+								co = c.pesquisarFornecedorIndice(co);
+								TableItem a = new TableItem(table, 0);
+								a.setText(0, Integer.toString(co.getIndice()));
+								a.setText(1, co.getNomeFantasia());
+								a.setText(2, co.getCidade().getNomeCidade());
 
-								co = new Fornecedor();
-								Cidade cidade = new Cidade();
-								cidade.setNomeCidade(text.getText());
-								co.setCidade(cidade);
-								TableItem itens = null;
-								List<Fornecedor> lista = c.pesquisarListaFornecedorCidade(co.getCidade());
-								if (lista != null && !lista.isEmpty()) {
-									for (Fornecedor cc : lista) {
-										itens = new TableItem(table, SWT.ARROW);
-										itens.setText(0, Integer.toString(cc.getIndice()));
-										itens.setText(1, cc.getNomeFantasia());
-										itens.setText(2, cc.getCidade().getNomeCidade());
-									}
-								} else {
-									PropriedadesShell.mensagemDeRetorno(
-											"Não há nenhum registro com esse argumento: " + text.getText());
+							} else {
+								PropriedadesShell.mensagemDeRetorno("O que você inseriu não é número");
+							}
+						} else if (combo.getSelectionIndex() == 1) {
+							co = new Fornecedor();
+							co.setNomeFantasia(text.getText());
+							List<Fornecedor> lista = c.pesquisarListaFornecedorNomeFantasia(co);
+							if (lista != null && !lista.isEmpty()) {
+								for (Fornecedor cc : lista) {
+									TableItem a = new TableItem(table, 0);
+									a.setText(0, Integer.toString(cc.getIndice()));
+									a.setText(1, cc.getNomeFantasia());
+									a.setText(2, cc.getCidade().getNomeCidade());
+
 								}
-							} 
-						}else {
-							PropriedadesShell.mensagemDeRetorno("Usuário sem permissao para acessar o recurso: "+permissoes.getNomepermissao());
+							} else {
+								PropriedadesShell.mensagemDeRetorno(
+										"Não há nenhum registro com esse argumento: " + text.getText());
+							}
+						} else if (combo.getSelectionIndex() == 2) {
+							table.setItemCount(0);
+
+							co = new Fornecedor();
+							Cidade cidade = new Cidade();
+							cidade.setNomeCidade(text.getText());
+							co.setCidade(cidade);
+							TableItem itens = null;
+							List<Fornecedor> lista = c.pesquisarListaFornecedorCidade(co.getCidade());
+							if (lista != null && !lista.isEmpty()) {
+								for (Fornecedor cc : lista) {
+									itens = new TableItem(table, 0);
+									itens.setText(0, Integer.toString(cc.getIndice()));
+									itens.setText(1, cc.getNomeFantasia());
+									itens.setText(2, cc.getCidade().getNomeCidade());
+								}
+							} else {
+								PropriedadesShell.mensagemDeRetorno(
+										"Não há nenhum registro com esse argumento: " + text.getText());
+							}
 						}
-						Inicial.fechaconexao();
-
 
 					} catch (SQLException e1) {
 						PropriedadesShell.mensagemDeRetorno(
 								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
 						new EjetaException(e1);
 					} catch (NullPointerException es) {
-						PropriedadesShell.mensagemDeErro(
-								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
+						PropriedadesShell.mensagemDeRetorno("Não foram encotrados registros com esse argumento: "+text.getText());
 						new EjetaException(es);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					Inicial.fechaconexao();
 
 				} else {
 					PropriedadesShell.mensagemDeRetorno("informe o código de busca");

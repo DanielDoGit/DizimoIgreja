@@ -14,6 +14,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
@@ -31,7 +32,9 @@ import telas.Pesquiar.WindowComunidadeRecuperarAssociarAction;
 
 public class WindowColetorAction extends WindowColetor {
 
-	private String verificacaoCadastrar = "Cadastrar", verificacaoEditar = "Editar";
+	private Permissoes permissoes[] = { new Permissoes(13, "Cadastrar Coletor"), new Permissoes(16, "Editar Coletor"),
+			new Permissoes(15, "Excluir Coletor"), new Permissoes(14, "Pesquisar Coletor") };
+	private List<Boolean> listaconfirma;
 	private Cidade cidade;
 	private Comunidade comunidade;
 	private List<Permissoes> lista, listapermissao;
@@ -41,9 +44,8 @@ public class WindowColetorAction extends WindowColetor {
 		this.coletor = c;
 	}
 
-	public WindowColetorAction(String a) {
-
-		if (a.equals(verificacaoCadastrar)) {
+	public void verificarPermissaoCadastrar() throws SQLException {
+		if (listaconfirma.get(0)) {
 			super.createContents();
 			try {
 				acessarComunidade();
@@ -57,7 +59,16 @@ public class WindowColetorAction extends WindowColetor {
 			this.tratarEventosCadastrar();
 			super.open();
 
-		} else if (a.equals(verificacaoEditar)) {
+		} else {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[0].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[0].getNomepermissao());
+		}
+	}
+
+	public void verificarPermissaoEditar(Coletor c) throws SQLException {
+		if (listaconfirma.get(1)) {
+			coletor = c;
 			super.createContents();
 			try {
 				acessarComunidade();
@@ -68,19 +79,43 @@ public class WindowColetorAction extends WindowColetor {
 			}
 			preenchimentotabelapermissoes();
 			this.tratarEventosEditar();
-
-		} 
-
+			puxartodaspermissoesColetor();
+			popularTelaColetor();
+			open();
+		} else {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[1].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[1].getNomepermissao());
+		}
 	}
 
-	public void tratarEventosCadastrar() {
-		
+	public void verificarPermissaoExcluir() throws SQLException {
+		if (!listaconfirma.get(2)) {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[2].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[2].getNomepermissao());
+		}
+	}
+	public void verificarPermissaoPesquisar() throws SQLException {
+		if (!listaconfirma.get(3)) {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[3].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[3].getNomepermissao());
+		}
+	}
+
+	public WindowColetorAction() {
+		listaconfirma = new AutenticadorUsuario().verificarPermissoesGlobal(permissoes);
+	}
+
+	private void tratarEventosCadastrar() {
+
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-			
+
 				textCelular.setText("");
 				textCidade.setText("");
 				textComunidade.setText("");
@@ -95,24 +130,24 @@ public class WindowColetorAction extends WindowColetor {
 				textRG.setText("");
 				textTelefone.setText("");
 				textSenha.setText("");
-				
+
 				itens = table.getItems();
 
 				try {
 					for (int i = 0; i < itens.length; i++) {
 						if (itens[i].getChecked()) {
 							itens[i].setChecked(false);
-						} 
+						}
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		btnGravar.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -135,67 +170,62 @@ public class WindowColetorAction extends WindowColetor {
 						}
 					}
 
-				
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(13, "Cadastrar Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes) || autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(), permissoes)) {
-						if (!textNome.getText().isEmpty() && !textCpf.getText().isEmpty() && !textRG.getText().isEmpty()
-								&& !textComunidade.getText().isEmpty() && !textCidade.getText().isEmpty()
-								&& !textLogin.getText().isEmpty() && !textSenha.getText().isEmpty()) {
+					if (!textNome.getText().isEmpty() && !textCpf.getText().isEmpty() && !textRG.getText().isEmpty()
+							&& !textComunidade.getText().isEmpty() && !textCidade.getText().isEmpty()
+							&& !textLogin.getText().isEmpty() && !textSenha.getText().isEmpty()) {
 
-							Date data = dateChooserCombo.getValue();
+						Date data = dateChooserCombo.getValue();
 
-							if (data != null) {
-								LocalDate hoje = LocalDate.now();
-								LocalDate nascimento = Instant.ofEpochMilli(data.getTime())
-										.atZone(ZoneId.systemDefault()).truncatedTo(ChronoUnit.DAYS).toLocalDate();
-								int i = Period.between(nascimento, hoje).getYears();
-								if (i >= 18 && i < 100) {
-									coletor.setIdUsuario(Integer.valueOf(textCodigo.getText()));
-									coletor.setNomeUsuario(textNome.getText());
-									coletor.setCidadeUsuario(cidade);
-									coletor.setComunidade(comunidade);
-									coletor.setCpfUsuario(textCpf.getText());
-									coletor.setRgUsuario(textRG.getText());
-									coletor.setCelularUsuario(textCelular.getText());
-									coletor.setTelefoneUsuario(textTelefone.getText());
-									coletor.setDatanascimentoUsuario(nascimento);
-									coletor.setEnderecoUsuario(textEndereco.getText());
-									coletor.setNumeroenderecoUsuario(textNumeroEndereco.getText());
-									coletor.setObservacoesUsuario(textObservacao.getText());
-									coletor.setDataCadastro(hoje);
-									coletor.setLoginUsuario(textLogin.getText());
-									coletor.setSenhaUsuario(textSenha.getText());
-									if (btnAtivo.getSelection()) {
-										coletor.setIsativo("S");
-									} else {
-										coletor.setIsativo("N");
-									}
+						if (data != null) {
+							LocalDate hoje = LocalDate.now();
+							LocalDate nascimento = Instant.ofEpochMilli(data.getTime()).atZone(ZoneId.systemDefault())
+									.truncatedTo(ChronoUnit.DAYS).toLocalDate();
+							int i = Period.between(nascimento, hoje).getYears();
+							if (i >= 18 && i < 100) {
+								coletor.setIdUsuario(Integer.valueOf(textCodigo.getText()));
+								coletor.setNomeUsuario(textNome.getText());
+								coletor.setCidadeUsuario(cidade);
+								coletor.setComunidade(comunidade);
+								coletor.setCpfUsuario(textCpf.getText());
+								coletor.setRgUsuario(textRG.getText());
+								coletor.setCelularUsuario(textCelular.getText());
+								coletor.setTelefoneUsuario(textTelefone.getText());
+								coletor.setDatanascimentoUsuario(nascimento);
+								coletor.setEnderecoUsuario(textEndereco.getText());
+								coletor.setNumeroenderecoUsuario(textNumeroEndereco.getText());
+								coletor.setObservacoesUsuario(textObservacao.getText());
+								coletor.setDataCadastro(hoje);
+								coletor.setLoginUsuario(textLogin.getText());
+								coletor.setSenhaUsuario(textSenha.getText());
+								if (btnAtivo.getSelection()) {
+									coletor.setIsativo("S");
+								} else {
+									coletor.setIsativo("N");
+								}
 
-									if (aux > 0) {
-										coletorDao.inserirColetor(coletor);
-										new AutenticadorUsuario()
-												.inputpermissaoColetor(new PermissaoColetor(coletor, listaauxiliar));
-										limparAtela();
-									} else {
-										PropriedadesShell.mensagemDeRetorno(
-												"Você precisa conceder ao menos 1 permissão para este coletor");
-									}
-
+								if (aux > 0) {
+									coletorDao.inserirColetor(coletor);
+									new AutenticadorUsuario()
+											.inputpermissaoColetor(new PermissaoColetor(coletor, listaauxiliar));
+									limparAtela();
 								} else {
 									PropriedadesShell.mensagemDeRetorno(
-											"Não é possível cadastrar esse coletor. Sua idade é de: " + i + " ano(s)");
+											"Você precisa conceder ao menos 1 permissão para este coletor");
 								}
+
 							} else {
 								PropriedadesShell.mensagemDeRetorno(
-										"Não é possível prosseguir, pois o campo data não foi preenchido");
+										"Não é possível cadastrar esse coletor. Sua idade é de: " + i + " ano(s)");
 							}
-
 						} else {
-							PropriedadesShell
-									.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
-						} 
+							PropriedadesShell.mensagemDeRetorno(
+									"Não é possível prosseguir, pois o campo data não foi preenchido");
+						}
+
+					} else {
+						PropriedadesShell.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
 					}
+
 					Inicial.fechaconexao();
 
 				} catch (Exception e1) {
@@ -208,14 +238,14 @@ public class WindowColetorAction extends WindowColetor {
 		});
 	}
 
-	public void tratarEventosEditar() {
+	private void tratarEventosEditar() {
 
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
-		
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-			
+
 				textCelular.setText("");
 				textCidade.setText("");
 				textComunidade.setText("");
@@ -230,24 +260,24 @@ public class WindowColetorAction extends WindowColetor {
 				textRG.setText("");
 				textTelefone.setText("");
 				textSenha.setText("");
-				
+
 				itens = table.getItems();
 
 				try {
 					for (int i = 0; i < itens.length; i++) {
 						if (itens[i].getChecked()) {
 							itens[i].setChecked(false);
-						} 
+						}
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		btnGravar.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -302,7 +332,7 @@ public class WindowColetorAction extends WindowColetor {
 								}
 
 								if (listaauxiliar.size() > 0) {
-									autenticadorUsuario.deletePermissoesColetor(coletor);
+									AutenticadorUsuario.deletePermissoesColetor(coletor);
 									autenticadorUsuario
 											.inputpermissaoColetor(new PermissaoColetor(coletor, listaauxiliar));
 									coletorDao.editarColetor(coletor);
@@ -338,10 +368,11 @@ public class WindowColetorAction extends WindowColetor {
 
 	}
 
-	public void preenchimentotabelapermissoes() {
-		AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
+	private void preenchimentotabelapermissoes() {
+		
 		try {
 			AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
+			AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
 			lista = autenticadorUsuario.popularPermissoes();
 
 			for (int i = 0; i < lista.size(); i++) {
@@ -381,7 +412,7 @@ public class WindowColetorAction extends WindowColetor {
 
 	}
 
-	public void buscarultimoindiceColetor() {
+	private void buscarultimoindiceColetor() {
 		ColetorDao coletorDao = new ColetorDao();
 		try {
 			coletorDao.setConnectionOnComunidadeDao(Inicial.startaPropertiesConnection());
@@ -396,7 +427,7 @@ public class WindowColetorAction extends WindowColetor {
 
 	}
 
-	public void acessarComunidade() throws Exception {
+	private void acessarComunidade() throws Exception {
 
 		tltmPesquisarComunidade.addSelectionListener(new SelectionAdapter() {
 
@@ -422,7 +453,7 @@ public class WindowColetorAction extends WindowColetor {
 		});
 	}
 
-	public void limparAtela() {
+	private void limparAtela() {
 		textCelular.setText("");
 		textCidade.setText("");
 		textComunidade.setText("");
@@ -462,7 +493,7 @@ public class WindowColetorAction extends WindowColetor {
 		}
 	}
 
-	public void acessarCidade() {
+	private void acessarCidade() {
 
 		tltmPesquisar.addSelectionListener(new SelectionAdapter() {
 
@@ -490,7 +521,7 @@ public class WindowColetorAction extends WindowColetor {
 
 	}
 
-	public void puxartodaspermissoesColetor() {
+	private void puxartodaspermissoesColetor() {
 
 		try {
 			AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
@@ -513,7 +544,7 @@ public class WindowColetorAction extends WindowColetor {
 
 	}
 
-	public void popularTelaColetor() {
+	private void popularTelaColetor() {
 
 		try {
 			ColetorDao coletordao = new ColetorDao();

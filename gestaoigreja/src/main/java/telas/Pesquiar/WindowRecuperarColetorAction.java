@@ -48,42 +48,15 @@ public class WindowRecuperarColetorAction extends WindowRecuperarColetor {
 					}
 				}
 				try {
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(14, "Pesquisar Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes) || autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(), permissoes)) {
 
-						if (combo.getSelectionIndex() == 0) {
-							if (text.getText().matches("[+-]?\\d*(\\.\\d+)?")) {
-								Coletor coletor = new Coletor();
-								coletor.setIdUsuario(Integer.valueOf(text.getText()));
-								ColetorDao coletorDao = new ColetorDao();
-								coletorDao.setConnectionOnComunidadeDao(AutenticadorUsuario.getCon());
-								lista = coletorDao.pesquisarlistaColetorCodigo(coletor);
-								if (lista != null && !lista.isEmpty()) {
-									table.setItemCount(lista.size());
-									TableItem itens[] = table.getItems();
-									for (int i = 0; i < itens.length; i++) {
-										itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
-										itens[i].setText(1, lista.get(i).getNomeUsuario());
-										itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
-										itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
-									}
-
-								} else {
-									PropriedadesShell.mensagemDeRetorno(
-											"Nenhum registro foi encontrado com esse argumento: " + text.getText());
-								}
-							} else {
-								PropriedadesShell.mensagemDeRetorno("O que você inseriu não é número");
-							}
-							AutenticadorUsuario.getCon().close();
-						} else if (combo.getSelectionIndex() == 1) {
+					new WindowColetorAction().verificarPermissaoPesquisar();
+					if (combo.getSelectionIndex() == 0) {
+						if (text.getText().matches("[+-]?\\d*(\\.\\d+)?")) {
 							Coletor coletor = new Coletor();
-							coletor.setNomeUsuario(text.getText());
+							coletor.setIdUsuario(Integer.valueOf(text.getText()));
 							ColetorDao coletorDao = new ColetorDao();
-							coletorDao.setConnectionOnComunidadeDao(AutenticadorUsuario.getCon());
-							lista = coletorDao.pesquisarlistaColetorNome(coletor);
+							coletorDao.setConnectionOnComunidadeDao(Inicial.startaPropertiesConnection());
+							lista = coletorDao.pesquisarlistaColetorCodigo(coletor);
 							if (lista != null && !lista.isEmpty()) {
 								table.setItemCount(lista.size());
 								TableItem itens[] = table.getItems();
@@ -98,56 +71,74 @@ public class WindowRecuperarColetorAction extends WindowRecuperarColetor {
 								PropriedadesShell.mensagemDeRetorno(
 										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
 							}
-							AutenticadorUsuario.getCon().close();
-						} else if (combo.getSelectionIndex() == 2) {
-
-							Cidade cidade = new Cidade();
-							cidade.setNomeCidade(text.getText());
-							ColetorDao coletorDao = new ColetorDao();
-							coletorDao.setConnectionOnComunidadeDao(AutenticadorUsuario.getCon());
-							lista = coletorDao.pesquisarListaColetorCidade(cidade);
-							if (lista != null && !lista.isEmpty()) {
-								table.setItemCount(lista.size());
-								TableItem itens[] = table.getItems();
-								for (int i = 0; i < itens.length; i++) {
-									itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
-									itens[i].setText(1, lista.get(i).getNomeUsuario());
-									itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
-									itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
-								}
-							} else {
-								PropriedadesShell.mensagemDeRetorno(
-										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
-							}
-							AutenticadorUsuario.getCon().close();
-						} else if (combo.getSelectionIndex() == 3) {
-							Comunidade comunidade = new Comunidade();
-							comunidade.setNomefantaziaComunidade(text.getText());
-							ColetorDao coletorDao = new ColetorDao();
-							coletorDao.setConnectionOnComunidadeDao(AutenticadorUsuario.getCon());
-							lista = coletorDao.pesquisarListaColetorCoomunidade(comunidade);
-							if (lista != null && !lista.isEmpty()) {
-								table.setItemCount(lista.size());
-								TableItem itens[] = table.getItems();
-								for (int i = 0; i < itens.length; i++) {
-									itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
-									itens[i].setText(1, lista.get(i).getNomeUsuario());
-									itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
-									itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
-								}
-							} else {
-								PropriedadesShell.mensagemDeRetorno(
-										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
-							}
-							AutenticadorUsuario.getCon().close();
+						} else {
+							PropriedadesShell.mensagemDeRetorno("O que você inseriu não é número");
 						}
 
-					} else {
-						AutenticadorUsuario.getCon().close();
-						PropriedadesShell.mensagemDeRetorno("Usuário não possui permissao para acessar esse recurso: "
-								+ permissoes.getNomepermissao());
-					}
+					} else if (combo.getSelectionIndex() == 1) {
+						Coletor coletor = new Coletor();
+						coletor.setNomeUsuario(text.getText());
+						ColetorDao coletorDao = new ColetorDao();
+						coletorDao.setConnectionOnComunidadeDao(Inicial.startaPropertiesConnection());
+						lista = coletorDao.pesquisarlistaColetorNome(coletor);
+						if (lista != null && !lista.isEmpty()) {
+							table.setItemCount(lista.size());
+							TableItem itens[] = table.getItems();
+							for (int i = 0; i < itens.length; i++) {
+								itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
+								itens[i].setText(1, lista.get(i).getNomeUsuario());
+								itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
+								itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
+							}
 
+						} else {
+							PropriedadesShell.mensagemDeRetorno(
+									"Nenhum registro foi encontrado com esse argumento: " + text.getText());
+						}
+
+					} else if (combo.getSelectionIndex() == 2) {
+
+						Cidade cidade = new Cidade();
+						cidade.setNomeCidade(text.getText());
+						ColetorDao coletorDao = new ColetorDao();
+						coletorDao.setConnectionOnComunidadeDao(Inicial.startaPropertiesConnection());
+						lista = coletorDao.pesquisarListaColetorCidade(cidade);
+						if (lista != null && !lista.isEmpty()) {
+							table.setItemCount(lista.size());
+							TableItem itens[] = table.getItems();
+							for (int i = 0; i < itens.length; i++) {
+								itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
+								itens[i].setText(1, lista.get(i).getNomeUsuario());
+								itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
+								itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
+							}
+						} else {
+							PropriedadesShell.mensagemDeRetorno(
+									"Nenhum registro foi encontrado com esse argumento: " + text.getText());
+						}
+
+					} else if (combo.getSelectionIndex() == 3) {
+						Comunidade comunidade = new Comunidade();
+						comunidade.setNomefantaziaComunidade(text.getText());
+						ColetorDao coletorDao = new ColetorDao();
+						coletorDao.setConnectionOnComunidadeDao(Inicial.startaPropertiesConnection());
+						lista = coletorDao.pesquisarListaColetorCoomunidade(comunidade);
+						if (lista != null && !lista.isEmpty()) {
+							table.setItemCount(lista.size());
+							TableItem itens[] = table.getItems();
+							for (int i = 0; i < itens.length; i++) {
+								itens[i].setText(0, String.valueOf(lista.get(i).getIdUsuario()));
+								itens[i].setText(1, lista.get(i).getNomeUsuario());
+								itens[i].setText(2, lista.get(i).getCidadeUsuario().getNomeCidade());
+								itens[i].setText(3, lista.get(i).getComunidade().getNomefantaziaComunidade());
+							}
+						} else {
+							PropriedadesShell.mensagemDeRetorno(
+									"Nenhum registro foi encontrado com esse argumento: " + text.getText());
+						}
+
+					}
+					Inicial.fechaconexao();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					PropriedadesShell
@@ -164,27 +155,16 @@ public class WindowRecuperarColetorAction extends WindowRecuperarColetor {
 				// TODO Auto-generated method stub
 
 				try {
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(16, "Editar Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes) || autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)) {
-						int i = table.getSelectionIndex();
-						if (i != -1) {
 
-							TableItem lista[] = table.getItems();
-							Coletor coletor = new Coletor();
-							coletor.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
-							WindowColetorAction wca = new WindowColetorAction("Editar");
-							wca.setColetor(coletor);
-							wca.puxartodaspermissoesColetor();
-							wca.popularTelaColetor();
-							wca.open();
-						} else {
-							PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
-						}
+					int i = table.getSelectionIndex();
+					if (i != -1) {
+
+						TableItem lista[] = table.getItems();
+						Coletor coletor = new Coletor();
+						coletor.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
+						new WindowColetorAction().verificarPermissaoEditar(coletor);
 					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissao para acessar o recurso: " + permissoes.getNomepermissao());
+						PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -200,48 +180,70 @@ public class WindowRecuperarColetorAction extends WindowRecuperarColetor {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+
+					new WindowColetorAction().verificarPermissaoExcluir();
 					Connection conec = Inicial.startaPropertiesConnection();
 					AutenticadorUsuario.setCon(conec);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(15, "Excluir Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes) || autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)) {
-						int i = table.getSelectionIndex();
-						if (i != -1) {
+					int i = table.getSelectionIndex();
+					if (i != -1) {
 
-							TableItem lista[] = table.getItems();
-							Coletor coletor = new Coletor();
-							coletor.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
-							if (!AutenticadorUsuario.getusuario().getIdUsuario().equals(coletor.getIdUsuario())) {
-								autenticadorUsuario.deletePermissoesColetor(coletor);
-								ColetorDao coletorDao = new ColetorDao();
-								coletorDao.setConnectionOnComunidadeDao(conec);
-								coletorDao.excluir(coletor);
-								
-								TableItem ass[] = table.getItems();
+						TableItem item[] = table.getItems();
+						Coletor coletor = new Coletor();
+						coletor.setIdUsuario(Integer.valueOf(item[i].getText(0)));
 
-								if (!text.getText().isEmpty()) {
-									if (ass.length > 0) {
-										for (int s = 0; s < ass.length; i++) {
-											ass[s].setText(0, "");
-											ass[s].setText(1, "");
-											ass[s].setText(2, "");
+						if (!AutenticadorUsuario.getusuario().getIdUsuario().equals(coletor.getIdUsuario())) {
 
-										}
-										table.setItemCount(0);
+							AutenticadorUsuario.deletePermissoesColetor(coletor);
+							ColetorDao coletorDao = new ColetorDao();
+							coletorDao.setConnectionOnComunidadeDao(conec);
+							coletorDao.excluir(coletor);
+							lista.remove(i);
+
+							table.setItemCount(0);
+							TableItem ass[] = table.getItems();
+
+							if (!text.getText().isEmpty()) {
+								if (ass.length > 0) {
+									for (int s = 0; s < ass.length; i++) {
+										ass[s].setText(0, "");
+										ass[s].setText(1, "");
+										ass[s].setText(2, "");
+
 									}
+
 								}
-							} else {
-								PropriedadesShell.mensagemDeErro(
-										"Este coletor está utlizando o sistema, portanto não é possível excluí-lo");
+							}
+
+						} else if (!AutenticadorUsuario.isColetor()
+								&& AutenticadorUsuario.getusuario().getIdUsuario().equals(coletor.getIdUsuario())) {
+							AutenticadorUsuario.deletePermissoesColetor(coletor);
+							ColetorDao coletorDao = new ColetorDao();
+							coletorDao.setConnectionOnComunidadeDao(conec);
+							coletorDao.excluir(coletor);
+							table.setItemCount(0);
+							TableItem ass[] = table.getItems();
+
+							if (!text.getText().isEmpty()) {
+								if (ass.length > 0) {
+									for (int s = 0; s < ass.length; i++) {
+										ass[s].setText(0, "");
+										ass[s].setText(1, "");
+										ass[s].setText(2, "");
+
+									}
+
+								}
 							}
 
 						} else {
-							PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser excluído");
+							PropriedadesShell.mensagemDeErro(
+									"Este coletor está utlizando o sistema, portanto não é possível excluí-lo");
 						}
+
 					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissão para acessar o recurso " + permissoes.getNomepermissao());
+						PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser excluído");
 					}
+					AutenticadorUsuario.getCon().close();
 					Inicial.fechaconexao();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

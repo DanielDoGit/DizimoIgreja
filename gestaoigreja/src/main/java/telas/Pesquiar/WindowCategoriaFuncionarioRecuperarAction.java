@@ -55,13 +55,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 
 				try {
 					Connection con = Inicial.startaPropertiesConnection();
-					AutenticadorUsuario.setCon(con);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(19, "Pesquisar Categoria Funcionario");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
-
+					new WindowCategoriaFuncionarioAction().verificarPermissoesPesquisar();
 						if (text.getText() != null && !text.getText().isEmpty()) {
 
 							if (combo.getSelectionIndex() == 0) {
@@ -105,10 +99,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 							PropriedadesShell.mensagemDeRetorno("Informe um argumento para realizar uma consulta");
 						}
 
-					} else {
-						PropriedadesShell.mensagemDeRetorno("Este usuário não tem permissão para acessar o recurso: "
-								+ permissoes.getNomepermissao());
-					}
+					
 					Inicial.fechaconexao();
 				} catch (NumberFormatException s) {
 					PropriedadesShell.mensagemDeErro("O que você digitou não é um argumento valido");
@@ -128,12 +119,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 
 				try {
 					Connection con = Inicial.startaPropertiesConnection();
-					AutenticadorUsuario.setCon(con);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(20, "Editar Categoria Funcionario");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
+				new WindowCategoriaFuncionarioAction().editarCategoriaFuncionario();
 
 						if (table.getSelectionIndex() != -1) {
 
@@ -158,10 +144,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 						} else {
 							PropriedadesShell.mensagemDeRetorno("Selecione um item para ser editado");
 						}
-					} else {
-						PropriedadesShell.mensagemDeRetorno("Este usuário não tem permissão para acessar este recurso: "
-								+ permissoes.getNomepermissao());
-					}
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
@@ -177,12 +160,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 				// TODO Auto-generated method stub
 				try {
 					Connection con = Inicial.startaPropertiesConnection();
-					AutenticadorUsuario.setCon(con);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(21, "Excluir Categoria Funcionario");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
+					new WindowCategoriaFuncionarioAction().verificarPermissoesExcluir();
 						if (table.getSelectionIndex() != -1) {
 							
 							CategoriaFuncionarioDao cf = new CategoriaFuncionarioDao();
@@ -206,10 +184,7 @@ public class WindowCategoriaFuncionarioRecuperarAction extends WindowCategoriaFu
 							PropriedadesShell.mensagemDeRetorno("Selecione um item para ser excluido");
 						}
 						
-					}else {
-						PropriedadesShell.mensagemDeRetorno("Este usuário não tem permissão para acessar este recurso: "
-								+ permissoes.getNomepermissao());
-					}
+					
 				} catch (SQLException e1) {
 					PropriedadesShell.mensagemDeErro("Não é possível deletar esta categoria, pois pertence a outros registros");
 					new EjetaException(e1);

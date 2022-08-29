@@ -2,6 +2,7 @@ package telas;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,6 +16,13 @@ import dao.CategoriaFuncionarioDao;
 
 public class WindowCategoriaFuncionarioAction extends WindowCategoriaFuncionario {
 
+	private Permissoes permissoes[] = {
+			new Permissoes(18, "Cadastrar Categoria Funcionario"),
+			new Permissoes(20, "Editar Categoria Funcionario"), 
+			new Permissoes(21, "Excluir Categoria Funcionario"),
+			new Permissoes(19, "Pesquisar Categoria Funcionario") };
+
+	private List<Boolean> listachecagem;
 	private CategoriaFuncionario categoriaFuncionario;
 
 	public CategoriaFuncionario getCategoriaFuncionario() {
@@ -26,13 +34,42 @@ public class WindowCategoriaFuncionarioAction extends WindowCategoriaFuncionario
 	}
 
 	public WindowCategoriaFuncionarioAction() {
+		listachecagem = new AutenticadorUsuario().verificarPermissoesGlobal(permissoes);
 		super.createContents();
 
+	}
+	
+	public void verificarPermissoesCadastrar() throws SQLException {
+		if (!listachecagem.get(0)) {
+			PropriedadesShell.mensagemRetornoUsuarioPermissao(permissoes[0]);
+			throw new SQLException("Usuário sem permissao para acessar o recurso:" + permissoes[0]);
+		}
+	}
+	
+	public void verificarPermissoesEditar() throws SQLException {
+		if (!listachecagem.get(1)) {
+			PropriedadesShell.mensagemRetornoUsuarioPermissao(permissoes[1]);
+			throw new SQLException("Usuário sem permissao para acessar o recurso:" + permissoes[1]);
+		}
+	}
+	
+	public void verificarPermissoesExcluir() throws SQLException {
+		if (!listachecagem.get(2)) {
+			PropriedadesShell.mensagemRetornoUsuarioPermissao(permissoes[2]);
+			throw new SQLException("Usuário sem permissao para acessar o recurso:" + permissoes[2]);
+		}
+	}
+	
+	public void verificarPermissoesPesquisar() throws SQLException {
+		if (!listachecagem.get(3)) {
+			PropriedadesShell.mensagemRetornoUsuarioPermissao(permissoes[3]);
+			throw new SQLException("Usuário sem permissao para acessar o recurso:" + permissoes[3]);
+		}
 	}
 
 	public void populartelaeditar() {
 		try {
-			text.setText(Integer.toHexString(categoriaFuncionario.getIdCategoriaFuncionario()));
+			text.setText(Integer.toString(categoriaFuncionario.getIdCategoriaFuncionario()));
 			text_1.setText(categoriaFuncionario.getNomeCategoraiFuncionario());
 
 		} catch (Exception e) {
@@ -50,8 +87,6 @@ public class WindowCategoriaFuncionarioAction extends WindowCategoriaFuncionario
 			categoriaFuncionario = cateDao.retornaCategoriaFuncionarioMaximo();
 			if (categoriaFuncionario != null && categoriaFuncionario.getIdCategoriaFuncionario() != null) {
 				text.setText(String.valueOf(categoriaFuncionario.getIdCategoriaFuncionario()));
-			} else {
-				text.setText("1");
 			}
 			Inicial.fechaconexao();
 		} catch (SQLException e) {
@@ -60,7 +95,7 @@ public class WindowCategoriaFuncionarioAction extends WindowCategoriaFuncionario
 	}
 
 	public void gravarCategoriaFuncionario() {
-		
+
 		btnLimpar.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -77,32 +112,21 @@ public class WindowCategoriaFuncionarioAction extends WindowCategoriaFuncionario
 				// TODO Auto-generated method stub
 				try {
 					Connection con = Inicial.startaPropertiesConnection();
-					AutenticadorUsuario.setCon(con);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(18, "Cadastrar Categoria Funcionario");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
 
-						if (text_1.getText() != null && !text_1.getText().isEmpty()) {
-							CategoriaFuncionarioDao cateDao = new CategoriaFuncionarioDao();
-							cateDao.setCon(con);
-							categoriaFuncionario.setIdCategoriaFuncionario(Integer.valueOf(text.getText()));
-							categoriaFuncionario.setNomeCategoraiFuncionario(text_1.getText());
-							cateDao.inserircategoria(categoriaFuncionario);
-							text.setText("");
-							text.setText(Integer
-									.toString(cateDao.retornaCategoriaFuncionarioMaximo().getIdCategoriaFuncionario()));
-							text_1.setText("");
-						} else {
-							PropriedadesShell
-									.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
-						}
-
+					if (text_1.getText() != null && !text_1.getText().isEmpty()) {
+						CategoriaFuncionarioDao cateDao = new CategoriaFuncionarioDao();
+						cateDao.setCon(con);
+						categoriaFuncionario.setIdCategoriaFuncionario(Integer.valueOf(text.getText()));
+						categoriaFuncionario.setNomeCategoraiFuncionario(text_1.getText());
+						cateDao.inserircategoria(categoriaFuncionario);
+						text.setText("");
+						text.setText(Integer
+								.toString(cateDao.retornaCategoriaFuncionarioMaximo().getIdCategoriaFuncionario()));
+						text_1.setText("");
 					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissão para acessar o recurso: " + permissoes.getNomepermissao());
+						PropriedadesShell.mensagemDeRetorno("Verifique se os campos obrigatorios foram preenchidos");
 					}
+
 					Inicial.fechaconexao();
 
 				} catch (Exception e1) {

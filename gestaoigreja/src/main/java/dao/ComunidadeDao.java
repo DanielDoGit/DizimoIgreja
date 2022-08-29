@@ -156,9 +156,9 @@ public class ComunidadeDao {
 		Comunidade com = null;
 		while(rs.next()) {
 			com = new Comunidade();
-			com.setIdComunidade(rs.getInt("max"));
+			com.setIdComunidade(rs.getInt("max")+1);
 		}
-		com.setIdComunidade(com.getIdComunidade()+1);
+		
 		return com;
 	}
 	

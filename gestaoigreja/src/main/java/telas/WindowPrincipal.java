@@ -31,7 +31,6 @@ public abstract class WindowPrincipal {
 	protected MenuItem mntmPesquisar_3;
 	protected MenuItem mntmCadastrar_4;
 	protected MenuItem mntmPesquisar_4;
-	protected MenuItem mntmCadastrar_8;
 	protected MenuItem mntmCadastrar_10;
 	protected MenuItem mntmPesquisar_9;
 	protected MenuItem mntmCadastros;
@@ -41,12 +40,13 @@ public abstract class WindowPrincipal {
 	protected MenuItem mntmColetor;
 	protected MenuItem mntmFuncionario;
 	protected MenuItem mntmContribuintedizimista;
-	protected MenuItem mntmFormasDePagamento;
 	protected MenuItem mntmMissas;
 	protected CLabel lblTeste;
 	protected MenuItem mntmCategoriaDeFuncinario;
 	protected MenuItem mntmCadastrar_12;
 	protected MenuItem mntmPesquisar_12;
+	protected MenuItem mntmCadastrar_6, mntmPesquisar_6;
+	protected MenuItem mntmCaixa;
 
 	public static void main(String[] args) {
 		WindowPrincipal principal = new WindowPrincipal() {
@@ -78,7 +78,6 @@ public abstract class WindowPrincipal {
 		shell.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
 		shell.setMaximized(true);
-		shell.setText("Gestão Igreja");
 		shell.setLayout(new GridLayout(1, true));
 
 		Menu menu = new Menu(shell, SWT.BAR);
@@ -183,20 +182,6 @@ public abstract class WindowPrincipal {
 
 		new MenuItem(menu_1, SWT.SEPARATOR);
 
-		mntmFormasDePagamento = new MenuItem(menu_1, SWT.CASCADE);
-		mntmFormasDePagamento.setText("Formas de Pagamento");
-
-		Menu menu_12 = new Menu(mntmFormasDePagamento);
-		mntmFormasDePagamento.setMenu(menu_12);
-
-		mntmCadastrar_8 = new MenuItem(menu_12, SWT.NONE);
-		mntmCadastrar_8.setText("Cadastrar");
-
-		MenuItem mntmPesquisar_11 = new MenuItem(menu_12, SWT.NONE);
-		mntmPesquisar_11.setText("Pesquisar");
-
-		new MenuItem(menu_1, SWT.SEPARATOR);
-
 		mntmMissas = new MenuItem(menu_1, SWT.CASCADE);
 		mntmMissas.setText("Missas");
 
@@ -251,10 +236,10 @@ public abstract class WindowPrincipal {
 		Menu menu_9 = new Menu(mntmBalancete);
 		mntmBalancete.setMenu(menu_9);
 
-		MenuItem mntmCadastrar_6 = new MenuItem(menu_9, SWT.NONE);
+		mntmCadastrar_6 = new MenuItem(menu_9, SWT.NONE);
 		mntmCadastrar_6.setText("Cadastrar");
 
-		MenuItem mntmPesquisar_6 = new MenuItem(menu_9, SWT.NONE);
+		mntmPesquisar_6 = new MenuItem(menu_9, SWT.NONE);
 		mntmPesquisar_6.setText("Pesquisar");
 
 		new MenuItem(menu_7, SWT.SEPARATOR);
@@ -271,10 +256,7 @@ public abstract class WindowPrincipal {
 		MenuItem mntmPesquisar_7 = new MenuItem(menu_10, SWT.NONE);
 		mntmPesquisar_7.setText("Pesquisar");
 
-		MenuItem mntmRecebimentoDizimo = new MenuItem(menu_10, SWT.NONE);
-		mntmRecebimentoDizimo.setText("Recebimento Dizimo");
-
-		MenuItem mntmCaixa = new MenuItem(menu_7, SWT.NONE);
+		mntmCaixa = new MenuItem(menu_7, SWT.NONE);
 		mntmCaixa.setText("Caixa");
 
 		new MenuItem(menu_7, SWT.SEPARATOR);

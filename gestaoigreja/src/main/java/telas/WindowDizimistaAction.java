@@ -1,6 +1,6 @@
 package telas;
 
-import java.lang.reflect.Method;
+
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,7 +15,6 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 
 import beans.Dizimista;
 import beans.Permissoes;

@@ -172,8 +172,8 @@ public class ColetorDao {
 		List<Coletor> listaColetor = new ArrayList<Coletor>();
 		StringBuilder st = new StringBuilder();
 		st.append(
-				"select colid, colnome, comufantasia, cidadenomecidade from coletor inner join comunidade on (comunidade_comuid = comuid ) inner join cidade on (cidadeid = coletor.cidade_cidadeid)\r\n"
-						+ "where cidadenomecidade ilike ?" + "; ");
+				"select colid, colnome, comufantasia, cidadenomecidade from coletor, cidade, comunidade where (comunidade_comuid = comuid) and (cidadeid = comunidade.cidade_cidadeid)\r\n"
+				+ " and cidadenomecidade ilike ? ");
 		PreparedStatement ps = con.prepareStatement(st.toString());
 		ps.setString(1, "%" + cidade.getNomeCidade() + "%");
 		ResultSet rs = ps.executeQuery();

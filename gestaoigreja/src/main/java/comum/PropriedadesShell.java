@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import beans.Permissoes;
+
 public class PropriedadesShell {
 
 	public static Point centralizarShell(Shell pai, Display display) {
@@ -58,6 +60,13 @@ public class PropriedadesShell {
 		}
 		table.setItemCount(0);
 		
+	}
+	
+	public static void mensagemRetornoUsuarioPermissao(Permissoes permissao) {
+		MessageBox dialog = new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK);
+		dialog.setText("Mensagem");
+		dialog.setMessage("Usuário sem permissão para acessar o recurso: "+ permissao.getNomepermissao());
+		dialog.open();
 	}
 
 }

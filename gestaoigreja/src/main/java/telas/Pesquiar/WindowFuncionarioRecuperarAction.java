@@ -53,19 +53,14 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 				// TODO Auto-generated method stub
 				limparTabela();
 				try {
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(23, "Pesquisar Funcionario");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
-
+					
+					new WindowFuncionarioAction().verificarPermissaoPesquisar();
 						if (combo.getSelectionIndex() == 0) {
 							if (text.getText().matches("[+-]?\\d*(\\.\\d+)?")) {
 								Funcionario funcionario = new Funcionario();
 								funcionario.setIdUsuario(Integer.valueOf(text.getText()));
 								FuncionarioDao funcionarioDao = new FuncionarioDao();
-								funcionarioDao.setConnectionFuncionarioDao(AutenticadorUsuario.getCon());
+								funcionarioDao.setConnectionFuncionarioDao(Inicial.startaPropertiesConnection());
 								lista = funcionarioDao.pesquisarlistaFuncionarioCodigo(funcionario);
 								if (lista != null && !lista.isEmpty()) {
 									table.setItemCount(lista.size());
@@ -85,7 +80,7 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 							} else {
 								PropriedadesShell.mensagemDeRetorno("O que você inseriu não é número");
 							}
-							AutenticadorUsuario.getCon().close();
+							
 						} else if (combo.getSelectionIndex() == 1) {
 							Funcionario funcionario = new Funcionario();
 							funcionario.setNomeUsuario(text.getText());
@@ -107,7 +102,7 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 								PropriedadesShell.mensagemDeRetorno(
 										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
 							}
-							AutenticadorUsuario.getCon().close();
+							
 						} else if (combo.getSelectionIndex() == 2) {
 
 							Cidade cidade = new Cidade();
@@ -129,7 +124,7 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 								PropriedadesShell.mensagemDeRetorno(
 										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
 							}
-							AutenticadorUsuario.getCon().close();
+						
 						} else if (combo.getSelectionIndex() == 3) {
 							CategoriaFuncionario categoriaFuncionario = new CategoriaFuncionario();
 							categoriaFuncionario.setNomeCategoraiFuncionario(text.getText());
@@ -150,15 +145,9 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 								PropriedadesShell.mensagemDeRetorno(
 										"Nenhum registro foi encontrado com esse argumento: " + text.getText());
 							}
-							AutenticadorUsuario.getCon().close();
+							
 						}
-
-					} else {
-						AutenticadorUsuario.getCon().close();
-						PropriedadesShell.mensagemDeRetorno("Usuário não possui permissao para acessar esse recurso: "
-								+ permissoes.getNomepermissao());
-					}
-
+						Inicial.fechaconexao();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					PropriedadesShell
@@ -175,30 +164,18 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 				// TODO Auto-generated method stub
 
 				try {
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(16, "Editar Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(),
-									permissoes)) {
-						int i = table.getSelectionIndex();
-						if (i != -1) {
+					int i = table.getSelectionIndex();
+					if (i != -1) {
 
-							TableItem lista[] = table.getItems();
-							Funcionario funcionario = new Funcionario();
-							funcionario.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
-							WindowFuncionarioAction wca = new WindowFuncionarioAction("Editar");
-							wca.setFuncionario(funcionario);
-							wca.puxartodaspermissoesFuncionario();
-							wca.popularTelaFuncionario();
-							wca.open();
-						} else {
-							PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
-						}
+						TableItem lista[] = table.getItems();
+						Funcionario funcionario = new Funcionario();
+						funcionario.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
+						WindowFuncionarioAction wca = new WindowFuncionarioAction();
+						wca.verificarPermissaoEditar(funcionario);
 					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissao para acessar o recurso: " + permissoes.getNomepermissao());
+						PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
 					}
+
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
@@ -213,35 +190,31 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					new WindowFuncionarioAction().verificarPermissaoExcluir();
 					Connection conec = Inicial.startaPropertiesConnection();
-					AutenticadorUsuario.setCon(conec);
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(15, "Excluir Coletor");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(),
-									permissoes)) {
 						int i = table.getSelectionIndex();
 						if (i != -1) {
 
 							TableItem lista[] = table.getItems();
 							Funcionario funcionario = new Funcionario();
 							funcionario.setIdUsuario(Integer.valueOf(lista[i].getText(0)));
-							
-							if (AutenticadorUsuario.getusuario().getIdUsuario().equals(funcionario.getIdUsuario()) && AutenticadorUsuario.isColetor()) {
-								autenticadorUsuario.deletePermissoesFuncionario(funcionario);
+
+							if (AutenticadorUsuario.getusuario().getIdUsuario().equals(funcionario.getIdUsuario())
+									&& AutenticadorUsuario.isColetor()) {
+								AutenticadorUsuario.deletePermissoesFuncionario(funcionario);
 								FuncionarioDao funcionarioDao = new FuncionarioDao();
 								funcionarioDao.setConnectionFuncionarioDao(conec);
 								funcionarioDao.excluirFuncionario(funcionario);
 								limparTabela();
 
-			
-							}else if(!AutenticadorUsuario.getusuario().getIdUsuario().equals(funcionario.getIdUsuario())) {
-								autenticadorUsuario.deletePermissoesFuncionario(funcionario);
+							} else if (!AutenticadorUsuario.getusuario().getIdUsuario()
+									.equals(funcionario.getIdUsuario())) {
+								AutenticadorUsuario.deletePermissoesFuncionario(funcionario);
 								FuncionarioDao funcionarioDao = new FuncionarioDao();
 								funcionarioDao.setConnectionFuncionarioDao(conec);
 								funcionarioDao.excluirFuncionario(funcionario);
 								limparTabela();
-								
+
 							} else {
 								PropriedadesShell.mensagemDeErro(
 										"Este funcionário está utlizando o sistema, portanto não é possível excluí-lo");
@@ -250,10 +223,7 @@ public class WindowFuncionarioRecuperarAction extends WindowFuncionarioRecuperar
 						} else {
 							PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser excluído");
 						}
-					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissão para acessar o recurso " + permissoes.getNomepermissao());
-					}
+					
 					Inicial.fechaconexao();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

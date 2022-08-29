@@ -14,13 +14,13 @@ import beans.PermissaoFuncionario;
 import beans.Permissoes;
 import beans.Usuario;
 import comum.EjetaException;
+import telas.Inicial;
 
 public class AutenticadorUsuario {
 
 	private static Usuario usuario;
 	private static Connection con;
 	private static boolean isColetor = false;
-	
 
 	public static boolean isColetor() {
 		return isColetor;
@@ -41,15 +41,50 @@ public class AutenticadorUsuario {
 	public static Usuario getusuario() {
 		return usuario;
 	}
-	
+
 	public static void setUsuario(Usuario usuario) {
 		AutenticadorUsuario.usuario = usuario;
+	}
+
+	public List<Boolean> verificarPermissoesGlobal(Permissoes[] permissao) {
+		try {
+			AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			new EjetaException(e1);
+		}
+		List<Boolean> listaPermissao = new ArrayList<Boolean>();
+		if (isColetor) {
+			for (int i = 0; i < permissao.length; i++) {
+				try {
+					Boolean x = verificarPermissaoColetor(AutenticadorUsuario.usuario, permissao[i]);
+					listaPermissao.add(x);
+				} catch (SQLException e) {
+					new EjetaException(e);
+				}
+			}
+			Inicial.fechaconexao();
+			return listaPermissao;
+		}
+
+		for (int i = 0; i < permissao.length; i++) {
+			try {
+				Boolean x = verificarPermissaoFuncionario(AutenticadorUsuario.usuario, permissao[i]);
+				listaPermissao.add(x);
+			} catch (SQLException e) {
+				new EjetaException(e);
+			}
+		}
+
+		Inicial.fechaconexao();
+		return listaPermissao;
+
 	}
 
 	public static boolean isAuthentiquedUserFuncionario(String login, String senha) {
 
 		try {
-			
+
 			if (con == null) {
 				throw new NullPointerException("A Conexão esta nula ");
 			}
@@ -85,12 +120,12 @@ public class AutenticadorUsuario {
 	public static boolean isAuthentiquedUserColetor(String login, String senha) {
 
 		try {
-			
+
 			if (con == null) {
 				throw new NullPointerException("A Conexão esta nula ");
 			}
-			PreparedStatement ps = con
-					.prepareStatement("select colLogin,colSenha, colid, colnome from coletor where colLogin=? and colSenha=?;");
+			PreparedStatement ps = con.prepareStatement(
+					"select colLogin,colSenha, colid, colnome from coletor where colLogin=? and colSenha=?;");
 			ps.setString(1, login);
 			ps.setString(2, senha);
 			ResultSet rs = ps.executeQuery();
@@ -119,7 +154,7 @@ public class AutenticadorUsuario {
 
 	}
 
-	public void deletePermissoesColetor(Coletor coletor) throws Exception {
+	public static void deletePermissoesColetor(Coletor coletor) throws Exception {
 
 		StringBuilder st1 = new StringBuilder();
 		st1.append("delete from permissaocoletor where colid_fk = ?;");
@@ -148,8 +183,8 @@ public class AutenticadorUsuario {
 	}
 
 	public boolean verificarPermissaoColetor(Usuario coletor, Permissoes permissao) throws SQLException {
-		Permissoes permissoes = new Permissoes();
 
+		Permissoes permissoes = new Permissoes();
 		if (coletor != null) {
 			StringBuilder st = new StringBuilder();
 			st.append(
@@ -163,10 +198,12 @@ public class AutenticadorUsuario {
 				permissoes.setId(seResultSet.getInt("permiid_fk"));
 				permissoes.setNomepermissao(seResultSet.getString("perminome"));
 			}
-
+			seResultSet.close();
+			ps.close();
 		}
 
-		if (permissoes.getId() != null && (permissoes.getNomepermissao().equals(permissao.getNomepermissao()))) {
+		if (permissoes.getId() != null && (permissoes.getNomepermissao().equals(permissao.getNomepermissao())
+				&& permissoes.getId().equals(permissao.getId()))) {
 			return true;
 		} else {
 			return false;
@@ -232,7 +269,7 @@ public class AutenticadorUsuario {
 
 	public boolean verificarPermissaoFuncionario(Usuario funcionario, Permissoes permissao) throws SQLException {
 		Permissoes permissoes = new Permissoes();
-		
+
 		if (funcionario != null) {
 			StringBuilder st = new StringBuilder();
 			st.append(
@@ -245,7 +282,7 @@ public class AutenticadorUsuario {
 			while (seResultSet.next()) {
 				permissoes.setId(seResultSet.getInt("permissoes_permiid"));
 				permissoes.setNomepermissao(seResultSet.getString("perminome"));
-				
+
 			}
 
 		}
@@ -256,8 +293,9 @@ public class AutenticadorUsuario {
 			return false;
 		}
 	}
-	
-	public PermissaoFuncionario recuperarPermissoesFuncionario(PermissaoFuncionario permissaoFuncionario) throws Exception {
+
+	public PermissaoFuncionario recuperarPermissoesFuncionario(PermissaoFuncionario permissaoFuncionario)
+			throws Exception {
 		Permissoes permissoes = null;
 		permissaoFuncionario.setListaPermissoes(new ArrayList<Permissoes>());
 
@@ -284,14 +322,45 @@ public class AutenticadorUsuario {
 
 		return permissaoFuncionario;
 	}
-	
-	public void deletePermissoesFuncionario(Funcionario funcionario) throws Exception {
+
+	public static void deletePermissoesFuncionario(Funcionario funcionario) throws Exception {
 
 		StringBuilder st1 = new StringBuilder();
 		st1.append("delete from permissaofuncionario where funcionario_funcid = ?;");
 		PreparedStatement ps = con.prepareStatement(st1.toString());
 		ps.setInt(1, funcionario.getIdUsuario());
 		ps.executeUpdate();
+
+	}
+
+	public static boolean verificarSenhaUsuário(String senha) throws SQLException {
+
+		boolean a = false;
+		AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
+		if (isColetor) {
+			StringBuilder st = new StringBuilder();
+			st.append("select colSenha from coletor where colSenha = ?");
+			PreparedStatement ps = con.prepareStatement(st.toString());
+			ps.setString(1, senha);
+			ResultSet rs = ps.executeQuery();
+			a = rs.next();
+			rs.close();
+			ps.close();
+			Inicial.fechaconexao();
+			return a;
+
+		}
+
+		StringBuilder st = new StringBuilder();
+		st.append("select funcSenha from funcionario where funcSenha = ?");
+		PreparedStatement ps = con.prepareStatement(st.toString());
+		ps.setString(1, senha);
+		ResultSet rs = ps.executeQuery();
+		a = rs.next();
+		rs.close();
+		ps.close();
+		Inicial.fechaconexao();
+		return a;
 
 	}
 }

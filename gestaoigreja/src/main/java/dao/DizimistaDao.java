@@ -92,7 +92,31 @@ public class DizimistaDao {
 		List<Dizimista> listaDizimistas = new ArrayList<Dizimista>();
 		StringBuilder st = new StringBuilder();
 		st.append("select diznome, dizimista.cidade_cidadeid, dizid, cidadenomecidade, isativo from dizimista "
-				+ "inner join cidade on (cidadeid = dizimista.cidade_cidadeid) where diznome ilike ?");
+				+ "inner join cidade on (cidadeid = dizimista.cidade_cidadeid) where diznome ilike ? ");
+		PreparedStatement ps = connection.prepareStatement(st.toString());
+		ps.setString(1, "%"+diz.getNomeDizimista()+"%");
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			diz = new Dizimista();
+			Cidade cidade = new Cidade();
+			cidade.setIdCidade(rs.getInt("cidade_cidadeid"));
+			cidade.setNomeCidade(rs.getString("cidadenomecidade"));
+			diz.setCidade(cidade);
+			diz.setIdDizimista(rs.getInt("dizid"));
+			diz.setNomeDizimista(rs.getString("diznome"));
+			diz.setIsativo(rs.getString("isativo"));
+			listaDizimistas.add(diz);
+		}
+
+		return listaDizimistas;
+	}
+	
+	public List<Dizimista> pesquisarListaDizimistasNomeAtivos(Dizimista diz) throws Exception {
+		List<Dizimista> listaDizimistas = new ArrayList<Dizimista>();
+		StringBuilder st = new StringBuilder();
+		st.append("select diznome, dizimista.cidade_cidadeid, dizid, cidadenomecidade, isativo from dizimista "
+				+ "inner join cidade on (cidadeid = dizimista.cidade_cidadeid) where diznome ilike ? and isativo ilike '%s'");
 		PreparedStatement ps = connection.prepareStatement(st.toString());
 		ps.setString(1, "%"+diz.getNomeDizimista()+"%");
 		ResultSet rs = ps.executeQuery();
@@ -117,6 +141,30 @@ public class DizimistaDao {
 		StringBuilder st = new StringBuilder();
 		st.append("select diznome, dizimista.cidade_cidadeid, dizid, cidadenomecidade, isativo from dizimista "
 				+ "inner join cidade on (cidadeid = dizimista.cidade_cidadeid) where dizid = ?");
+		PreparedStatement ps = connection.prepareStatement(st.toString());
+		ps.setInt(1,diz.getIdDizimista());
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			diz = new Dizimista();
+			Cidade cidade = new Cidade();
+			cidade.setIdCidade(rs.getInt("cidade_cidadeid"));
+			cidade.setNomeCidade(rs.getString("cidadenomecidade"));
+			diz.setCidade(cidade);
+			diz.setIdDizimista(rs.getInt("dizid"));
+			diz.setNomeDizimista(rs.getString("diznome"));
+			diz.setIsativo(rs.getString("isativo"));
+			listaDizimistas.add(diz);
+		}
+
+		return listaDizimistas;
+	}
+	
+	public List<Dizimista> pesquisarListaDizimistasCodigoAtivos(Dizimista diz) throws Exception {
+		List<Dizimista> listaDizimistas = new ArrayList<Dizimista>();
+		StringBuilder st = new StringBuilder();
+		st.append("select diznome, dizimista.cidade_cidadeid, dizid, cidadenomecidade, isativo from dizimista "
+				+ "inner join cidade on (cidadeid = dizimista.cidade_cidadeid) where dizid = ? and isativo ilike '%s'");
 		PreparedStatement ps = connection.prepareStatement(st.toString());
 		ps.setInt(1,diz.getIdDizimista());
 		ResultSet rs = ps.executeQuery();

@@ -31,7 +31,9 @@ import telas.Pesquiar.WindowCidadeRecuperarAssociarAction;
 
 public class WindowFuncionarioAction extends WindowFuncionario {
 
-	private String verificacaoCadastrar = "Cadastrar", verificacaoEditar = "Editar";
+	private Permissoes permissoes[] = { new Permissoes(22, "Cadastrar Funcionario"),
+			new Permissoes(24, "Editar Funcionario"), new Permissoes(25, "Excluir Funcionario"), new Permissoes(23,"Pesquisar Funcionario") };
+	private List<Boolean> listaconfirma;
 	private Cidade cidade;
 	private List<Permissoes> lista, listapermissao;
 	private Funcionario funcionario;
@@ -41,9 +43,8 @@ public class WindowFuncionarioAction extends WindowFuncionario {
 		this.funcionario = funcionario;
 	}
 
-	public WindowFuncionarioAction(String a) {
-
-		if (a.equals(verificacaoCadastrar)) {
+	public void verificarPermissaoCadastrar() throws SQLException {
+		if (listaconfirma.get(0)) {
 			super.createContents();
 			try {
 				acessarCategoriaFuncionario();
@@ -56,8 +57,16 @@ public class WindowFuncionarioAction extends WindowFuncionario {
 			preenchimentotabelapermissoes();
 			this.tratarEventosCadastrar();
 			super.open();
+		} else {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[0].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[0].getNomepermissao());
+		}
+	}
 
-		} else if (a.equals(verificacaoEditar)) {
+	public void verificarPermissaoEditar(Funcionario c) throws SQLException {
+		funcionario = c;
+		if (listaconfirma.get(1)) {
 			super.createContents();
 			try {
 				acessarCategoriaFuncionario();
@@ -68,9 +77,33 @@ public class WindowFuncionarioAction extends WindowFuncionario {
 			}
 			preenchimentotabelapermissoes();
 			this.tratarEventosEditar();
-
+			puxartodaspermissoesFuncionario();
+			popularTelaFuncionario();
+			open();
+		} else {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[1].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[1].getNomepermissao());
 		}
+	}
+	
+	public void verificarPermissaoExcluir() throws SQLException {
+		if (!listaconfirma.get(2)) {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[2].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[2].getNomepermissao());
+		}
+	}
+	public void verificarPermissaoPesquisar() throws SQLException {
+		if (!listaconfirma.get(3)) {
+			PropriedadesShell.mensagemDeRetorno(
+					"Usuário sem permissao para acessar o recurso: " + permissoes[3].getNomepermissao());
+			throw new SQLException("Usuário sem permissão para acessar o recurso: " + permissoes[3].getNomepermissao());
+		}
+	}
 
+	public WindowFuncionarioAction() {
+		listaconfirma = new AutenticadorUsuario().verificarPermissoesGlobal(permissoes);
 	}
 
 	public void tratarEventosCadastrar() {

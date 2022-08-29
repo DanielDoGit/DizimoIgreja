@@ -32,30 +32,21 @@ public class WindowComunidadeRecuperarAction extends WindowComunidadeRecuperar {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(17, "Editar Comunidade");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
 
-						Inicial.fechaconexao();
-						if (table.getSelectionIndex() != -1) {
-							ass = table.getItems();
+					if (table.getSelectionIndex() != -1) {
+						ass = table.getItems();
 
-							Text t = new Text(shlPesquisar, SWT.None);
+						Text t = new Text(shlPesquisar, SWT.None);
 
-							t.setText(ass[table.getSelectionIndex()].getText(0));
+						t.setText(ass[table.getSelectionIndex()].getText(0));
 
-							new WindowComunidadeAction(btnEditar, t);
+						new WindowComunidadeAction().verificarpermissaoEditar(t.getText());
+						
 
-						} else {
-							PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
-						}
 					} else {
-						PropriedadesShell.mensagemDeRetorno(
-								"Usuário sem permissao para acessar o recurso: " + permissoes.getNomepermissao());
+						PropriedadesShell.mensagemDeRetorno("Selecione um registro para ser editado");
 					}
+
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
@@ -72,29 +63,19 @@ public class WindowComunidadeRecuperarAction extends WindowComunidadeRecuperar {
 
 				try {
 
-					AutenticadorUsuario.setCon(Inicial.startaPropertiesConnection());
-					AutenticadorUsuario autenticadorUsuario = new AutenticadorUsuario();
-					Permissoes permissoes = new Permissoes(8, "Excluir Comunidade");
-					if (autenticadorUsuario.verificarPermissaoColetor(AutenticadorUsuario.getusuario(), permissoes)
-							|| autenticadorUsuario.verificarPermissaoFuncionario(AutenticadorUsuario.getusuario(),
-									permissoes)) {
+					if (table.getSelectionIndex() != -1) {
 
-						if (table.getSelectionIndex() != -1) {
-
-							WindowComunidadeAction wc = new WindowComunidadeAction(
-									ass[table.getSelectionIndex()].getText(0));
-							if (wc.getverificadorexclusao()) {
+						 new WindowComunidadeAction().verificarPermissaoExcluir(ass[table.getSelectionIndex()].getText(0));
+						
 								int a = table.getSelectionIndex();
 								ass[a].setText(0, "");
 								ass[a].setText(1, "");
 								ass[a].setText(2, "");
-							}
+							
 						} else {
 							PropriedadesShell.mensagemDeRetorno("Selecione um registro para excluir");
 						}
-					}else {
-						PropriedadesShell.mensagemDeRetorno("Usuário sem permissao para acessar o recurso: "+permissoes.getNomepermissao());
-					}
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					new EjetaException(e1);
@@ -119,9 +100,9 @@ public class WindowComunidadeRecuperarAction extends WindowComunidadeRecuperar {
 						}
 						table.setItemCount(0);
 					}
-
+					
 					try {
-
+						new WindowComunidadeAction().verificarPermissaoPesquisar();
 						ComunidadeDao c = new ComunidadeDao();
 						c.setCon(Inicial.startaPropertiesConnection());
 
@@ -174,8 +155,7 @@ public class WindowComunidadeRecuperarAction extends WindowComunidadeRecuperar {
 								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
 						new EjetaException(e1);
 					} catch (NullPointerException es) {
-						PropriedadesShell.mensagemDeErro(
-								"Não foi possível realizar a consulta. Verifique o log e tente novamente.");
+					
 						new EjetaException(es);
 					} catch (Exception ex) {
 						PropriedadesShell.mensagemDeErroDetalhada(ex);

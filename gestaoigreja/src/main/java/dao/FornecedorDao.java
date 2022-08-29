@@ -71,7 +71,8 @@ public class FornecedorDao {
 
 	}
 	
-	public Fornecedor pesquisarFornecedorNomeFantasia(Fornecedor com) throws SQLException {
+	public List<Fornecedor> pesquisarFornecedorNomeFantasia(Fornecedor com) throws SQLException {
+		List<Fornecedor> lista = new ArrayList<>();
 		StringBuilder st = new StringBuilder();
 		st.append(
 				"select fornecedor.forId as id, cidade.cidadeNomeCidade as nomecidade from fornecedor"
@@ -86,9 +87,10 @@ public class FornecedorDao {
 			Cidade cidade = new Cidade();
 			cidade.setNomeCidade(rs.getString("nomecidade"));
 			com.setCidade(cidade);
+			lista.add(com);
 		}
 		
-		return com;
+		return lista;
 	}
 	
 	public Fornecedor pesquisarFornecedorIndice(Fornecedor com) throws SQLException {

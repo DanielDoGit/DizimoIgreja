@@ -22,7 +22,7 @@ public class WindowIdentificacaoUsuario extends Dialog {
 	}
 
 	public Object open() {
-		Display display = getParent().getDisplay();
+		Display display = Display.getDefault();
 		createContents();
 		
 		shlBoasVindasAo.open();
